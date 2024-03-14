@@ -7,7 +7,7 @@ export default function EduviShopNine({ thethree = "The Three Musketeers", price
       <div className="flex flex-col items-center justify-start w-full md:h-auto p-5 bg-white-A700 rounded-[10px]">
         <div className="flex flex-col items-center justify-start w-full md:px-5 max-w-[230px]">
           <Img
-            src="images/defaultNoData.png"
+            src="images/img_image_5.png"
             alt="image_one"
             className="w-full md:h-auto sm:w-full object-cover rounded-[10px]"
           />
