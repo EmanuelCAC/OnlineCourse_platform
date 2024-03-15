@@ -7,7 +7,4 @@ import { Input } from "./Input";
 import { Slider } from "./Slider";
 import { CheckBox } from "./CheckBox";
 import { SelectBox } from "./SelectBox";
-import Header from "./Header";
-import Footer from "./Footer";
-import Subscribe from "./Subscribe";
-export { Button, Img, Text, Heading, RatingBar, Input, Slider, CheckBox, SelectBox, Header, Footer, Subscribe };
+export { Button, Img, Text, Heading, RatingBar, Input, Slider, CheckBox, SelectBox };
