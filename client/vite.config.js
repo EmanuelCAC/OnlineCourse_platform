@@ -10,4 +10,9 @@ export default defineConfig({
     outDir: "build",
   },
   plugins: [tsconfigPaths(), react()],
+  server: {
+    proxy: {
+      '/api': 'http://localhost:3001/api'
+    }
+  }
 });
