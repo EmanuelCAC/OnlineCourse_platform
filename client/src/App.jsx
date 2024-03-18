@@ -5,20 +5,23 @@ import { BrowserRouter as Router } from "react-router-dom";
 function App() {
   const [data, setData] = React.useState(null);
 
-  React.useEffect(() => {
-    setData(fetch('http://localhost:3001/api'))
-      .then(res => res.json())
-      .then(data => setData(data.message))
-  }, []);
+  async function getAPI() {
+    const apiData = await fetch('http://localhost:3001/api')
+    console.log((apiData))
+    const result = await apiData.json()
+    console.log((result))
+    setData(result.message)
+    console.log((result.message))
+  }
 
-  console.log(data)
+  React.useEffect(() => {
+  }, []);
 
 
   return (
-    <p>{!data ? "Loading..." : "Loading..."}</p>
-    // <Router>
-    //   <Routes />
-    // </Router>
+    <Router>
+      <Routes />
+    </Router>
   );
 }
 
