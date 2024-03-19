@@ -6,8 +6,8 @@ import EduviCoursesPricing from "pages/EduviCoursesPricing";
 import EduviJoinAsTeacher from "pages/EduviJoinAsTeacher";
 import Allmentors from "pages/Allmentors";
 import Singlementordetails from "pages/Singlementordetails";
-import EduviCoursesDetails from "pages/EduviCoursesDetails";
-import EduviShop from "pages/EduviShop";
+import EduviCoursesDetails from "pages/CoursesDetails";
+import EduviShop from "pages/Shop";
 import EduviCourses from "pages/EduviCourses";
 
 const ProjectRoutes = () => {

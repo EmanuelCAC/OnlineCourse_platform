@@ -1,13 +1,18 @@
 import React from "react";
 import { Img, Text } from "./..";
+import { useNavigate } from "react-router-dom";
 
 export default function Header({ ...props }) {
+  const navigate = useNavigate();
+
   return (
     <header {...props}>
       <div className="flex flex-row md:flex-col justify-between w-full mx-auto md:gap-10 md:px-5 max-w-7xl">
-        <Img src="images/img_logo.svg" alt="logo_one" className="h-[30px]" />
+        <button onClick={() => navigate("/")}>
+          <Img src="images/img_logo.svg" alt="logo_one" className="h-[30px]" />
+        </button>
         <div className="flex flex-row md:flex-col justify-start items-center w-[58%] md:w-full gap-6 md:gap-5">
-          <Text as="p" className="!text-gray-900 !font-medium">
+          <Text as="button" className="!text-gray-900 !font-medium" onClick={() => navigate("/shop")}>
             Shop
           </Text>
           <div className="flex flex-row justify-start items-center w-[22%] md:w-full gap-0.5">
