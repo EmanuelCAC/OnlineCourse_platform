@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { CloseSVG } from "../../assets/images";
-import { Header, Text, Heading, Img, RatingBar, Button, Footer } from "components";
+import { Header, Text, Heading, Img, RatingBar, Button, Footer, BreadCrumbs } from "components";
+
+
 
 export default function Home() {
   const [books, setBooks] = useState(null)
 
-  const popularBooks = async (req, res) => {
-    const data = await fetch('http://localhost:3001/api/v1/book?limit=3&sort=rating')
+  const popularBooks = async () => {
+    const data = await fetch('http://localhost:3001/api/v1/book?limit=3&sort=-rating')
     const result = await data.json()
-    setBooks(result.result)
+    setBooks(result.books)
+    console.log(result.books)
   }
 
-  popularBooks()
+  useEffect(() => {
+    popularBooks()
+  }, [])
+
+
 
   return (
     <>
@@ -24,9 +31,12 @@ export default function Home() {
         <div className="flex flex-col items-center justify-start w-full gap-12">
           <Header className="flex justify-center items-center w-full md:h-auto p-[22px] sm:p-5 bg-gray-100" />
           <div className="flex flex-col items-start justify-start w-full gap-[5px] p-5 md:px-5 bg-red-50 max-w-7xl rounded-[20px]">
-            <Text as="p" className="mt-[5px] ml-2.5 md:ml-0 !text-black-900_02 !font-medium">
-              Home
-            </Text>
+            <BreadCrumbs routes={[
+              {
+                name: "Home",
+                path: "#"
+              }
+            ]} />
             <div className="flex flex-row md:flex-col justify-between items-center w-[99%] md:w-full ml-2.5 gap-[492px] md:gap-10 md:ml-0">
               <Heading size="3xl" as="h1" className="w-[30%] !font-semibold">
                 <>
