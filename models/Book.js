@@ -25,6 +25,6 @@ const BookSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'Please provide a price']
   }
-})
+}, { timestamps: true })
 
 export default mongoose.model('Book', BookSchema)

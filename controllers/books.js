@@ -2,9 +2,9 @@ import Book from "../models/Book.js";
 import { StatusCodes } from 'http-status-codes'
 
 const getAll = async (req, res) => {
-  console.log("success")
-  const { limit, sort } = req.params
-  let result = await Book.find()
+  const { limit, sort } = req.query
+  let result = Book.find()
+
 
   if (sort) {
     const sortList = sort.split(',').join(' ')
@@ -15,7 +15,8 @@ const getAll = async (req, res) => {
     result = result.limit(Number(limit))
   }
 
-  res.status(StatusCodes.OK).json({ result })
+  const books = await result
+  res.status(StatusCodes.OK).json({ books })
 }
 
 const create = async (req, res) => {

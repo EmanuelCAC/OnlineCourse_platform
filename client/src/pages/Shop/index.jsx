@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { CloseSVG } from "../../assets/images";
 import { Button, Img, Text, SelectBox, Input, Heading, RatingBar, BreadCrumbs } from "../../components";
@@ -13,6 +13,25 @@ const dropDownOptions = [
 
 export default function EduviShopPage() {
   const [searchBarValue6, setSearchBarValue6] = React.useState("");
+  const [popularBooks, setPopularBooks] = useState(null)
+  const [newArrivals, setNewArrivals] = useState(null)
+
+  const getPopularBooks = async (props) => {
+    const data = await fetch('http://localhost:3001/api/v1/book?limit=3&sort=-rating')
+    const result = await data.json()
+    setPopularBooks(result.books)
+  }
+
+  const getNewArrivals = async (props) => {
+    const data = await fetch('http://localhost:3001/api/v1/book?limit=3&sort=-createdAt')
+    const result = await data.json()
+    setNewArrivals(result.books)
+  }
+
+  useEffect(() => {
+    getPopularBooks()
+    getNewArrivals()
+  }, [])
 
   return (
     <>
@@ -57,87 +76,37 @@ export default function EduviShopPage() {
                 Popular Books
               </Heading>
               <div className="flex flex-col w-full gap-[15px]">
-                <div className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px]">
-                  <Img
-                    src="images/img_image_14.png"
-                    alt="popular_books"
-                    className="w-[21%] md:h-auto sm:w-full ml-[3px] object-cover rounded-[5px]"
-                  />
-                  <div className="flex flex-col items-start justify-start w-[73%] mr-[3px] gap-2.5">
-                    <RatingBar
-                      value={5}
-                      isEditable={true}
-                      color="#ffc107"
-                      activeColor="#ffc107"
-                      size={16}
-                      className="flex justify-between"
+                {popularBooks && popularBooks.map((book) => (
+                  <div
+                    key={book._id}
+                    className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px]">
+                    <Img
+                      src={book.image}
+                      alt="popular_books"
+                      className="w-[21%] md:h-auto sm:w-full ml-[3px] object-cover rounded-[5px]"
                     />
-                    <Heading as="h3" className="!text-black-900_02">
-                      <>
-                        The Three Musketeers, by
-                        <br />
-                        Alexandre Dumas
-                      </>
-                    </Heading>
-                    <Heading as="h4" className="!text-red-300_01">
-                      $39.00
-                    </Heading>
+                    <div className="flex flex-col items-start justify-start w-[73%] mr-[3px] gap-2.5">
+                      <RatingBar
+                        starCount={book.rating}
+                        isEditable={true}
+                        color="#ffc107"
+                        activeColor="#ffc107"
+                        size={16}
+                        className="flex justify-between"
+                      />
+                      <Heading as="h3" className="!text-black-900_02">
+                        <>
+                          {book.name}, by
+                          <br />
+                          {book.author}
+                        </>
+                      </Heading>
+                      <Heading as="h4" className="!text-red-300_01">
+                        ${book.price}
+                      </Heading>
+                    </div>
                   </div>
-                </div>
-                <div className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px]">
-                  <Img
-                    src="images/img_image_90x75.png"
-                    alt="image"
-                    className="w-[21%] md:h-auto sm:w-full ml-[3px] object-cover rounded-[5px]"
-                  />
-                  <div className="flex flex-col items-start justify-start w-[73%] mr-[3px] gap-2.5">
-                    <RatingBar
-                      value={5}
-                      isEditable={true}
-                      color="#ffc107"
-                      activeColor="#ffc107"
-                      size={16}
-                      className="flex justify-between"
-                    />
-                    <Heading as="h5" className="!text-black-900_02">
-                      <>
-                        The Three Musketeers, by
-                        <br />
-                        Alexandre Dumas
-                      </>
-                    </Heading>
-                    <Heading as="h6" className="!text-red-300_01">
-                      $39.00
-                    </Heading>
-                  </div>
-                </div>
-                <div className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px]">
-                  <Img
-                    src="images/img_image_4.png"
-                    alt="image"
-                    className="w-[21%] md:h-auto sm:w-full ml-[3px] object-cover rounded-[5px]"
-                  />
-                  <div className="flex flex-col items-start justify-start w-[73%] mr-[3px] gap-2.5">
-                    <RatingBar
-                      value={5}
-                      isEditable={true}
-                      color="#ffc107"
-                      activeColor="#ffc107"
-                      size={16}
-                      className="flex justify-between"
-                    />
-                    <Heading as="h6" className="!text-black-900_02">
-                      <>
-                        The Three Musketeers, by
-                        <br />
-                        Alexandre Dumas
-                      </>
-                    </Heading>
-                    <Heading as="h6" className="!text-red-300_01">
-                      $39.00
-                    </Heading>
-                  </div>
-                </div>
+                ))}
               </div>
               <Text size="lg" as="p" className="!text-red-300_01">
                 See More
@@ -148,87 +117,37 @@ export default function EduviShopPage() {
                 New Arrivals
               </Heading>
               <div className="flex flex-col w-full gap-[15px]">
-                <div className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px]">
-                  <Img
-                    src="images/img_image_14.png"
-                    alt="new_arrivals"
-                    className="w-[21%] md:h-auto sm:w-full ml-[3px] object-cover rounded-[5px]"
-                  />
-                  <div className="flex flex-col items-start justify-start w-[73%] mr-[3px] gap-2.5">
-                    <RatingBar
-                      value={5}
-                      isEditable={true}
-                      color="#ffc107"
-                      activeColor="#ffc107"
-                      size={16}
-                      className="flex justify-between"
+                {newArrivals && newArrivals.map((book) => (
+                  <div
+                    key={book._id}
+                    className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px]">
+                    <Img
+                      src={book.image}
+                      alt="popular_books"
+                      className="w-[21%] md:h-auto sm:w-full ml-[3px] object-cover rounded-[5px]"
                     />
-                    <Heading as="h6" className="!text-black-900_02">
-                      <>
-                        The Three Musketeers, by
-                        <br />
-                        Alexandre Dumas
-                      </>
-                    </Heading>
-                    <Heading as="h6" className="!text-red-300_01">
-                      $39.00
-                    </Heading>
+                    <div className="flex flex-col items-start justify-start w-[73%] mr-[3px] gap-2.5">
+                      <RatingBar
+                        starCount={book.rating}
+                        isEditable={true}
+                        color="#ffc107"
+                        activeColor="#ffc107"
+                        size={16}
+                        className="flex justify-between"
+                      />
+                      <Heading as="h3" className="!text-black-900_02">
+                        <>
+                          {book.name}, by
+                          <br />
+                          {book.author}
+                        </>
+                      </Heading>
+                      <Heading as="h4" className="!text-red-300_01">
+                        ${book.price}
+                      </Heading>
+                    </div>
                   </div>
-                </div>
-                <div className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px]">
-                  <Img
-                    src="images/img_image_90x75.png"
-                    alt="image_one"
-                    className="w-[21%] md:h-auto sm:w-full ml-[3px] object-cover rounded-[5px]"
-                  />
-                  <div className="flex flex-col items-start justify-start w-[73%] mr-[3px] gap-2.5">
-                    <RatingBar
-                      value={5}
-                      isEditable={true}
-                      color="#ffc107"
-                      activeColor="#ffc107"
-                      size={16}
-                      className="flex justify-between"
-                    />
-                    <Heading as="h6" className="!text-black-900_02">
-                      <>
-                        The Three Musketeers, by
-                        <br />
-                        Alexandre Dumas
-                      </>
-                    </Heading>
-                    <Heading as="h6" className="!text-red-300_01">
-                      $39.00
-                    </Heading>
-                  </div>
-                </div>
-                <div className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px]">
-                  <Img
-                    src="images/img_image_4.png"
-                    alt="image_one"
-                    className="w-[21%] md:h-auto sm:w-full ml-[3px] object-cover rounded-[5px]"
-                  />
-                  <div className="flex flex-col items-start justify-start w-[73%] mr-[3px] gap-2.5">
-                    <RatingBar
-                      value={5}
-                      isEditable={true}
-                      color="#ffc107"
-                      activeColor="#ffc107"
-                      size={16}
-                      className="flex justify-between"
-                    />
-                    <Heading as="h6" className="!text-black-900_02">
-                      <>
-                        The Three Musketeers, by
-                        <br />
-                        Alexandre Dumas
-                      </>
-                    </Heading>
-                    <Heading as="h6" className="!text-red-300_01">
-                      $39.00
-                    </Heading>
-                  </div>
-                </div>
+                ))}
               </div>
               <Text size="lg" as="p" className="!text-red-300_01">
                 See More
