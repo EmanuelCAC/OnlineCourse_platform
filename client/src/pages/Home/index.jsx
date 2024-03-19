@@ -38,7 +38,7 @@ export default function Home() {
               <Img
                 src="images/img_image_210x374.png"
                 alt="kisspngbookcas"
-                className="w-[40%] md:w-full md:h-[600px] object-cover"
+                className="w-[31%] md:w-full md:h-[600px] object-cover"
               />
             </div>
           </div>
