@@ -6,9 +6,12 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 
 const dropDownOptions = [
-  { label: "Option1", value: "option1" },
-  { label: "Option2", value: "option2" },
-  { label: "Option3", value: "option3" },
+  { label: "Latest", value: "-createdAt" },
+  { label: "Earliest", value: "createdAt" },
+  { label: "A - Z", value: "name" },
+  { label: "Z - A", value: "-name" },
+  { label: "$ - $$$", value: "price" },
+  { label: "$$$ - $", value: "-price" },
 ];
 
 export default function EduviShopPage() {
@@ -16,6 +19,7 @@ export default function EduviShopPage() {
   const [popularBooks, setPopularBooks] = useState(null)
   const [newArrivals, setNewArrivals] = useState(null)
   const [books, setBooks] = useState(null)
+  const [sortBy, setSortBy] = useState("-createdAt")
   const [active, setActive] = useState("All Books")
 
   const getPopularBooks = async () => {
@@ -31,7 +35,7 @@ export default function EduviShopPage() {
   }
 
   const getBooks = async () => {
-    const data = await fetch(`http://localhost:3001/api/v1/book?search=${searchBarValue}`)
+    const data = await fetch(`http://localhost:3001/api/v1/book?search=${searchBarValue}&sort=${sortBy}`)
     const result = await data.json()
     setBooks(result.books)
   }
@@ -43,7 +47,7 @@ export default function EduviShopPage() {
 
   useEffect(() => {
     getBooks()
-  }, [searchBarValue])
+  }, [searchBarValue, sortBy])
 
   return (
     <>
@@ -197,15 +201,16 @@ export default function EduviShopPage() {
                       <Img src="images/img_search.svg" alt="search" className="cursor-pointer opacity-0 fill-black-900_02" fill="#0000000" />
                     )
                   }
-                  className="w-[67%] sm:w-full gap-[35px] !text-gray-700_99 rounded-tr-[10px] rounded-br-[10px] font-medium"
+                  className="w-[84%] sm:w-full gap-[35px] !text-gray-700_99 rounded-tr-[10px] rounded-br-[10px] font-medium"
                 />
                 <SelectBox
                   shape="round"
                   indicator={<Img src="images/img_arrowdown_red_300_01.svg" alt="arrow_down" />}
-                  name="sortbylatest"
+                  name="sortby"
                   placeholder="Sort by: Latest"
                   options={dropDownOptions}
-                  className="w-[33%] sm:w-full gap-px font-medium"
+                  className="w-[16%] sm:w-full gap-px font-medium"
+                  onChange={(value) => { setSortBy(value.value) }}
                 />
               </div>
               <div className="justify-center w-full gap-[15px] grid-cols-3 md:grid-cols-2 md:gap-5 sm:grid-cols-1 grid">
