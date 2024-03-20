@@ -2,9 +2,8 @@ import Book from "../models/Book.js";
 import { StatusCodes } from 'http-status-codes'
 
 const getAll = async (req, res) => {
-  const { limit, sort } = req.query
+  const { limit, sort, search } = req.query
   let result = Book.find()
-
 
   if (sort) {
     const sortList = sort.split(',').join(' ')
@@ -15,7 +14,13 @@ const getAll = async (req, res) => {
     result = result.limit(Number(limit))
   }
 
-  const books = await result
+  let books = await result
+
+  if (search) {
+    books = books.filter((book) => {
+      return book.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+    })
+  }
   res.status(StatusCodes.OK).json({ books })
 }
 

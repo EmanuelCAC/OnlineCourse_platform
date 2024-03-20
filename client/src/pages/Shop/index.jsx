@@ -12,26 +12,38 @@ const dropDownOptions = [
 ];
 
 export default function EduviShopPage() {
-  const [searchBarValue6, setSearchBarValue6] = React.useState("");
+  const [searchBarValue, setSearchBarValue] = useState("");
   const [popularBooks, setPopularBooks] = useState(null)
   const [newArrivals, setNewArrivals] = useState(null)
+  const [books, setBooks] = useState(null)
+  const [active, setActive] = useState("All Books")
 
-  const getPopularBooks = async (props) => {
+  const getPopularBooks = async () => {
     const data = await fetch('http://localhost:3001/api/v1/book?limit=3&sort=-rating')
     const result = await data.json()
     setPopularBooks(result.books)
   }
 
-  const getNewArrivals = async (props) => {
+  const getNewArrivals = async () => {
     const data = await fetch('http://localhost:3001/api/v1/book?limit=3&sort=-createdAt')
     const result = await data.json()
     setNewArrivals(result.books)
+  }
+
+  const getBooks = async () => {
+    const data = await fetch(`http://localhost:3001/api/v1/book?search=${searchBarValue}`)
+    const result = await data.json()
+    setBooks(result.books)
   }
 
   useEffect(() => {
     getPopularBooks()
     getNewArrivals()
   }, [])
+
+  useEffect(() => {
+    getBooks()
+  }, [searchBarValue])
 
   return (
     <>
@@ -157,16 +169,16 @@ export default function EduviShopPage() {
           <div className="flex flex-col items-center justify-start w-[65%] md:w-full gap-10">
             <div className="flex flex-col items-center justify-start w-full gap-[30px]">
               <div className="flex flex-row md:flex-col justify-start w-full gap-6 md:gap-5">
-                <Button color="orange_200_01" className="sm:px-5 font-medium min-w-[131px] rounded-[10px]">
+                <Button onClick={() => setActive("All Books")} color={active == "All Books" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[131px] rounded-[10px]">
                   All Books
                 </Button>
-                <Button color="white_A700" className="sm:px-5 font-medium min-w-[212px] rounded-[10px]">
+                <Button onClick={() => setActive("Kindergarten")} color={active == "Kindergarten" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[212px] rounded-[10px]">
                   Kindergarten
                 </Button>
-                <Button color="white_A700" className="sm:px-5 font-medium min-w-[212px] rounded-[10px]">
+                <Button onClick={() => setActive("High School")} color={active == "High School" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[212px] rounded-[10px]">
                   High School
                 </Button>
-                <Button color="white_A700" className="sm:px-5 font-medium min-w-[212px] rounded-[10px]">
+                <Button onClick={() => setActive("College")} color={active == "College" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[212px] rounded-[10px]">
                   College
                 </Button>
               </div>
@@ -175,14 +187,14 @@ export default function EduviShopPage() {
                   color="white_A700"
                   size="md"
                   name="search"
-                  placeholder="Search Class, Course, Book Name"
-                  value={searchBarValue6}
-                  onChange={(e) => setSearchBarValue6(e)}
+                  placeholder="Search Book Name"
+                  value={searchBarValue}
+                  onChange={(e) => setSearchBarValue(e)}
                   suffix={
-                    searchBarValue6?.length > 0 ? (
-                      <CloseSVG onClick={() => setSearchBarValue6("")} height={24} width={24} fillColor="#ffffffff" />
+                    searchBarValue?.length > 0 ? (
+                      <CloseSVG onClick={() => setSearchBarValue("")} height={24} width={24} fillColor="#0000000" />
                     ) : (
-                      <Img src="images/img_search.svg" alt="search" className="cursor-pointer" />
+                      <Img src="images/img_search.svg" alt="search" className="cursor-pointer opacity-0 fill-black-900_02" fill="#0000000" />
                     )
                   }
                   className="w-[67%] sm:w-full gap-[35px] !text-gray-700_99 rounded-tr-[10px] rounded-br-[10px] font-medium"
@@ -197,6 +209,35 @@ export default function EduviShopPage() {
                 />
               </div>
               <div className="justify-center w-full gap-[15px] grid-cols-3 md:grid-cols-2 md:gap-5 sm:grid-cols-1 grid">
+                {books && books.map((book, i) => (
+                  <div className="flex flex-col items-center justify-start w-full gap-2" key={i}>
+                    <div className="flex flex-col items-center justify-start w-full md:h-auto p-5 bg-white-A700 rounded-[10px]">
+                      <div className="flex flex-col items-center justify-start w-full md:px-5 max-w-[230px]">
+                        <Img
+                          src={book.image}
+                          alt="image_one"
+                          className="w-full md:h-auto sm:w-full object-cover rounded-[10px]"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-start justify-start w-full gap-[9px]">
+                      <Heading as="h1">{book.name}</Heading>
+                      <div className="flex flex-row justify-between items-center w-full">
+                        <Heading as="h2" className="!text-red-300_01">
+                          {book.price}
+                        </Heading>
+                        <RatingBar
+                          value={book.rating}
+                          isEditable={true}
+                          color="#ffc107"
+                          activeColor="#ffc107"
+                          size={16}
+                          className="flex justify-between"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
             <div className="flex flex-row justify-between items-center w-[35%] md:w-full">
