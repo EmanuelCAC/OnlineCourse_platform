@@ -15,12 +15,14 @@ const dropDownOptions = [
 ];
 
 export default function EduviShopPage() {
-  const [searchBarValue, setSearchBarValue] = useState("");
   const [popularBooks, setPopularBooks] = useState(null)
   const [newArrivals, setNewArrivals] = useState(null)
   const [books, setBooks] = useState(null)
+  const [searchBarValue, setSearchBarValue] = useState("");
   const [sortBy, setSortBy] = useState("-createdAt")
   const [active, setActive] = useState("All Books")
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
 
   const getPopularBooks = async () => {
     const data = await fetch('http://localhost:3001/api/v1/book?limit=3&sort=-rating')
@@ -35,9 +37,24 @@ export default function EduviShopPage() {
   }
 
   const getBooks = async () => {
-    const data = await fetch(`http://localhost:3001/api/v1/book?search=${searchBarValue}&sort=${sortBy}`)
+    const data = await fetch(`http://localhost:3001/api/v1/book?search=${searchBarValue}&sort=${sortBy}&limit=9&page=${page}`)
     const result = await data.json()
     setBooks(result.books)
+  }
+
+  const getTotalPages = async () => {
+    const data = await fetch(`http://localhost:3001/api/v1/book?search=${searchBarValue}&sort=${sortBy}`)
+    const result = await data.json()
+    setTotalPages(Math.ceil(result.books.length / 9))
+    console.log(totalPages)
+  }
+
+  const pageHandler = (action) => {
+    if (action === "next") {
+      (page + 1) >= totalPages ? setPage(totalPages) : setPage(page + 1)
+    } else if (action === "prev") {
+      (page - 1) <= 1 ? setPage(1) : setPage(page - 1)
+    }
   }
 
   useEffect(() => {
@@ -47,7 +64,8 @@ export default function EduviShopPage() {
 
   useEffect(() => {
     getBooks()
-  }, [searchBarValue, sortBy])
+    getTotalPages()
+  }, [searchBarValue, sortBy, page])
 
   return (
     <>
@@ -246,19 +264,19 @@ export default function EduviShopPage() {
               </div>
             </div>
             <div className="flex flex-row justify-between items-center w-[35%] md:w-full">
-              <Button color="white_A700" size="lg" shape="round" className="w-[15%] !rounded-md">
+              <Button color="white_A700" size="lg" shape="round" className="w-[15%] !rounded-md" onClick={() => pageHandler('prev')}>
                 <Img src="images/img_arrow_left.svg" />
               </Button>
               <Text as="p" className="!text-gray-900 !font-medium">
                 Page
               </Text>
-              <Button color="white_A700" size="sm" className="!text-gray-700_01 font-medium min-w-[42px] rounded-lg">
-                5
+              <Button color="white_A700" size="sm" className="!text-gray-700_01 font-medium min-w-[42px] rounded-lg cursor-default">
+                {page}
               </Button>
               <Text as="p" className="!text-gray-900 !font-medium">
-                of 80
+                of {books ? totalPages : 1}
               </Text>
-              <Button size="lg" shape="round" className="w-[15%] !rounded-md">
+              <Button size="lg" shape="round" className="w-[15%] !rounded-md" onClick={() => pageHandler('next')}>
                 <Img src="images/img_arrow_right.svg" />
               </Button>
             </div>
