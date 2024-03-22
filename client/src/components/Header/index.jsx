@@ -9,6 +9,7 @@ export default function Header({ ...props }) {
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.status)
   const [login, setLogin] = useState(false)
+  const [signup, setSignup] = useState(false)
 
   const navItems = [
     {
@@ -94,14 +95,17 @@ export default function Header({ ...props }) {
         alt: "profiletwentyfo",
         className: "h-[30px] w-[30px]"
       },
-      action: () => { setLogin(true) },
+      action: () => {
+        setLogin(true)
+        console.log(login)
+      },
       active: !authStatus
     },
   ]
 
   return (
     <header {...props}>
-      <div className="flex flex-row md:flex-col justify-between w-full mx-auto md:gap-10 md:px-5 max-w-7xl" onClick={() => { if (login) setLogin(false) }}>
+      <div className="flex flex-row md:flex-col justify-between w-full mx-auto md:gap-10 md:px-5 max-w-7xl">
         <button onClick={() => navigate("/")}>
           <Img src="images/img_logo.svg" alt="logo_one" className="h-[30px]" />
         </button>
@@ -130,7 +134,22 @@ export default function Header({ ...props }) {
           }
         </ul>
       </div>
-      <LogIn isOpen={login} />
+      <LogIn
+        isOpen={login}
+        isSignupOpen={() => {
+          setLogin(false)
+          setSignup(true)
+        }}
+        onRequestClose={() => setLogin(false)}
+      />
+      <SignUp
+        isOpen={signup}
+        isLoginOpen={() => {
+          setSignup(false)
+          setLogin(true)
+        }}
+        onRequestClose={() => setSignup(false)}
+      />
     </header>
   );
 }

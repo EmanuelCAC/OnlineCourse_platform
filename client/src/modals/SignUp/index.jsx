@@ -3,12 +3,17 @@ import { Text, CheckBox, Button, Input, Img, Heading, Slider } from "../../compo
 import SignUpInputfield from "../../components/SignUpInputfield";
 import { default as ModalProvider } from "react-modal";
 
-export default function SignUp({ isOpen, ...props }) {
+export default function SignUp({ isOpen, isLoginOpen, ...props }) {
   const [sliderState, setSliderState] = React.useState(0);
   const sliderRef = React.useRef(null);
 
   return (
-    <ModalProvider {...props} appElement={document.getElementById("root")} isOpen={isOpen} className="min-w-[1052px]">
+    <ModalProvider
+      {...props}
+      appElement={document.getElementById("root")}
+      isOpen={isOpen}
+      className="min-w-[1052px]"
+    >
       <div className="flex flex-row justify-center w-full">
         <div className="flex flex-row justify-center w-full px-14 py-[71px] md:p-5 bg-white-A700 rounded-[15px]">
           <div className="flex flex-row justify-center w-[97%]">
@@ -115,7 +120,7 @@ export default function SignUp({ isOpen, ...props }) {
                         </Text>
                       </a>
                       <a href="#" className="ml-1 mr-[65px] md:mr-5">
-                        <Text as="p" className="!text-red-300_01 !font-medium">
+                        <Text as="button" className="!text-red-300_01 !font-medium" onClick={isLoginOpen}>
                           Sign in
                         </Text>
                       </a>

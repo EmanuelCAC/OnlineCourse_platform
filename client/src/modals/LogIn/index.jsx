@@ -3,20 +3,25 @@ import { Text, CheckBox, Button, Input, Img, Heading, Slider } from "../../compo
 import SignUpInputfield from "../../components/SignUpInputfield";
 import { default as ModalProvider } from "react-modal";
 
-export default function LogIn({ isOpen, ...props }) {
+export default function LogIn({ isOpen, isSignupOpen, ...props }) {
   const [sliderState, setSliderState] = React.useState(0);
   const sliderRef = React.useRef(null);
 
   return (
-    <ModalProvider {...props} appElement={document.getElementById("root")} isOpen={isOpen} className="min-w-[1052px]">
+    <ModalProvider
+      {...props}
+      appElement={document.getElementById("root")}
+      isOpen={isOpen}
+      className="w-full"
+    >
       <div className="flex flex-row justify-center w-full">
-        <div className="flex flex-row justify-center w-full px-14 py-[71px] md:p-5 bg-white-A700 rounded-[15px]">
+        <div className="flex flex-row justify-center w-full px-14 py-[71px] md:p-5 bg-white-A700 rounded-[15px] outline-none">
           <div className="flex flex-row justify-center w-[97%]">
             <div className="flex flex-row justify-center w-full p-2">
               <div className="flex flex-row justify-center w-full">
                 <div className="flex flex-row md:flex-col justify-between items-center w-full md:gap-10">
                   <div className="flex flex-col items-center justify-start w-[40%] md:w-full gap-[25px]">
-                    <Slider
+                    {<Slider
                       autoPlay
                       autoPlayInterval={2000}
                       responsive={{ 0: { items: 1 }, 550: { items: 1 }, 1050: { items: 3 } }}
@@ -40,7 +45,7 @@ export default function LogIn({ isOpen, ...props }) {
                           </Heading>
                         </React.Fragment>
                       ))}
-                    />
+                    />}
                     <div className="flex justify-center w-[36px] h-[10px] sm:w-full" />
                   </div>
                   <div className="h-[641px] w-px md:w-full md:h-px bg-gradient" />
@@ -106,7 +111,7 @@ export default function LogIn({ isOpen, ...props }) {
                         </Text>
                       </a>
                       <a href="#">
-                        <Text as="p" className="!text-red-300_01 !font-medium">
+                        <Text as="button" className="!text-red-300_01 !font-medium" onClick={isSignupOpen}>
                           Sign Up
                         </Text>
                       </a>
