@@ -5,6 +5,7 @@ import cors from 'cors'
 import connectDB from '../db/connect.js'
 import bookRouter from '../routes/book.js'
 import userRouter from '../routes/user.js'
+import authRouter from '../routes/auth.js'
 import notFoundMiddleware from '../middleware/not-found.js'
 import errorHandlerMiddleware from '../middleware/error-handler.js'
 
@@ -17,6 +18,7 @@ app.use(cors())
 //Routes
 app.use('/api/v1/book', bookRouter)
 app.use('/api/v1/user', userRouter)
+app.use('/api/v1/auth', authRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
