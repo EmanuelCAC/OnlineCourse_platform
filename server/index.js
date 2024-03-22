@@ -5,6 +5,8 @@ import cors from 'cors'
 import connectDB from '../db/connect.js'
 import bookRouter from '../routes/book.js'
 import userRouter from '../routes/user.js'
+import notFoundMiddleware from '../middleware/not-found.js'
+import errorHandlerMiddleware from '../middleware/error-handler.js'
 
 dotenv.config()
 const app = express()
@@ -16,6 +18,8 @@ app.use(cors())
 app.use('/api/v1/book', bookRouter)
 app.use('/api/v1/user', userRouter)
 
+app.use(notFoundMiddleware)
+app.use(errorHandlerMiddleware)
 
 const port = process.env.PORT || 3001;
 
