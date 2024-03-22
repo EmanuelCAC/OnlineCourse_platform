@@ -140,6 +140,7 @@ export default function Header({ ...props }) {
           setLogin(false)
           setSignup(true)
         }}
+        close={() => setLogin(false)}
         onRequestClose={() => setLogin(false)}
       />
       <SignUp

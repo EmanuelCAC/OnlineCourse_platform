@@ -2,10 +2,31 @@ import React from "react";
 import { Text, CheckBox, Button, Input, Img, Heading, Slider } from "../../components";
 import SignUpInputfield from "../../components/SignUpInputfield";
 import { default as ModalProvider } from "react-modal";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { login as authLogin } from "store/authSlice";
 
-export default function LogIn({ isOpen, isSignupOpen, ...props }) {
+export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
   const [sliderState, setSliderState] = React.useState(0);
   const sliderRef = React.useRef(null);
+  const [email, setEmail] = React.useState("")
+  const [password, setPassword] = React.useState("")
+  const dispatch = useDispatch()
+
+  const submitHandler = (async (e) => {
+    e.preventDefault()
+
+    const { data } = await axios.post("http://localhost:3001/api/v1/auth/login", { email, password })
+    console.log(data.user.name)
+    localStorage.setItem('token', data.token)
+    setEmail("")
+    setPassword("")
+
+    if (data.token) {
+      dispatch(authLogin(data.user))
+      close()
+    }
+  })
 
   return (
     <ModalProvider
@@ -66,30 +87,38 @@ export default function LogIn({ isOpen, isSignupOpen, ...props }) {
                       </a>
                       <div className="h-px w-[6%] mr-[55px] md:mr-5 bg-gray-700_01" />
                     </div>
-                    <div className="flex flex-col items-center justify-start w-full mt-5 gap-5">
-                      <SignUpInputfield className="flex flex-col items-start justify-start w-full pt-[5px] gap-[9px]" />
-                      <div className="flex flex-col items-start justify-start w-full pt-[5px] gap-[9px]">
-                        <Text as="p" className="!text-gray-900 !font-medium">
-                          Password
-                        </Text>
-                        <Input
-                          color="white_A700"
-                          size="xs"
-                          type="password"
-                          name="password"
-                          placeholder="*************"
-                          prefix={
-                            <Img
-                              src="images/img_lockpad_locksafesecurityprotectedlock_alt_24_outline.svg"
-                              alt="lock,pad lock,safe,security,protected,lock alt, / 24 / Outline"
-                            />
-                          }
-                          suffix={<Img src="images/img_eye_1_1.svg" alt="eye (1) 1" />}
-                          className="w-full sm:w-full gap-[15px] rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"
+                    <form className="w-full" onSubmit={(e) => { submitHandler(e) }} method="post">
+                      <div className="flex flex-col items-center justify-start w-full mt-5 gap-5">
+                        <SignUpInputfield
+                          value={email}
+                          onChange={(e) => setEmail(e)}
+                          className="flex flex-col items-start justify-start w-full pt-[5px] gap-[9px]"
                         />
+                        <div className="flex flex-col items-start justify-start w-full pt-[5px] gap-[9px]">
+                          <Text as="p" className="!text-gray-900 !font-medium">
+                            Password
+                          </Text>
+                          <Input
+                            color="white_A700"
+                            size="xs"
+                            type="text"
+                            name="password"
+                            placeholder="*************"
+                            value={password}
+                            onChange={(e) => setPassword(e)}
+                            prefix={
+                              <Img
+                                src="images/img_lockpad_locksafesecurityprotectedlock_alt_24_outline.svg"
+                                alt="lock,pad lock,safe,security,protected,lock alt, / 24 / Outline"
+                              />
+                            }
+                            suffix={<Img src="images/img_eye_1_1.svg" alt="eye (1) 1" />}
+                            className="w-full sm:w-full gap-[15px] rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <Button className="w-full mt-[30px] sm:px-5 font-medium rounded-[10px]">Sign In</Button>
+                      <Button type="submit" className="w-full mt-[30px] sm:px-5 font-medium rounded-[10px]">Sign In</Button>
+                    </form>
                     <div className="flex flex-row justify-between items-center w-full mt-6 py-[3px]">
                       <CheckBox
                         shape="square"

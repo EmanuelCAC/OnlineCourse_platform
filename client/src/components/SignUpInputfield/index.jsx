@@ -1,7 +1,7 @@
 import React from "react";
 import { Input, Img, Text } from "..";
 
-export default function SignUpInputfield({ email = "Email", ...props }) {
+export default function SignUpInputfield({ email = "Email", value, onChange, ...props }) {
   return (
     <div {...props}>
       <div className="flex flex-row justify-start w-[12%] md:w-full">
@@ -16,6 +16,8 @@ export default function SignUpInputfield({ email = "Email", ...props }) {
         size="xs"
         name="email"
         placeholder="user@example.com"
+        value={value}
+        onChange={onChange}
         prefix={<Img src="images/img_message_24_outline.svg" alt="message / 24 / Outline" />}
         className="w-full gap-[15px] rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"
       />
