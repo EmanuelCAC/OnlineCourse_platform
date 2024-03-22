@@ -4,6 +4,7 @@ import express from 'express'
 import cors from 'cors'
 import connectDB from '../db/connect.js'
 import bookRouter from '../routes/book.js'
+import userRouter from '../routes/user.js'
 
 dotenv.config()
 const app = express()
@@ -13,6 +14,7 @@ app.use(cors())
 
 //Routes
 app.use('/api/v1/book', bookRouter)
+app.use('/api/v1/user', userRouter)
 
 
 const port = process.env.PORT || 3001;
