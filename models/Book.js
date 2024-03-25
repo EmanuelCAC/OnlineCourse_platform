@@ -15,12 +15,6 @@ const BookSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a image']
   },
-  rating: {
-    type: Number,
-    default: 1,
-    min: 1,
-    max: 5
-  },
   price: {
     type: Number,
     required: [true, 'Please provide a price']
