@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Img, Text } from "./..";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { login as authLogin, logout as authLogut } from "store/authSlice";
 import LogIn from "modals/LogIn";
 import SignUp from "modals/SignUp";
 
 export default function Header({ ...props }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const authStatus = useSelector((state) => state.auth.status)
+  const authData = useSelector((state) => state.auth.userData)
   const [login, setLogin] = useState(false)
   const [signup, setSignup] = useState(false)
 
@@ -77,14 +81,17 @@ export default function Header({ ...props }) {
       active: authStatus
     },
     {
-      name: "My Account",
+      name: authData ? authData.name : "My Account",
       slug: "#",
       img: {
         src: "images/img_profile_24_outline.svg",
         alt: "profiletwentyfo",
         className: "h-[30px] w-[30px]"
       },
-      action: () => { navigate(item.slug) },
+      action: () => {
+        dispatch(authLogut())
+        localStorage.removeItem('token')
+      },
       active: authStatus
     },
     {
@@ -97,7 +104,6 @@ export default function Header({ ...props }) {
       },
       action: () => {
         setLogin(true)
-        console.log(login)
       },
       active: !authStatus
     },

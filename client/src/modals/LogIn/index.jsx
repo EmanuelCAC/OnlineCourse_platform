@@ -11,20 +11,22 @@ export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
   const sliderRef = React.useRef(null);
   const [email, setEmail] = React.useState("")
   const [password, setPassword] = React.useState("")
+  const [error, setError] = React.useState(null)
   const dispatch = useDispatch()
 
   const submitHandler = (async (e) => {
     e.preventDefault()
 
-    const { data } = await axios.post("http://localhost:3001/api/v1/auth/login", { email, password })
-    console.log(data.user.name)
-    localStorage.setItem('token', data.token)
-    setEmail("")
-    setPassword("")
-
-    if (data.token) {
-      dispatch(authLogin(data.user))
+    try {
+      const { data } = await axios.post("http://localhost:3001/api/v1/auth/login", { email, password })
+      localStorage.setItem('token', data.token)
+      setEmail("")
+      setPassword("")
+      setError(null)
+      dispatch(authLogin(data.token))
       close()
+    } catch (error) {
+      setError(error.response.data.msg)
     }
   })
 
@@ -101,7 +103,7 @@ export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
                           <Input
                             color="white_A700"
                             size="xs"
-                            type="text"
+                            type="password"
                             name="password"
                             placeholder="*************"
                             value={password}
@@ -116,6 +118,9 @@ export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
                             className="w-full sm:w-full gap-[15px] rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"
                           />
                         </div>
+                      </div>
+                      <div className="flex justify-center mt-4">
+                        {error && <Text as="p" className="!text-red-700 !font-medium">{error}</Text>}
                       </div>
                       <Button type="submit" className="w-full mt-[30px] sm:px-5 font-medium rounded-[10px]">Sign In</Button>
                     </form>

@@ -1,8 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { decodeJwt } from "jose";
 
 const initialState = {
   status: false,
   userData: null
+}
+
+if (localStorage.getItem('token')) {
+  const data = localStorage.getItem('token')
+  console.log(data);
+  initialState.status = true;
+  initialState.userData = decodeJwt(data)
 }
 
 const authSlice = createSlice({
@@ -11,7 +19,7 @@ const authSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.status = true;
-      state.userData = action.payload.userData
+      state.userData = decodeJwt(action.payload)
     },
     logout: (state) => {
       state.status = false;
