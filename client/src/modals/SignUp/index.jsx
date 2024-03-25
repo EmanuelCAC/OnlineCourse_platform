@@ -2,10 +2,35 @@ import React from "react";
 import { Text, CheckBox, Button, Input, Img, Heading, Slider } from "../../components";
 import SignUpInputfield from "../../components/SignUpInputfield";
 import { default as ModalProvider } from "react-modal";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { login as authLogin } from "store/authSlice";
 
-export default function SignUp({ isOpen, isLoginOpen, ...props }) {
+export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
   const [sliderState, setSliderState] = React.useState(0);
   const sliderRef = React.useRef(null);
+  const [name, setName] = React.useState("")
+  const [email, setEmail] = React.useState("")
+  const [password, setPassword] = React.useState("")
+  const [error, setError] = React.useState(null)
+  const dispatch = useDispatch()
+
+  const submitHandler = (async (e) => {
+    e.preventDefault()
+
+    try {
+      const { data } = await axios.post("http://localhost:3001/api/v1/auth/signup", { name, email, password })
+      localStorage.setItem('token', data.token)
+      setName("")
+      setEmail("")
+      setPassword("")
+      setError(null)
+      dispatch(authLogin(data.token))
+      close()
+    } catch (error) {
+      setError(error.response.data.msg)
+    }
+  })
 
   return (
     <ModalProvider
@@ -66,46 +91,59 @@ export default function SignUp({ isOpen, isLoginOpen, ...props }) {
                       </a>
                       <div className="h-px w-[6%] mr-[54px] md:mr-5 bg-gray-700_01" />
                     </div>
-                    <div className="flex flex-col items-start justify-start w-full mt-5 pt-[5px] gap-[9px]">
-                      <Text as="p" className="!text-gray-900 !font-medium">
-                        Full name
-                      </Text>
-                      <Input
-                        color="white_A700"
-                        size="xs"
-                        type="text"
-                        name="fullName"
-                        placeholder="Enter name"
-                        prefix={<Img src="images/img_account_24_outline.svg" alt="account / 24 / Outline" />}
-                        className="w-full gap-[15px] rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"
+                    <form className="w-full" onSubmit={(e) => { submitHandler(e) }} method="post">
+                      <div className="flex flex-col items-start justify-start w-full mt-5 pt-[5px] gap-[9px]">
+                        <Text as="p" className="!text-gray-900 !font-medium">
+                          Full name
+                        </Text>
+                        <Input
+                          color="white_A700"
+                          size="xs"
+                          type="text"
+                          name="fullName"
+                          placeholder="Enter name"
+                          value={name}
+                          onChange={(e) => setName(e)}
+                          prefix={<Img src="images/img_account_24_outline.svg" alt="account / 24 / Outline" />}
+                          className="w-full gap-[15px] rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"
+                        />
+                      </div>
+                      <SignUpInputfield
+                        value={email}
+                        onChange={(e) => setEmail(e)}
+                        className="flex flex-col items-start justify-start w-full pt-[5px] gap-[9px]"
                       />
-                    </div>
-                    <SignUpInputfield className="flex flex-col items-start justify-start w-full mt-5 pt-[5px] gap-[9px]" />
-                    <div className="flex flex-col items-start justify-start w-full mt-5 pt-[5px] gap-[9px]">
-                      <Text as="p" className="!text-gray-900 !font-medium">
-                        Password
-                      </Text>
-                      <Input
-                        color="white_A700"
-                        size="xs"
-                        type="password"
-                        name="password"
-                        placeholder="*************"
-                        prefix={
-                          <Img
-                            src="images/img_lockpad_locksafesecurityprotectedlock_alt_24_outline.svg"
-                            alt="lock,pad lock,safe,security,protected,lock alt, / 24 / Outline"
-                          />
-                        }
-                        suffix={
-                          <div className="flex justify-center items-center w-[15px] h-[11px]">
-                            <Img src="images/img_vector.svg" alt="Vector" />
-                          </div>
-                        }
-                        className="w-full sm:w-full gap-[15px] rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"
-                      />
-                    </div>
-                    <Button className="w-full mt-[30px] sm:px-5 font-medium rounded-[10px]">Sign up</Button>
+                      <div className="flex flex-col items-start justify-start w-full mt-5 pt-[5px] gap-[9px]">
+                        <Text as="p" className="!text-gray-900 !font-medium">
+                          Password
+                        </Text>
+                        <Input
+                          color="white_A700"
+                          size="xs"
+                          type="password"
+                          name="password"
+                          placeholder="*************"
+                          value={password}
+                          onChange={(e) => setPassword(e)}
+                          prefix={
+                            <Img
+                              src="images/img_lockpad_locksafesecurityprotectedlock_alt_24_outline.svg"
+                              alt="lock,pad lock,safe,security,protected,lock alt, / 24 / Outline"
+                            />
+                          }
+                          suffix={
+                            <div className="flex justify-center items-center w-[15px] h-[11px]">
+                              <Img src="images/img_vector.svg" alt="Vector" />
+                            </div>
+                          }
+                          className="w-full sm:w-full gap-[15px] rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"
+                        />
+                      </div>
+                      <div className="flex justify-center mt-4">
+                        {error && <Text as="p" className="!text-red-700 !font-medium">{error}</Text>}
+                      </div>
+                      <Button type="submit" className="w-full mt-[30px] sm:px-5 font-medium rounded-[10px]">Sign up</Button>
+                    </form>
                     <CheckBox
                       shape="square"
                       name="checked24outlin"
