@@ -46,7 +46,6 @@ export default function EduviShopPage() {
     const data = await fetch(`http://localhost:3001/api/v1/book?search=${searchBarValue}&sort=${sortBy}`)
     const result = await data.json()
     setTotalPages(Math.ceil(result.books.length / 9))
-    console.log(totalPages)
   }
 
   const pageHandler = (action) => {

@@ -8,7 +8,6 @@ const initialState = {
 
 if (localStorage.getItem('token')) {
   const data = localStorage.getItem('token')
-  console.log(data);
   initialState.status = true;
   initialState.userData = decodeJwt(data)
 }
