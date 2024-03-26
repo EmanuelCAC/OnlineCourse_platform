@@ -1,5 +1,6 @@
 import Book from "../models/Book.js";
 import { StatusCodes } from 'http-status-codes'
+import { BadRequestError, UnauthenticatedError, NotFoundError } from '../errors/index.js'
 
 const getAll = async (req, res) => {
   const { sort, search, category } = req.query
@@ -9,7 +10,6 @@ const getAll = async (req, res) => {
     queryObject.category = category
   }
 
-  console.log(queryObject)
   let result = Book.find(queryObject)
 
   if (sort) {
@@ -37,7 +37,46 @@ const create = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ book })
 }
 
+const getOne = async (req, res) => {
+  const bookId = req.params.id
+  const book = await Book.findOne({ _id: bookId })
+
+  if (!book) {
+    throw new NotFoundError(`No book with id ${bookId}`)
+  }
+
+  res.status(StatusCodes.OK).json(book)
+}
+
+const remove = async (req, res) => {
+  const bookId = req.params.id
+  const book = await Book.findOneAndDelete({ _id: bookId })
+
+  if (!book) {
+    throw new NotFoundError(`No book with id ${bookId}`)
+  }
+
+  res.status(StatusCodes.OK).send()
+}
+
+const edit = async (req, res) => {
+  const bookId = req.params.id
+  const book = await Book.findByIdAndUpdate(
+    { _id: bookId },
+    req.body
+  )
+
+  if (!book) {
+    throw new NotFoundError(`No book with id ${bookId}`)
+  }
+
+  res.status(StatusCodes.OK).json(book)
+}
+
 export {
   getAll,
-  create
+  create,
+  getOne,
+  remove,
+  edit
 }
