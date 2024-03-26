@@ -4,6 +4,7 @@ import { CloseSVG } from "../../assets/images";
 import { Button, Img, Text, SelectBox, Input, Heading, RatingBar, BreadCrumbs } from "../../components";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
+import { useNavigate } from "react-router-dom";
 
 const dropDownOptions = [
   { label: "Latest", value: "-createdAt" },
@@ -23,6 +24,8 @@ export default function EduviShopPage() {
   const [active, setActive] = useState("All Books")
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
+
+  const navigate = useNavigate()
 
   const getPopularBooks = async () => {
     const data = await fetch('http://localhost:3001/api/v1/book?limit=3&sort=-rating')
@@ -112,7 +115,8 @@ export default function EduviShopPage() {
                 {popularBooks && popularBooks.map((book) => (
                   <div
                     key={book._id}
-                    className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px]">
+                    onClick={() => navigate(book._id)}
+                    className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px] cursor-pointer">
                     <Img
                       src={book.image}
                       alt="popular_books"
@@ -153,7 +157,8 @@ export default function EduviShopPage() {
                 {newArrivals && newArrivals.map((book) => (
                   <div
                     key={book._id}
-                    className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px]">
+                    onClick={() => navigate(book._id)}
+                    className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px] cursor-pointer">
                     <Img
                       src={book.image}
                       alt="popular_books"
@@ -232,7 +237,11 @@ export default function EduviShopPage() {
               </div>
               <div className="justify-center w-full gap-[15px] grid-cols-3 md:grid-cols-2 md:gap-5 sm:grid-cols-1 grid">
                 {books && books.map((book, i) => (
-                  <div className="flex flex-col items-center justify-start w-full gap-2" key={i}>
+                  <div
+                    className="flex flex-col items-center justify-start w-full gap-2 cursor-pointer"
+                    key={i}
+                    onClick={() => navigate(book._id)}
+                  >
                     <div className="flex flex-col items-center justify-start w-full md:h-auto p-5 bg-white-A700 rounded-[10px]">
                       <div className="flex flex-col items-center justify-start w-full md:px-5 max-w-[230px]">
                         <Img

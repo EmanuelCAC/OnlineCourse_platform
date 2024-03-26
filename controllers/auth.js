@@ -4,7 +4,6 @@ import { BadRequestError, UnauthenticatedError } from "../errors/index.js";
 
 const register = async (req, res) => {
   const user = await User.create(req.body)
-  console.log(user)
   const token = user.createJWT()
   res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token })
 }
