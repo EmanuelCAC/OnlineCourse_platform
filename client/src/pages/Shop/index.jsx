@@ -37,13 +37,13 @@ export default function EduviShopPage() {
   }
 
   const getBooks = async () => {
-    const data = await fetch(`http://localhost:3001/api/v1/book?search=${searchBarValue}&sort=${sortBy}&limit=9&page=${page}`)
+    const data = await fetch(`http://localhost:3001/api/v1/book?search=${searchBarValue}&sort=${sortBy}&limit=9&page=${page}&category=${active}`)
     const result = await data.json()
     setBooks(result.books)
   }
 
   const getTotalPages = async () => {
-    const data = await fetch(`http://localhost:3001/api/v1/book?search=${searchBarValue}&sort=${sortBy}`)
+    const data = await fetch(`http://localhost:3001/api/v1/book?search=${searchBarValue}&sort=${sortBy}&category=${active}`)
     const result = await data.json()
     setTotalPages(Math.ceil(result.books.length / 9))
   }
@@ -64,7 +64,7 @@ export default function EduviShopPage() {
   useEffect(() => {
     getBooks()
     getTotalPages()
-  }, [searchBarValue, sortBy, page])
+  }, [searchBarValue, sortBy, page, active])
 
   return (
     <>

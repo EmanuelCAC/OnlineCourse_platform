@@ -2,8 +2,15 @@ import Book from "../models/Book.js";
 import { StatusCodes } from 'http-status-codes'
 
 const getAll = async (req, res) => {
-  const { sort, search } = req.query
-  let result = Book.find()
+  const { sort, search, category } = req.query
+  const queryObject = {}
+
+  if (category && category != "All Books") {
+    queryObject.category = category
+  }
+
+  console.log(queryObject)
+  let result = Book.find(queryObject)
 
   if (sort) {
     const sortList = sort.split(',').join(' ')

@@ -18,6 +18,14 @@ const BookSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: [true, 'Please provide a price']
+  },
+  category: {
+    type: String,
+    required: [true, 'Please provide a category'],
+    enum: {
+      values: ['Kindergarten', 'High School', 'College'],
+      message: '{VALUE} is not supported',
+    }
   }
 }, { timestamps: true })
 
