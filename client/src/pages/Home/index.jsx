@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { CloseSVG } from "../../assets/images";
 import { Header, Text, Heading, Img, RatingBar, Button, Footer, BreadCrumbs } from "components";
-
+import { useNavigate } from "react-router-dom";
 
 
 export default function Home() {
   const [books, setBooks] = useState(null)
+
+  const navigate = useNavigate()
 
   const popularBooks = async () => {
     const data = await fetch('http://localhost:3001/api/v1/book?limit=3&sort=-rating')
@@ -62,7 +64,8 @@ export default function Home() {
               {books && books.map((book) => (
                 <div
                   key={book._id}
-                  className="flex flex-col justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px]">
+                  onClick={() => navigate(`shop/${book._id}`)}
+                  className="flex flex-col justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px] cursor-pointer">
                   <Img
                     src={book.image}
                     alt="popular_books"
@@ -93,7 +96,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
         <Footer className="flex justify-center items-center w-full px-14 py-20 md:p-5 bg-gray-100" />
       </div>
     </>
