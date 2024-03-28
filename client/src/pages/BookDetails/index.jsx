@@ -5,6 +5,7 @@ import { Header, Text, Heading, Img, RatingBar, Button, Footer, BreadCrumbs, Inp
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import EditReview from "modals/EditReview";
 
 export default function BookDetails() {
   const { id } = useParams()
@@ -17,6 +18,8 @@ export default function BookDetails() {
   const [reviews, setReviews] = useState()
   const [bookRating, setBookRating] = useState(0)
   const [totalReviews, setTotalReviews] = useState(0)
+  const [editReview, setEditReview] = useState(false)
+  const [review, setReview] = useState(null)
   const authData = useSelector((state) => state.auth.userData)
 
   const getBook = async () => {
@@ -69,13 +72,16 @@ export default function BookDetails() {
     } catch (error) {
       console.log(error.response.data.msg)
     }
-
   }
 
   useEffect(() => {
     getBook()
     getReviews()
   }, [])
+
+  useEffect(() => {
+    getReviews()
+  }, [submitHandler])
 
   useEffect(() => {
     if (reviews) {
@@ -180,9 +186,11 @@ export default function BookDetails() {
                   <Text size="md" className="pb-4">{totalReviews} reviews</Text>
                 </div>
               </div>
-              <div>
-                <Button children={'Add review'} className="rounded-full" size="xs" onClick={() => setIsForm(true)} />
-              </div>
+              {authData && (
+                <div>
+                  <Button children={'Add review'} className="rounded-full" size="xs" onClick={() => setIsForm(true)} />
+                </div>
+              )}
               <div className="flex flex-col w-[70%] pl-3 pr-6 gap-2 my-5">
                 {isForm ? (
                   <>
@@ -237,7 +245,7 @@ export default function BookDetails() {
                         <div className="flex flex-row w-full gap-2">
                           <Img src="images/img_profile_24_outline.svg" className="h-[30px] w-[30px]" />
                           <Text className="!text-gray-600 !font-medium h-5 my-auto">{review.userName}</Text>
-                          <Text className="!text-gray-500 !font-medium h-4 my-auto ml-auto" size="xs">{review.createdAt.substr(0, 10)}</Text>
+                          <Text className="!text-gray-500 !font-medium h-4 my-auto ml-auto" size="xs">{review.updatedAt.substr(0, 10)}</Text>
                         </div>
                         <RatingBar value={review.rating} />
                         <Text className="!text-gray-800 !font-medium">
@@ -251,13 +259,49 @@ export default function BookDetails() {
                             rightIcon={<img width="24" height="24" src="https://img.icons8.com/material-outlined/24/6B7280/facebook-like--v1.png" alt="facebook-like--v1" />}
                             children={<Text className="text-inherit !font-medium !text-[#6B7280] pt-[2px]">Útil</Text>}
                           />
-                          <Button
-                            shape="circle"
-                            color="white_A700"
-                            size="xs"
-                            className="ml-auto"
-                            children={<img width="24" height="24" src="https://img.icons8.com/material-rounded/24/737373/menu-2.png" alt="menu-2" />}
-                          />
+                          <div className="flex flex-col w-full relative">
+                            <Button
+                              shape="circle"
+                              color="white_A700"
+                              size="xs"
+                              className="ml-auto"
+                              children={<img width="24" height="24" src="https://img.icons8.com/material-rounded/24/737373/menu-2.png" alt="menu-2" />}
+                              onClick={() => {
+                                const item = document.getElementsByName(review.userName)
+                                item[0].className = item[0].className.replace('hidden', '')
+                              }}
+                            />
+                            {authData && review.createdBy == authData.userId ? (
+                              <Button
+                                name={review.userName}
+                                shape="round"
+                                color="white_A700"
+                                size="xs"
+                                rightIcon={<img width="20" height="20" src="https://img.icons8.com/material/20/9ca38f/pencil--v2.png" alt="pencil--v2" />}
+                                className="border-2 border-gray-300 absolute top-9 right-2 hidden"
+                                children={<Text className="text-inherit !font-medium !text-gray-400 pr-1">Edit</Text>}
+                                onClick={() => {
+                                  const item = document.getElementsByName(review.userName)
+                                  item[0].className += ' hidden'
+                                  setReview(review)
+                                  setEditReview(true)
+                                }}
+                              />
+                            ) : (
+                              <Button
+                                name={review.userName}
+                                shape="round"
+                                color="white_A700"
+                                size="xs"
+                                className="border-2 border-gray-300 absolute top-9 right-2 hidden"
+                                children={<Text className="text-inherit !font-medium !text-gray-400 pt-[2px]">Report</Text>}
+                                onClick={() => {
+                                  const item = document.getElementsByName(review.userName)
+                                  item[0].className += ' hidden'
+                                }}
+                              />
+                            )}
+                          </div>
                         </div>
                       </div>
                       <hr />
@@ -265,6 +309,7 @@ export default function BookDetails() {
                   ))
                 ) : null}
               </div>
+              <EditReview isOpen={editReview} close={() => setEditReview(false)} onRequestClose={() => setEditReview(false)} review={review} />
             </div>
           </div>
         </div>
