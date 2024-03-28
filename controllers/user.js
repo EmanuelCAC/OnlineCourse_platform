@@ -7,7 +7,8 @@ const getAll = async (req, res) => {
 }
 
 const getOne = async (req, res) => {
-  const user = await User.findById({ _id: req.params.id })
+  const { _id, name, email } = await User.findById({ _id: req.params.id })
+  const user = { _id, name, email }
   res.status(StatusCodes.OK).json({ user })
 }
 

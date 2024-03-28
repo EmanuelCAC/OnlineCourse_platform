@@ -8,7 +8,7 @@ const getAll = async (req, res) => {
 }
 
 const create = async (req, res) => {
-  const review = await BookReview.create({ createdBy: req.body.userId, ...req.body })
+  const review = await BookReview.create(req.body)
   res.status(StatusCodes.OK).json(review)
 }
 

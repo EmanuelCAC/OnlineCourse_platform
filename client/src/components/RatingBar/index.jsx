@@ -6,7 +6,7 @@ const RatingBar = ({
   className,
   starCount = 5,
   color = "grey",
-  activeColor = "red",
+  activeColor = "#ffc107",
   isEditable = false,
   ...restProps
 }) => {
@@ -16,7 +16,7 @@ const RatingBar = ({
         edit={isEditable}
         classNames={className}
         count={starCount}
-        isHalf={false}
+        isHalf={true}
         color={color}
         activeColor={activeColor}
         {...restProps}

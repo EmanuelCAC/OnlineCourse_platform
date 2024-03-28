@@ -3,12 +3,21 @@ import { Helmet } from "react-helmet";
 import { CloseSVG } from "../../assets/images";
 import { Header, Text, Heading, Img, RatingBar, Button, Footer, BreadCrumbs, Input } from "components";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 export default function BookDetails() {
   const { id } = useParams()
   const [book, setBook] = useState({})
   const [display, setDisplay] = useState(null)
   const [amount, setAmount] = useState(1)
+  const [isForm, setIsForm] = useState(false)
+  const [comment, setComment] = useState("")
+  const [rating, setRating] = useState(0)
+  const [reviews, setReviews] = useState()
+  const [bookRating, setBookRating] = useState(0)
+  const [totalReviews, setTotalReviews] = useState(0)
+  const authData = useSelector((state) => state.auth.userData)
 
   const getBook = async () => {
     const data = await fetch(`http://localhost:3001/api/v1/book/${id}`)
@@ -17,10 +26,63 @@ export default function BookDetails() {
     if (book) setDisplay(book.image)
   }
 
+  const getReviews = async () => {
+    const { data } = await axios.get(`http://localhost:3001/api/v1/review`, { bookId: book._id })
+    const reviewsList = data.map(async (review) => {
+      const data = await fetch(`http://localhost:3001/api/v1/user/${review.createdBy}`)
+      const user = await data.json()
+      if (user) review.userName = user.user.name
+      return review
+    })
+
+    if (reviewsList) Promise.all(reviewsList).then((result) => setReviews(result))
+  }
+
+  const getBookRating = () => {
+    let average = 0
+    let i
+    for (i = 0; i < reviews.length; i++) {
+      average += reviews[i].rating
+    }
+    setBookRating(Number((average / i).toFixed(2)))
+  }
+
+  const submitHandler = async (e) => {
+    e.preventDefault()
+
+    try {
+      const { data } = await axios.post(`http://localhost:3001/api/v1/review/`,
+        {
+          createdBy: authData.userId,
+          bookId: book._id,
+          comment,
+          rating
+        },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+      setComment("")
+      setRating(0)
+      setIsForm(false)
+    } catch (error) {
+      console.log(error.response.data.msg)
+    }
+
+  }
+
   useEffect(() => {
     getBook()
-
+    getReviews()
   }, [])
+
+  useEffect(() => {
+    if (reviews) {
+      getBookRating()
+      setTotalReviews(reviews.length)
+    }
+  }, [reviews])
 
   return (
     <>
@@ -62,8 +124,9 @@ export default function BookDetails() {
                     By {book.author}
                   </Text>
                   <div className="flex flex-rol gap-2">
-                    <RatingBar />
-                    <Text>(4,6)</Text>
+                    <Text className="h-5 my-auto">{bookRating}</Text>
+                    <RatingBar value={bookRating} size={20} />
+                    <Text className="h-5 my-auto">({totalReviews})</Text>
                   </div>
                 </div>
                 <div className="mt-8">
@@ -103,52 +166,105 @@ export default function BookDetails() {
                     </Button>
                   </div>
                   <Button className="ml-auto">
-                    Adicionar ao Carrinho
+                    Add to Cart
                   </Button>
                 </div>
               </div>
             </div>
             <div className="flex flex-col mt-10 px-3 w-full">
-              <Heading size="lg" className="py-8 font-normal">Avaliações</Heading>
+              <Heading size="lg" className="py-8 font-normal">Reviews</Heading>
               <div className="flex flex-row h-[60px] gap-3">
-                <Text as="span" className="text-5xl font-extrabold h-[36px] my-auto">4.6</Text>
+                <Text as="span" className="text-5xl font-extrabold h-[36px] my-auto">{bookRating}</Text>
                 <div className="flex flex-col my-auto">
-                  <RatingBar />
-                  <Text size="md" className="pb-4">13 avaliações</Text>
+                  <RatingBar value={bookRating} size={20} />
+                  <Text size="md" className="pb-4">{totalReviews} reviews</Text>
                 </div>
+              </div>
+              <div>
+                <Button children={'Add review'} className="rounded-full" size="xs" onClick={() => setIsForm(true)} />
               </div>
               <div className="flex flex-col w-[70%] pl-3 pr-6 gap-2 my-5">
-                <div className="flex flex-col w-full gap-2 my-5">
-                  <div className="flex flex-row w-full gap-2">
-                    <Img src="images/img_profile_24_outline.svg" className="h-[30px] w-[30px]" />
-                    <Text className="!text-gray-600 !font-medium h-5 my-auto">Usuario 1</Text>
-                    <Text className="!text-gray-500 !font-medium h-4 my-auto ml-auto" size="xs">22 dez. 2023</Text>
-                  </div>
-                  <RatingBar />
-                  <Text className="!text-gray-800 !font-medium">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Praesentium delectus commodi hic at obcaecati rem, minus facere ab harum officiis aperiam doloremque in blanditiis magnam cupiditate? Nihil dolorem beatae quisquam!
-                  </Text>
-                  <div className="flex flex-row w-full pt-1">
-                    <Button
-                      className="rounded-full border-2 border-[#6B7280] gap-1 font-medium"
-                      color="white_A700"
-                      size="xs"
-                      rightIcon={<img width="24" height="24" src="https://img.icons8.com/material-outlined/24/6B7280/facebook-like--v1.png" alt="facebook-like--v1" />}
-                      children={<Text className="text-inherit !font-medium !text-[#6B7280] pt-[2px]">Útil</Text>}
-                    />
-                    <Button
-                      shape="circle"
-                      color="white_A700"
-                      size="xs"
-                      className="ml-auto"
-                      children={<img width="24" height="24" src="https://img.icons8.com/material-rounded/24/737373/menu-2.png" alt="menu-2" />}
-                    />
-                  </div>
-                </div>
-                <hr />
+                {isForm ? (
+                  <>
+                    <form className="flex flex-col gap-3 my-3" onSubmit={(e) => submitHandler(e)} method="post">
+                      <div className="flex flex-row gap-1">
+                        <RatingBar
+                          isEditable={true}
+                          onChange={(e) => setRating(e)}
+                          size={25}
+                        />
+                        <Text size="lg" >({rating})</Text>
+                      </div>
+                      <Input
+                        color="white_A700"
+                        size="xs"
+                        type="text"
+                        name="comment"
+                        placeholder="Put your comment here..."
+                        maxLength={200}
+                        onChange={(e) => setComment(e)}
+                        value={comment}
+                        className="w-full sm:w-full rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"
+                      />
+                      <Text as="p" size="xs" className="text-right px-1">{comment.length}/200</Text>
+                      <div className="flex flex-row gap-3 mt-[-25px]">
+                        <Button
+                          className="rounded-full"
+                          size="xs"
+                          children={'Save'}
+                          type="submit"
+                        />
+                        <Button
+                          className="rounded-full border-2 border-gray-300 !text-gray-400"
+                          size="xs"
+                          color="white_A700"
+                          children={'Cancel'}
+                          onClick={() => {
+                            setIsForm(false)
+                            setComment("")
+                            setRating(0)
+                          }}
+                        />
+                      </div>
+                    </form>
+                    <hr />
+                  </>
+                ) : null}
+                {reviews ? (
+                  reviews.map((review) => (
+                    <div key={review._id}>
+                      <div className="flex flex-col w-full gap-2 my-5">
+                        <div className="flex flex-row w-full gap-2">
+                          <Img src="images/img_profile_24_outline.svg" className="h-[30px] w-[30px]" />
+                          <Text className="!text-gray-600 !font-medium h-5 my-auto">{review.userName}</Text>
+                          <Text className="!text-gray-500 !font-medium h-4 my-auto ml-auto" size="xs">{review.createdAt.substr(0, 10)}</Text>
+                        </div>
+                        <RatingBar value={review.rating} />
+                        <Text className="!text-gray-800 !font-medium">
+                          {review.comment}
+                        </Text>
+                        <div className="flex flex-row w-full pt-1">
+                          <Button
+                            className="rounded-full border-2 border-[#6B7280] gap-1 font-medium"
+                            color="white_A700"
+                            size="xs"
+                            rightIcon={<img width="24" height="24" src="https://img.icons8.com/material-outlined/24/6B7280/facebook-like--v1.png" alt="facebook-like--v1" />}
+                            children={<Text className="text-inherit !font-medium !text-[#6B7280] pt-[2px]">Útil</Text>}
+                          />
+                          <Button
+                            shape="circle"
+                            color="white_A700"
+                            size="xs"
+                            className="ml-auto"
+                            children={<img width="24" height="24" src="https://img.icons8.com/material-rounded/24/737373/menu-2.png" alt="menu-2" />}
+                          />
+                        </div>
+                      </div>
+                      <hr />
+                    </div>
+                  ))
+                ) : null}
               </div>
-
-
             </div>
           </div>
         </div>
