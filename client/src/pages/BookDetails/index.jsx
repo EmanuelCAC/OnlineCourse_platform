@@ -80,7 +80,7 @@ export default function BookDetails() {
 
   useEffect(() => {
     getReviews()
-  }, [isForm], [setBook])
+  }, [isForm, setIsForm, book, setBook, editReview, setEditReview, close])
 
   useEffect(() => {
     if (reviews.length > 0) {
