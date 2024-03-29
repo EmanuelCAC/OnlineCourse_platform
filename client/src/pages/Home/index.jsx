@@ -14,14 +14,11 @@ export default function Home() {
     const data = await fetch('http://localhost:3001/api/v1/book?limit=3&sort=-rating')
     const result = await data.json()
     setBooks(result.books)
-    console.log(result.books)
   }
 
   useEffect(() => {
     popularBooks()
   }, [])
-
-
 
   return (
     <>

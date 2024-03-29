@@ -9,13 +9,13 @@ import EditReview from "modals/EditReview";
 
 export default function BookDetails() {
   const { id } = useParams()
-  const [book, setBook] = useState({})
+  const [book, setBook] = useState(null)
   const [display, setDisplay] = useState(null)
   const [amount, setAmount] = useState(1)
   const [isForm, setIsForm] = useState(false)
   const [comment, setComment] = useState("")
   const [rating, setRating] = useState(0)
-  const [reviews, setReviews] = useState()
+  const [reviews, setReviews] = useState([])
   const [bookRating, setBookRating] = useState(0)
   const [totalReviews, setTotalReviews] = useState(0)
   const [editReview, setEditReview] = useState(false)
@@ -30,7 +30,7 @@ export default function BookDetails() {
   }
 
   const getReviews = async () => {
-    const { data } = await axios.get(`http://localhost:3001/api/v1/review`, { bookId: book._id })
+    const { data } = await axios.post(`http://localhost:3001/api/v1/review/all`, { bookId: id })
     const reviewsList = data.map(async (review) => {
       const data = await fetch(`http://localhost:3001/api/v1/user/${review.createdBy}`)
       const user = await data.json()
@@ -76,15 +76,14 @@ export default function BookDetails() {
 
   useEffect(() => {
     getBook()
-    getReviews()
   }, [])
 
   useEffect(() => {
     getReviews()
-  }, [submitHandler])
+  }, [isForm], [setBook])
 
   useEffect(() => {
-    if (reviews) {
+    if (reviews.length > 0) {
       getBookRating()
       setTotalReviews(reviews.length)
     }
@@ -117,17 +116,17 @@ export default function BookDetails() {
             <div className="flex flex-row w-full mt-3">
               <div className="w-[50%] flex flex-row gap-5 mr-3">
                 <div className="flex flex-col" onClick={() => (setDisplay(book.image))}>
-                  <Img src={book.image} className={'w-16 hover:border-black-900_02 hover:border-2 mb-1 mx-3'} />
+                  <Img src={book ? book.image : null} className={'w-16 hover:border-black-900_02 hover:border-2 mb-1 mx-3'} />
                 </div>
                 <div>
-                  <Img src={display || book.image} />
+                  <Img src={display || book ? book.image : null} />
                 </div>
               </div>
               <div className="flex flex-col m-5 w-[50%]">
-                <Heading children={book.name} size="xl" />
+                <Heading children={book ? book.name : ""} size="xl" />
                 <div className="flex flex-rol w-full justify-between">
                   <Text>
-                    By {book.author}
+                    By {book ? book.author : ""}
                   </Text>
                   <div className="flex flex-rol gap-2">
                     <Text className="h-5 my-auto">{bookRating}</Text>
@@ -138,7 +137,7 @@ export default function BookDetails() {
                 <div className="mt-8">
                   <Heading children='Category' size="s" />
                   <div className="flex flex-row gap-3 mt-1">
-                    <Text as="span" className="border-2 py-1 px-2 rounded-full bg-gray-100 text-black-900_02">{book.category}</Text>
+                    <Text as="span" className="border-2 py-1 px-2 rounded-full bg-gray-100 text-black-900_02">{book ? book.category : ""}</Text>
                   </div>
                 </div>
                 <div className="mt-8">
