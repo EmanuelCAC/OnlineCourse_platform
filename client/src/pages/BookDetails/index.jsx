@@ -16,7 +16,7 @@ export default function BookDetails() {
   const [comment, setComment] = useState("")
   const [rating, setRating] = useState(0)
   const [reviews, setReviews] = useState([])
-  const [bookRating, setBookRating] = useState(0)
+  const [bookRating, setBookRating] = useState(5)
   const [totalReviews, setTotalReviews] = useState(0)
   const [editReview, setEditReview] = useState(false)
   const [review, setReview] = useState(null)
@@ -47,7 +47,9 @@ export default function BookDetails() {
     for (i = 0; i < reviews.length; i++) {
       average += reviews[i].rating
     }
+    console.log(Number((average / i).toFixed(2)));
     setBookRating(Number((average / i).toFixed(2)))
+    console.log(bookRating);
   }
 
   const submitHandler = async (e) => {
@@ -83,6 +85,7 @@ export default function BookDetails() {
   }, [isForm, setIsForm, book, setBook, editReview, setEditReview, close])
 
   useEffect(() => {
+
     if (reviews.length > 0) {
       getBookRating()
       setTotalReviews(reviews.length)
