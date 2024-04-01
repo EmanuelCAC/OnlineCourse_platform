@@ -3,7 +3,6 @@ import { UnauthenticatedError } from '../errors/index.js'
 
 const auth = (req, res, next) => {
   const authHeader = req.headers.authorization
-  console.log(req.headers)
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     throw new UnauthenticatedError('Authentication invalid')

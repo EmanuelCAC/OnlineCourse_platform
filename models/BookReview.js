@@ -21,8 +21,8 @@ const BookReviewSchema = mongoose.Schema({
     max: 5
   },
   like: {
-    type: Number,
-    default: 0
+    type: Array,
+    default: []
   }
 }, { timestamps: true })
 
