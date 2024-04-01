@@ -70,10 +70,8 @@ export default function Home() {
                   />
                   <div className="flex flex-col items-start justify-start w-[73%] mr-[3px] gap-2.5">
                     <RatingBar
-                      starCount={book.rating}
-                      isEditable={true}
-                      color="#ffc107"
-                      activeColor="#ffc107"
+                      value={book.rating}
+                      isEditable={false}
                       size={16}
                       className="flex justify-between"
                     />

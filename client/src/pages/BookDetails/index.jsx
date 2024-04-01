@@ -113,7 +113,16 @@ export default function BookDetails() {
 
   useEffect(() => {
     getBook()
-  }, [])
+  }, [reviews])
+
+  const updateBooks = async () => {
+    const { data } = await axios.patch(`http://localhost:3001/api/v1/book/${id}`)
+    console.log(data);
+  }
+
+  useEffect(() => {
+    updateBooks()
+  }, [reviews])
 
   useEffect(() => {
     getReviews()
@@ -166,8 +175,8 @@ export default function BookDetails() {
                     By {book ? book.author : ""}
                   </Text>
                   <div className="flex flex-rol gap-2">
-                    <Text className="h-5 my-auto">{bookRating}</Text>
-                    <RatingBar value={bookRating} size={20} />
+                    <Text className="h-5 my-auto">{book ? book.rating : 0}</Text>
+                    <RatingBar value={book ? book.rating : 0} size={20} />
                     <Text className="h-5 my-auto">({totalReviews})</Text>
                   </div>
                 </div>
@@ -216,9 +225,9 @@ export default function BookDetails() {
             <div className="flex flex-col mt-10 px-3 w-full">
               <Heading size="lg" className="py-8 font-normal">Reviews</Heading>
               <div className="flex flex-row h-[60px] gap-3">
-                <Text as="span" className="text-5xl font-extrabold h-[36px] my-auto">{bookRating}</Text>
+                <Text as="span" className="text-5xl font-extrabold h-[36px] my-auto">{book ? book.rating : 0}</Text>
                 <div className="flex flex-col my-auto">
-                  <RatingBar value={bookRating} size={20} />
+                  <RatingBar value={book ? book.rating : 0} size={20} />
                   <Text size="md" className="pb-4">{totalReviews} reviews</Text>
                 </div>
               </div>

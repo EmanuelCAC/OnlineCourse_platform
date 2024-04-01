@@ -63,7 +63,8 @@ const edit = async (req, res) => {
   const bookId = req.params.id
   const book = await Book.findByIdAndUpdate(
     { _id: bookId },
-    req.body
+    req.body,
+    { new: true, runValidators: true }
   )
 
   if (!book) {
