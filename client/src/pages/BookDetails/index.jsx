@@ -16,7 +16,6 @@ export default function BookDetails() {
   const [comment, setComment] = useState("")
   const [rating, setRating] = useState(0)
   const [reviews, setReviews] = useState([])
-  const [bookRating, setBookRating] = useState(5)
   const [totalReviews, setTotalReviews] = useState(0)
   const [editReview, setEditReview] = useState(false)
   const [review, setReview] = useState(null)
@@ -40,15 +39,6 @@ export default function BookDetails() {
     })
 
     if (reviewsList) Promise.all(reviewsList).then((result) => setReviews(result))
-  }
-
-  const getBookRating = () => {
-    let average = 0
-    let i
-    for (i = 0; i < reviews.length; i++) {
-      average += reviews[i].rating
-    }
-    setBookRating(Number((average / i).toFixed(2)))
   }
 
   const toogleLike = async (review) => {
@@ -111,26 +101,25 @@ export default function BookDetails() {
     }
   }
 
+  const updateBook = async () => {
+    const { data } = await axios.patch(`http://localhost:3001/api/v1/book/${id}`)
+    setBook(data)
+  }
+
   useEffect(() => {
     getBook()
   }, [reviews])
 
-  const updateBooks = async () => {
-    const { data } = await axios.patch(`http://localhost:3001/api/v1/book/${id}`)
-    console.log(data);
-  }
-
   useEffect(() => {
-    updateBooks()
+    updateBook()
   }, [reviews])
 
   useEffect(() => {
     getReviews()
-  }, [isForm, setIsForm, book, setBook, editReview, setEditReview, close])
+  }, [isForm, setIsForm, editReview, setEditReview, close])
 
   useEffect(() => {
     if (reviews.length > 0) {
-      getBookRating()
       setTotalReviews(reviews.length)
     }
   }, [reviews])
@@ -285,7 +274,10 @@ export default function BookDetails() {
                 ) : null}
                 {reviews ? (
                   reviews.map((review) => (
-                    <div key={review._id}>
+                    <div key={review._id} onMouseLeave={() => {
+                      const item = document.getElementsByName(review._id)
+                      if (!item[0].className.includes('hidden')) item[0].className += ' hidden'
+                    }}>
                       <div className="flex flex-col w-full gap-2 my-3">
                         <div className="flex flex-row w-full gap-2">
                           <Img src="images/img_profile_24_outline.svg" className="h-[30px] w-[30px]" />
@@ -344,6 +336,7 @@ export default function BookDetails() {
                                 color="white_A700"
                                 size="xs"
                                 className="border-2 border-gray-300 absolute top-9 right-2 hidden"
+                                onMouse
                                 children={<Text className="text-inherit !font-medium !text-gray-400 pt-[2px]">Report</Text>}
                                 onClick={() => {
                                   const item = document.getElementsByName(review._id)
