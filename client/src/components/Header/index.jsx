@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { login as authLogin, logout as authLogut } from "store/authSlice";
 import LogIn from "modals/LogIn";
 import SignUp from "modals/SignUp";
+import Menu from "modals/Menu"
 
 export default function Header({ ...props }) {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function Header({ ...props }) {
   const authData = useSelector((state) => state.auth.userData)
   const [login, setLogin] = useState(false)
   const [signup, setSignup] = useState(false)
+  const [menu, setMenu] = useState(false)
 
   const navItems = [
     {
@@ -89,8 +91,7 @@ export default function Header({ ...props }) {
         className: "h-[30px] w-[30px]"
       },
       action: () => {
-        dispatch(authLogut())
-        localStorage.removeItem('token')
+        setMenu(true)
       },
       active: authStatus
     },
@@ -157,6 +158,11 @@ export default function Header({ ...props }) {
         }}
         close={() => setSignup(false)}
         onRequestClose={() => setSignup(false)}
+      />
+      <Menu
+        isOpen={menu}
+        close={() => setMenu(false)}
+        onRequestClose={() => setMenu(false)}
       />
     </header>
   );

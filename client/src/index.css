@@ -10,3 +10,11 @@
     margin: 0;
   }
 }
+
+.ReactModal__Content {
+  transition: transform 300ms ease-out;
+}
+
+.ReactModal__Content--after-open {
+  transform: translate(0px, 0px) !important;
+}
