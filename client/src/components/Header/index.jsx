@@ -96,13 +96,13 @@ export default function Header({ updateCart, ...props }) {
   const navAuthItems = [
     {
       name: `Cart (${cartItems})`,
-      slug: "#",
+      slug: "/cart",
       img: {
         src: "images/img_shopping_bag_24.svg",
         alt: "shoppingbagtwen",
         className: "h-[30px] w-[30px]"
       },
-      action: () => { navigate(item.slug) },
+      action: (item) => { navigate(item.slug) },
       active: authStatus
     },
     {
@@ -154,7 +154,7 @@ export default function Header({ updateCart, ...props }) {
         <ul className="flex flex-row justify-between w-[21%] md:w-full">
           {
             navAuthItems.map((item) => item.active ? (
-              <li key={item.name} className="flex flex-row justify-start items-center pl-[3px] gap-2.5 ml-auto" onClick={() => item.action()}>
+              <li key={item.name} className="flex flex-row justify-start items-center pl-[3px] gap-2.5 ml-auto" onClick={() => item.action(item)}>
                 <Text as="button" className="!text-gray-900 text-right !font-medium" >
                   {item.name}
                 </Text>

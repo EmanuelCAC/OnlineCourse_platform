@@ -15,6 +15,7 @@ const auth = (req, res, next) => {
   } catch (error) {
     throw new UnauthenticatedError('Authentication invalid')
   }
+
   next()
 }
 
