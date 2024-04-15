@@ -8,7 +8,7 @@ import SignUp from "modals/SignUp";
 import Menu from "modals/Menu"
 import axios from "axios";
 
-export default function Header({ ...props }) {
+export default function Header({ updateCart, ...props }) {
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const authStatus = useSelector((state) => state.auth.status)
@@ -29,7 +29,6 @@ export default function Header({ ...props }) {
             authorization: `Bearer ${localStorage.getItem('token')}`
           }
         })
-      console.log(data)
       if (data) setCartItems(data.cart.length)
     } catch (error) {
       console.log(error.response.data.msg)
@@ -38,7 +37,7 @@ export default function Header({ ...props }) {
 
   useEffect(() => {
     getCart()
-  }, [authData])
+  }, [authData, updateCart])
 
 
   const navItems = [

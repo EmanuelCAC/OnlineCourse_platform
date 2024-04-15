@@ -19,6 +19,7 @@ export default function BookDetails() {
   const [totalReviews, setTotalReviews] = useState(0)
   const [editReview, setEditReview] = useState(false)
   const [review, setReview] = useState(null)
+  const [updateCart, setUpdateCart] = useState(false)
   const authData = useSelector((state) => state.auth.userData)
 
   const getBook = async () => {
@@ -77,6 +78,43 @@ export default function BookDetails() {
     getReviews()
   }
 
+  const updateBook = async () => {
+    const { data } = await axios.patch(`http://localhost:3001/api/v1/book/${id}`)
+    setBook(data)
+  }
+
+  useEffect(() => {
+    getBook()
+    updateBook()
+    if (reviews.length > 0) {
+      setTotalReviews(reviews.length)
+    }
+  }, [reviews])
+
+  useEffect(() => {
+    getReviews()
+  }, [isForm, setIsForm, editReview, setEditReview, close])
+
+  const addToCart = async () => {
+    try {
+      const { data } = await axios.post(`http://localhost:3001/api/v1/cart/new`,
+        {
+          userId: authData.userId,
+          productId: id,
+          amount
+        },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+      )
+      setUpdateCart(!updateCart)
+    } catch (error) {
+      console.log(error.response.data.msg)
+    }
+  }
+
   const submitHandler = async (e) => {
     e.preventDefault()
 
@@ -101,29 +139,6 @@ export default function BookDetails() {
     }
   }
 
-  const updateBook = async () => {
-    const { data } = await axios.patch(`http://localhost:3001/api/v1/book/${id}`)
-    setBook(data)
-  }
-
-  useEffect(() => {
-    getBook()
-  }, [reviews])
-
-  useEffect(() => {
-    updateBook()
-  }, [reviews])
-
-  useEffect(() => {
-    getReviews()
-  }, [isForm, setIsForm, editReview, setEditReview, close])
-
-  useEffect(() => {
-    if (reviews.length > 0) {
-      setTotalReviews(reviews.length)
-    }
-  }, [reviews])
-
   return (
     <>
       <Helmet>
@@ -132,7 +147,7 @@ export default function BookDetails() {
       </Helmet>
       <div className="flex flex-col items-center justify-start w-full gap-[100px] bg-gray-100">
         <div className="flex flex-col items-center justify-start w-full gap-12">
-          <Header className="flex justify-center items-center w-full md:h-auto p-[22px] sm:p-5 bg-gray-100" />
+          <Header className="flex justify-center items-center w-full md:h-auto p-[22px] sm:p-5 bg-gray-100" updateCart={updateCart} />
           <div className="flex flex-col items-start justify-start w-full gap-[5px] p-5 md:px-5 bg-white-A700 max-w-7xl rounded-[20px]">
             <BreadCrumbs routes={[
               {
@@ -205,7 +220,7 @@ export default function BookDetails() {
                       <Text size="lg" className="text-black-900_02" >+</Text>
                     </Button>
                   </div>
-                  <Button className="ml-auto">
+                  <Button className="ml-auto" onClick={() => { addToCart() }}>
                     Add to Cart
                   </Button>
                 </div>
