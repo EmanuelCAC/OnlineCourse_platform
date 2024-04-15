@@ -3,10 +3,10 @@ import { Img, Text } from "./..";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { login as authLogin, logout as authLogut } from "store/authSlice";
 import LogIn from "modals/LogIn";
 import SignUp from "modals/SignUp";
 import Menu from "modals/Menu"
+import axios from "axios";
 
 export default function Header({ ...props }) {
   const navigate = useNavigate();
@@ -16,6 +16,30 @@ export default function Header({ ...props }) {
   const [login, setLogin] = useState(false)
   const [signup, setSignup] = useState(false)
   const [menu, setMenu] = useState(false)
+  const [cartItems, setCartItems] = useState(0)
+
+  const getCart = async () => {
+    try {
+      const { data } = await axios.post('http://localhost:3001/api/v1/cart',
+        {
+          userId: authData.userId
+        },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+      console.log(data)
+      if (data) setCartItems(data.cart.length)
+    } catch (error) {
+      console.log(error.response.data.msg)
+    }
+  }
+
+  useEffect(() => {
+    getCart()
+  }, [authData])
+
 
   const navItems = [
     {
@@ -72,7 +96,7 @@ export default function Header({ ...props }) {
 
   const navAuthItems = [
     {
-      name: "Cart (0)",
+      name: `Cart (${cartItems})`,
       slug: "#",
       img: {
         src: "images/img_shopping_bag_24.svg",
