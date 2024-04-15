@@ -101,6 +101,9 @@ export default function BookDetails() {
         {
           userId: authData.userId,
           productId: id,
+          productName: book.name,
+          image: book.image,
+          price: book.price,
           amount
         },
         {
