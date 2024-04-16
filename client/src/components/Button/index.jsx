@@ -37,11 +37,12 @@ const Button = ({
   variant = "fill",
   size = "xl",
   color = "red_300_01",
+  hover = false,
   ...restProps
 }) => {
   return (
     <button
-      className={`${className} flex items-center justify-center text-center cursor-pointer ${(shape && shapes[shape]) || ""} ${(size && sizes[size]) || ""} ${(variant && variants[variant]?.[color]) || ""}`}
+      className={`${className} flex items-center justify-center text-center cursor-pointer ${hover && "hover:bg-deep_orange-400"} ${(shape && shapes[shape]) || ""} ${(size && sizes[size]) || ""} ${(variant && variants[variant]?.[color]) || ""}`}
       {...restProps}
     >
       {!!leftIcon && leftIcon}
