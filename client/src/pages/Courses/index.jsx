@@ -94,10 +94,10 @@ export default function EduviCoursesPage() {
                         <Img src="images/img_group.svg" alt="image" className="h-[50px] w-[50px]" />
                         <div className="flex flex-col items-center justify-start w-full gap-[9px]">
                           <Heading size="lg" as="h1" className="text-center">
-                            Standard One
+                            Literature and Composition
                           </Heading>
                           <Text as="p" className="!text-gray-700_01 text-center !leading-[30px]">
-                            Standard 1 is a foundation Standard that reflects 7 important concepts...
+                            Exploring classic and modern literary works and developing writing skills
                           </Text>
                         </div>
                       </div>
@@ -117,10 +117,10 @@ export default function EduviCoursesPage() {
                         <Img src="images/img_group.svg" alt="image" className="h-[50px] w-[50px]" />
                         <div className="flex flex-col items-center justify-start w-full gap-[9px]">
                           <Heading size="lg" as="h1" className="text-center">
-                            Standard One
+                            Algebra and Functions
                           </Heading>
                           <Text as="p" className="!text-gray-700_01 text-center !leading-[30px]">
-                            Standard 1 is a foundation Standard that reflects 7 important concepts...
+                            Understanding algebraic concepts and functions for solving equations and real-world problems
                           </Text>
                         </div>
                       </div>
@@ -140,10 +140,10 @@ export default function EduviCoursesPage() {
                         <Img src="images/img_group.svg" alt="image" className="h-[50px] w-[50px]" />
                         <div className="flex flex-col items-center justify-start w-full gap-[9px]">
                           <Heading size="lg" as="h1" className="text-center">
-                            Standard One
+                            Chemistry in Everyday Life
                           </Heading>
                           <Text as="p" className="!text-gray-700_01 text-center !leading-[30px]">
-                            Standard 1 is a foundation Standard that reflects 7 important concepts...
+                            Learning the basics of chemical reactions and their applications in daily life
                           </Text>
                         </div>
                       </div>
