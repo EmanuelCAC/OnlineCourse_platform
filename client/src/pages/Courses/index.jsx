@@ -11,9 +11,18 @@ const dropDownOptions = [
 
 export default function EduviCoursesPage() {
   const [searchBarValue, setSearchBarValue] = useState("");
+  const [active, setActive] = useState("")
+  const [courses, setCourses] = useState([])
 
-  const [active, setActive] = useState("All Courses")
+  const getCourses = async () => {
+    const data = await fetch(`http://localhost:3001/api/v1/course`)
+    const result = await data.json()
+    setCourses(result)
+  }
 
+  useEffect(() => {
+    getCourses()
+  }, [])
 
   return (
     <>
@@ -56,9 +65,6 @@ export default function EduviCoursesPage() {
         </div>
         <div className="flex flex-col items-center justify-start w-full gap-[47px]">
           <div className="flex flex-row md:flex-col justify-start w-full gap-5 md:px-5 max-w-7xl">
-            <Button onClick={() => setActive("All Courses")} color={active == "All Courses" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
-              All Courses
-            </Button>
             <Button onClick={() => setActive("Kindergarten")} color={active == "Kindergarten" ? "orange_200_01" : "white_A700"} className="font-medium min-w-[142px] rounded-[10px]">
               Kindergarten
             </Button>
@@ -68,95 +74,80 @@ export default function EduviCoursesPage() {
             <Button onClick={() => setActive("College")} color={active == "College" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
               College
             </Button>
-            <Button onClick={() => setActive("Computer")} color={active == "Computer" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
-              Computer
+            <Button onClick={() => setActive("Technology")} color={active == "Technology" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
+              Technology
             </Button>
             <Button onClick={() => setActive("Science")} color={active == "Science" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
               Science
             </Button>
-            <Button onClick={() => setActive("Engineering")} color={active == "Engineering" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
-              Engineering
+            <Button onClick={() => setActive("Language")} color={active == "Language" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
+              Language
             </Button>
-            <Button color="white_A700" className="!text-deep_orange-400 font-medium min-w-[142px] rounded-[10px]">
-              More Courses
+            <Button onClick={() => setActive("Mathematics")} color={active == "Mathematics" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
+              Mathematics
             </Button>
+            <Button onClick={() => setActive("Social Studies")} color={active == "Social Studies" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
+              Social Studies
+            </Button>
+          </div>
+          <div className="flex flex-row md:flex-col justify-start w-full gap-[42px] md:gap-5 max-w-7xl">
+            <Input
+              color="white_A700"
+              name="search"
+              placeholder="Search Class or Course Name"
+              value={searchBarValue}
+              onChange={(e) => setSearchBarValue(e)}
+              suffix={
+                searchBarValue?.length > 0 ? (
+                  <CloseSVG onClick={() => setSearchBarValue("")} height={24} width={24} fillColor="#0000000" />
+                ) : (
+                  <Img src="images/img_search.svg" alt="search" className="cursor-pointer opacity-0 fill-black-900_02" fill="#0000000" />
+                )
+              }
+              className="w-[84%] md:w-full gap-[35px] !text-gray-700_99 rounded-tr-[10px] rounded-br-[10px] font-medium"
+            />
+            <SelectBox
+              size="xs"
+              shape="round"
+              indicator={<Img src="images/img_arrowdown_red_300_01.svg" alt="arrow_down" />}
+              name="sortby"
+              placeholder="Sort by: Latest"
+              options={dropDownOptions}
+              className="w-[16%] md:w-full gap-px font-medium"
+            />
           </div>
           <div className="flex flex-row justify-center w-full">
             <div className="flex flex-col items-start justify-start w-full gap-[23px] md:px-5 max-w-7xl">
               <Heading size="xl" as="h2">
-                Standard Classes
+                {active ? active + " Courses" : "All Courses"}
               </Heading>
               <div className="flex flex-row justify-start w-full">
                 <div className="w-full gap-10 md:gap-5 flex-row flex flex-wrap justify-center">
-                  <div className="flex flex-col items-center justify-start w-full max-w-fit">
-                    <div className="flex flex-col items-center justify-center w-full gap-[25px] p-[15px] bg-white-A700 rounded-[15px]">
-                      <div className="flex flex-col items-center justify-start w-full mt-[15px] gap-[19px] md:px-5 max-w-[260px]">
-                        <Img src="images/img_group.svg" alt="image" className="h-[50px] w-[50px]" />
-                        <div className="flex flex-col items-center justify-start w-full gap-[9px]">
-                          <Heading size="lg" as="h1" className="text-center">
-                            Literature and Composition
-                          </Heading>
-                          <Text as="p" className="!text-gray-700_01 text-center !leading-[30px]">
-                            Exploring classic and modern literary works and developing writing skills
-                          </Text>
+                  {courses[0] && courses.map((course) => (
+                    <div className="flex flex-col items-center justify-start w-full max-w-fit">
+                      <div className="flex flex-col items-center justify-between w-full h-full p-[15px] bg-white-A700 rounded-[15px]">
+                        <div className="flex flex-col items-center justify-start w-full gap-3 md:px-5 max-w-[260px]">
+                          <Img src={course.image} alt="image" />
+                          <div className="flex flex-col items-center justify-start w-full gap-1">
+                            <Heading as="h1" className="text-center !font-bold">
+                              {course.name}
+                            </Heading>
+                            <Text as="p" className="!text-gray-700_01 text-center !leading-[20px] !text-sm">
+                              {course.description}
+                            </Text>
+                          </div>
                         </div>
+                        <Button
+                          size="md"
+                          variant="outline"
+                          shape="round"
+                          className="my-3 sm:px-5 font-medium min-w-[159px] sm:min-w-full"
+                        >
+                          Course Details
+                        </Button>
                       </div>
-                      <Button
-                        size="md"
-                        variant="outline"
-                        shape="round"
-                        className="mb-[15px] sm:px-5 font-medium min-w-[159px] sm:min-w-full"
-                      >
-                        Class Details
-                      </Button>
                     </div>
-                  </div>
-                  <div className="flex flex-col items-center justify-start w-full max-w-fit">
-                    <div className="flex flex-col items-center justify-center w-full gap-[25px] p-[15px] bg-white-A700 rounded-[15px]">
-                      <div className="flex flex-col items-center justify-start w-full mt-[15px] gap-[19px] md:px-5 max-w-[260px]">
-                        <Img src="images/img_group.svg" alt="image" className="h-[50px] w-[50px]" />
-                        <div className="flex flex-col items-center justify-start w-full gap-[9px]">
-                          <Heading size="lg" as="h1" className="text-center">
-                            Algebra and Functions
-                          </Heading>
-                          <Text as="p" className="!text-gray-700_01 text-center !leading-[30px]">
-                            Understanding algebraic concepts and functions for solving equations and real-world problems
-                          </Text>
-                        </div>
-                      </div>
-                      <Button
-                        size="md"
-                        variant="outline"
-                        shape="round"
-                        className="mb-[15px] sm:px-5 font-medium min-w-[159px] sm:min-w-full"
-                      >
-                        Class Details
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-center justify-start w-full max-w-fit">
-                    <div className="flex flex-col items-center justify-center w-full gap-[25px] p-[15px] bg-white-A700 rounded-[15px]">
-                      <div className="flex flex-col items-center justify-start w-full mt-[15px] gap-[19px] md:px-5 max-w-[260px]">
-                        <Img src="images/img_group.svg" alt="image" className="h-[50px] w-[50px]" />
-                        <div className="flex flex-col items-center justify-start w-full gap-[9px]">
-                          <Heading size="lg" as="h1" className="text-center">
-                            Chemistry in Everyday Life
-                          </Heading>
-                          <Text as="p" className="!text-gray-700_01 text-center !leading-[30px]">
-                            Learning the basics of chemical reactions and their applications in daily life
-                          </Text>
-                        </div>
-                      </div>
-                      <Button
-                        size="md"
-                        variant="outline"
-                        shape="round"
-                        className="mb-[15px] sm:px-5 font-medium min-w-[159px] sm:min-w-full"
-                      >
-                        Class Details
-                      </Button>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -167,34 +158,9 @@ export default function EduviCoursesPage() {
             <div className="flex flex-col items-center justify-start w-full gap-10">
               <div className="flex flex-col items-start justify-start w-full pt-0.5 gap-2.5">
                 <Heading size="xl" as="h2">
-                  Other Courses For High School
+                  Popular Courses
                 </Heading>
-                <div className="flex flex-row md:flex-col justify-start w-full gap-[42px] md:gap-5">
-                  <Input
-                    color="white_A700"
-                    name="search"
-                    placeholder="Search Class or Course Name"
-                    value={searchBarValue}
-                    onChange={(e) => setSearchBarValue(e)}
-                    suffix={
-                      searchBarValue?.length > 0 ? (
-                        <CloseSVG onClick={() => setSearchBarValue("")} height={24} width={24} fillColor="#0000000" />
-                      ) : (
-                        <Img src="images/img_search.svg" alt="search" className="cursor-pointer opacity-0 fill-black-900_02" fill="#0000000" />
-                      )
-                    }
-                    className="w-[84%] md:w-full gap-[35px] !text-gray-700_99 rounded-tr-[10px] rounded-br-[10px] font-medium"
-                  />
-                  <SelectBox
-                    size="xs"
-                    shape="round"
-                    indicator={<Img src="images/img_arrowdown_red_300_01.svg" alt="arrow_down" />}
-                    name="sortby"
-                    placeholder="Sort by: Latest"
-                    options={dropDownOptions}
-                    className="w-[16%] md:w-full gap-px font-medium"
-                  />
-                </div>
+
               </div>
               <div className="justify-center w-full gap-10 grid-cols-2 md:grid-cols-1 md:gap-5 grid">
                 <div className="flex flex-row justify-start w-full gap-6 p-[15px] bg-white-A700 cursor-pointer rounded-[10px] hover:shadow-xs">

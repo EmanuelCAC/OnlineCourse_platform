@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAll, create, getOne, remove, edit } from '../controllers/course'
+import { getAll, create, getOne, remove, edit } from '../controllers/course.js'
 
 const router = express.Router()
 
