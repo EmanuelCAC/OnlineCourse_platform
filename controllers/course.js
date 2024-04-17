@@ -7,7 +7,7 @@ const getAll = async (req, res) => {
   const { sort, search, category } = req.query
   const queryObject = {}
 
-  if (category && category != "All Courses") {
+  if (category) {
     queryObject.category = category
   }
 

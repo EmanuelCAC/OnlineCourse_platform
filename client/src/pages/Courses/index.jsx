@@ -4,9 +4,12 @@ import { CloseSVG } from "../../assets/images";
 import { Button, Img, Text, SelectBox, Input, Heading, Header, BreadCrumbs, RatingBar } from "../../components";
 
 const dropDownOptions = [
-  { label: "Option1", value: "option1" },
-  { label: "Option2", value: "option2" },
-  { label: "Option3", value: "option3" },
+  { label: "Latest", value: "-createdAt" },
+  { label: "Earliest", value: "createdAt" },
+  { label: "A - Z", value: "name" },
+  { label: "Z - A", value: "-name" },
+  { label: "$ - $$$", value: "price" },
+  { label: "$$$ - $", value: "-price" },
 ];
 
 export default function EduviCoursesPage() {
@@ -14,6 +17,8 @@ export default function EduviCoursesPage() {
   const [active, setActive] = useState("")
   const [courses, setCourses] = useState([])
   const [popularCourses, setPopularCourses] = useState([])
+  const [sortBy, setSortBy] = useState("-createdAt")
+
 
   const categoryHandler = (category) => {
     if (active == category) {
@@ -22,7 +27,7 @@ export default function EduviCoursesPage() {
   }
 
   const getCourses = async () => {
-    const data = await fetch(`http://localhost:3001/api/v1/course`)
+    const data = await fetch(`http://localhost:3001/api/v1/course?search=${searchBarValue}&sort=${sortBy}&limit=8&category=${active}`)
     const result = await data.json()
     setCourses(result)
   }
@@ -35,6 +40,9 @@ export default function EduviCoursesPage() {
 
   useEffect(() => {
     getCourses()
+  }, [active, searchBarValue, sortBy])
+
+  useEffect(() => {
     getPopularCourses()
   }, [])
 
@@ -128,6 +136,7 @@ export default function EduviCoursesPage() {
               placeholder="Sort by: Latest"
               options={dropDownOptions}
               className="w-[16%] md:w-full gap-px font-medium"
+              onChange={(value) => { setSortBy(value.value) }}
             />
           </div>
           <div className="flex flex-row justify-center w-full">
@@ -230,23 +239,6 @@ export default function EduviCoursesPage() {
                   </div>
                 ))}
               </div>
-            </div>
-            <div className="flex flex-row justify-start items-center w-full pl-[497px] pr-14 gap-[19px] md:px-5">
-              <Button color="white_A700" size="lg" shape="round" className="w-[44px] !rounded-md">
-                <Img src="images/img_arrow_left.svg" />
-              </Button>
-              <Text as="p" className="!text-gray-900 !font-medium">
-                Page
-              </Text>
-              <Button color="white_A700" size="sm" className="!text-gray-700_01 font-medium min-w-[42px] rounded-lg">
-                5
-              </Button>
-              <Text as="p" className="!text-gray-900 !font-medium">
-                of 80
-              </Text>
-              <Button size="lg" shape="round" className="w-[44px] !rounded-md">
-                <Img src="images/img_arrow_right.svg" />
-              </Button>
             </div>
           </div>
         </div>
