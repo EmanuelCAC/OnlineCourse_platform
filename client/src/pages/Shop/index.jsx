@@ -137,7 +137,7 @@ export default function EduviShopPage() {
                         </>
                       </Heading>
                       <Heading as="h4" className="!text-red-300_01">
-                        ${book.price}
+                        ${book.price.toFixed(2)}
                       </Heading>
                     </div>
                   </div>
@@ -177,7 +177,7 @@ export default function EduviShopPage() {
                         </>
                       </Heading>
                       <Heading as="h4" className="!text-red-300_01">
-                        ${book.price}
+                        ${book.price.toFixed(2)}
                       </Heading>
                     </div>
                   </div>
@@ -251,7 +251,7 @@ export default function EduviShopPage() {
                       <Heading as="h1">{book.name}</Heading>
                       <div className="flex flex-row justify-between items-center w-full">
                         <Heading as="h2" className="!text-red-300_01">
-                          {book.price}
+                          {book.price.toFixed(2)}
                         </Heading>
                         <RatingBar
                           value={book.rating}
