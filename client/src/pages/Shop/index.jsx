@@ -60,6 +60,10 @@ export default function EduviShopPage() {
   }
 
   useEffect(() => {
+    setPage(1)
+  }, [active])
+
+  useEffect(() => {
     getPopularBooks()
     getNewArrivals()
   }, [])

@@ -18,7 +18,23 @@ export default function EduviCoursesPage() {
   const [courses, setCourses] = useState([])
   const [popularCourses, setPopularCourses] = useState([])
   const [sortBy, setSortBy] = useState("-createdAt")
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
 
+  const pageHandler = (action) => {
+    if (action === "next") {
+      (page + 1) >= totalPages ? setPage(totalPages) : setPage(page + 1)
+    } else if (action === "prev") {
+      (page - 1) <= 1 ? setPage(1) : setPage(page - 1)
+    }
+  }
+
+  const getTotalPages = async () => {
+    const data = await fetch(`http://localhost:3001/api/v1/course?search=${searchBarValue}&sort=${sortBy}&category=${active}`)
+    const result = await data.json()
+    console.log(result)
+    setTotalPages(Math.ceil(result.length / 8))
+  }
 
   const categoryHandler = (category) => {
     if (active == category) {
@@ -27,7 +43,7 @@ export default function EduviCoursesPage() {
   }
 
   const getCourses = async () => {
-    const data = await fetch(`http://localhost:3001/api/v1/course?search=${searchBarValue}&sort=${sortBy}&limit=8&category=${active}`)
+    const data = await fetch(`http://localhost:3001/api/v1/course?search=${searchBarValue}&sort=${sortBy}&limit=8&page=${page}&category=${active}`)
     const result = await data.json()
     setCourses(result)
   }
@@ -39,8 +55,13 @@ export default function EduviCoursesPage() {
   }
 
   useEffect(() => {
+    setPage(1)
+  }, [active])
+
+  useEffect(() => {
     getCourses()
-  }, [active, searchBarValue, sortBy])
+    getTotalPages()
+  }, [active, searchBarValue, sortBy, page])
 
   useEffect(() => {
     getPopularCourses()
@@ -171,6 +192,25 @@ export default function EduviCoursesPage() {
                       </div>
                     </div>
                   ))}
+                </div>
+              </div>
+              <div className="flex w-full justify-center">
+                <div className="flex flex-row justify-between items-center w-[35%] md:w-full">
+                  <Button color="white_A700" size="lg" shape="round" className="w-[15%] !rounded-md" onClick={() => pageHandler('prev')}>
+                    <Img src="images/img_arrow_left.svg" />
+                  </Button>
+                  <Text as="p" className="!text-gray-900 !font-medium">
+                    Page
+                  </Text>
+                  <Button color="white_A700" size="sm" className="!text-gray-700_01 font-medium min-w-[42px] rounded-lg cursor-default">
+                    {page}
+                  </Button>
+                  <Text as="p" className="!text-gray-900 !font-medium">
+                    of {courses ? totalPages : 1}
+                  </Text>
+                  <Button size="lg" shape="round" className="w-[15%] !rounded-md" onClick={() => pageHandler('next')}>
+                    <Img src="images/img_arrow_right.svg" />
+                  </Button>
                 </div>
               </div>
             </div>
