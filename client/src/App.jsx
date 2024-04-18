@@ -1,6 +1,7 @@
 import React from "react";
 import Routes from "./Routes";
 import { BrowserRouter as Router } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const [data, setData] = React.useState(null);
@@ -21,6 +22,7 @@ function App() {
   return (
     <Router>
       <Routes />
+      <ScrollToTop />
     </Router>
   );
 }

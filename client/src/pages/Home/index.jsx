@@ -120,7 +120,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <Text size="lg" as="a" className="!text-red-300_01 ml-auto">
+            <Text size="lg" as="a" className="!text-red-300_01 ml-auto cursor-pointer" onClick={() => { navigate('/courses') }}>
               See More
             </Text>
           </div>
@@ -160,7 +160,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <Text size="lg" as="a" className="!text-red-300_01 ml-auto">
+            <Text size="lg" as="a" className="!text-red-300_01 ml-auto cursor-pointer" onClick={() => { navigate('/shop') }}>
               See More
             </Text>
           </div>
