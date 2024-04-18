@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Text, Heading, Img, Button, Header, Footer, BreadCrumbs } from "../../components";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function SinglementordetailsPage() {
+  const { id } = useParams()
+  const [mentor, setMentor] = useState()
+  const [roles, setRoles] = useState("")
+  const [language, setLanguage] = useState("")
+
+  const getMentor = async () => {
+    try {
+      const { data } = await axios.get(`http://localhost:3001/api/v1/mentor/${id}`)
+      if (data) {
+        setMentor(data)
+        setRoles(data.role.join(' & '))
+        setLanguage(data.language.join(", "))
+      }
+    } catch (error) {
+      console.log(error.response.data.msg)
+    }
+  }
+
+
+  useEffect(() => {
+    getMentor()
+  }, [])
+
+
+
   return (
     <>
       <Helmet>
@@ -29,7 +56,7 @@ export default function SinglementordetailsPage() {
                             path: "#"
                           },
                           {
-                            name: "name",
+                            name: mentor?.name,
                             path: "#"
                           }
                         ]} />
@@ -39,16 +66,16 @@ export default function SinglementordetailsPage() {
                   <div className="flex flex-row justify-start w-[32%] md:w-full mt-[-81px] ml-[30px] md:ml-0 sm:ml-5">
                     <div className="flex flex-row sm:flex-col justify-start items-center w-full gap-5 sm:gap-5">
                       <Img
-                        src="images/img_bg_170x170.png"
+                        src={mentor?.image}
                         alt="bg_one"
                         className="w-[170px] md:h-auto mb-px object-cover rounded-[10px]"
                       />
                       <div className="flex flex-col items-start justify-start w-[53%] sm:w-full gap-0.5">
                         <Text size="lg" as="p" className="!text-gray-900">
-                          Kritsin Watson
+                          {mentor?.name}
                         </Text>
-                        <Text size="md" as="p">
-                          Founder & Mentor
+                        <Text size="md" as="p" className="!text-gray-500">
+                          {mentor && roles}
                         </Text>
                       </div>
                     </div>
@@ -77,9 +104,9 @@ export default function SinglementordetailsPage() {
                 <div className="flex flex-col items-center justify-start w-full gap-[29px]">
                   <div className="flex flex-col items-start justify-start w-full gap-2">
                     <Heading size="xl" as="h1">
-                      About Kritsin
+                      About {mentor?.name}
                     </Heading>
-                    <Text as="p" className="!leading-[30px]">
+                    <Text as="p" className="!leading-[30px] !text-gray-900">
                       <>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra
@@ -91,16 +118,18 @@ export default function SinglementordetailsPage() {
                       </>
                     </Text>
                   </div>
-                  <div className="flex flex-col items-start justify-start w-full gap-2">
-                    <Heading size="xl" as="h2">
-                      Certification
-                    </Heading>
-                    <Text as="p" className="!leading-[30px]">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                      labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra
-                      maecenas accumsan lacus vel facilisis consectetur adipiscing elit.
-                    </Text>
-                  </div>
+                  {mentor?.graduated && (
+                    <div className="flex flex-col items-start justify-start w-full gap-2 ">
+                      <Heading size="xl" as="h2">
+                        Certification
+                      </Heading>
+                      <Text as="p" className="!leading-[30px] !text-gray-900">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra
+                        maecenas accumsan lacus vel facilisis consectetur adipiscing elit.
+                      </Text>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="flex flex-col items-center justify-center w-[32%] md:w-full gap-[19px] p-5 bg-white-A700 rounded-[10px]">
@@ -109,7 +138,7 @@ export default function SinglementordetailsPage() {
                     Total Course
                   </Heading>
                   <Heading size="lg" as="h4" className="!text-deep_orange-400 text-right">
-                    30
+                    {mentor?.totalCourse}
                   </Heading>
                 </div>
                 <div className="flex flex-row justify-between w-full">
@@ -117,10 +146,9 @@ export default function SinglementordetailsPage() {
                     <Heading size="s" as="h5" className="!text-gray-700_01">
                       Ratings
                     </Heading>
-                    <Img src="images/img_vector_amber_500.svg" alt="vector_one" className="h-[16px] w-[16px] mt-0.5" />
                   </div>
                   <Heading size="s" as="h6" className="text-right">
-                    4.9(153)
+                    {mentor?.rating}
                   </Heading>
                 </div>
                 <div className="flex flex-row justify-between w-full">
@@ -128,7 +156,7 @@ export default function SinglementordetailsPage() {
                     Experiences
                   </Heading>
                   <Heading size="s" as="h5" className="text-right">
-                    10 Years
+                    {mentor?.experience} Years
                   </Heading>
                 </div>
                 <div className="flex flex-row justify-between w-full">
@@ -136,7 +164,7 @@ export default function SinglementordetailsPage() {
                     Graduated
                   </Heading>
                   <Heading size="s" as="h5" className="text-right">
-                    Yes
+                    {mentor?.graduated ? "Yes" : "No"}
                   </Heading>
                 </div>
                 <div className="flex flex-row justify-between w-full">
