@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { CloseSVG } from "../../assets/images";
-import { Button, Img, Text, SelectBox, Input, Heading, Header, BreadCrumbs, RatingBar } from "../../components";
+import { Button, Img, Text, SelectBox, Input, Heading, Header, BreadCrumbs, RatingBar, Footer } from "../../components";
 
 const dropDownOptions = [
   { label: "Latest", value: "-createdAt" },
@@ -14,7 +14,7 @@ const dropDownOptions = [
 
 export default function EduviCoursesPage() {
   const [searchBarValue, setSearchBarValue] = useState("");
-  const [active, setActive] = useState(history.state.usr.category)
+  const [active, setActive] = useState(history.state.category)
   const [courses, setCourses] = useState([])
   const [popularCourses, setPopularCourses] = useState([])
   const [sortBy, setSortBy] = useState("-createdAt")
@@ -56,6 +56,10 @@ export default function EduviCoursesPage() {
   useEffect(() => {
     setPage(1)
   }, [active])
+
+  useEffect(() => {
+    setActive(history.state.category)
+  }, [history.state.category])
 
   useEffect(() => {
     getCourses()
@@ -107,28 +111,28 @@ export default function EduviCoursesPage() {
         </div>
         <div className="flex flex-col items-center justify-start w-full gap-[47px]">
           <div className="flex flex-row md:flex-col justify-start w-full gap-5 md:px-5 max-w-7xl">
-            <Button onClick={() => categoryHandler("Kindergarten")} color={active == "Kindergarten" ? "orange_200_01" : "white_A700"} className="font-medium min-w-[142px] rounded-[10px]">
+            <Button onClick={() => categoryHandler("Kindergarten")} color={active == "Kindergarten" ? "orange_200_01" : "white_A700"} className="font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               Kindergarten
             </Button>
-            <Button onClick={() => categoryHandler("High School")} color={active == "High School" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
+            <Button onClick={() => categoryHandler("High School")} color={active == "High School" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               High School
             </Button>
-            <Button onClick={() => categoryHandler("College")} color={active == "College" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
+            <Button onClick={() => categoryHandler("College")} color={active == "College" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               College
             </Button>
-            <Button onClick={() => categoryHandler("Technology")} color={active == "Technology" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
+            <Button onClick={() => categoryHandler("Technology")} color={active == "Technology" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               Technology
             </Button>
-            <Button onClick={() => categoryHandler("Science")} color={active == "Science" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
+            <Button onClick={() => categoryHandler("Science")} color={active == "Science" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               Science
             </Button>
-            <Button onClick={() => categoryHandler("Language")} color={active == "Language" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
+            <Button onClick={() => categoryHandler("Language")} color={active == "Language" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               Language
             </Button>
-            <Button onClick={() => categoryHandler("Mathematics")} color={active == "Mathematics" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
+            <Button onClick={() => categoryHandler("Mathematics")} color={active == "Mathematics" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               Mathematics
             </Button>
-            <Button onClick={() => categoryHandler("Social Studies")} color={active == "Social Studies" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px]">
+            <Button onClick={() => categoryHandler("Social Studies")} color={active == "Social Studies" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               Social Studies
             </Button>
           </div>
@@ -195,8 +199,20 @@ export default function EduviCoursesPage() {
               </div>
               <div className="flex w-full justify-center">
                 <div className="flex flex-row justify-between items-center w-[35%] md:w-full">
-                  <Button color="white_A700" size="lg" shape="round" className="w-[15%] !rounded-md" onClick={() => pageHandler('prev')}>
-                    <Img src="images/img_arrow_left.svg" />
+                  <Button size="lg" shape="round" className="w-[15%] !rounded-md !bg-white-A700 hover:!bg-red-300_01"
+                    onClick={() => pageHandler('prev')}
+                    onMouseOver={() => {
+                      const img = document.getElementById('prev')
+                      img.src = "images/img_arrow_right.svg"
+                      img.className = img.className.replace("rotate-0", "rotate-180")
+                    }}
+                    onMouseLeave={() => {
+                      const img = document.getElementById('prev')
+                      img.src = "images/img_arrow_left.svg"
+                      img.className = img.className.replace("rotate-180", "rotate-0")
+                    }}
+                  >
+                    <Img src="images/img_arrow_left.svg" id="prev" className="rotate-0" />
                   </Button>
                   <Text as="p" className="!text-gray-900 !font-medium">
                     Page
@@ -207,8 +223,20 @@ export default function EduviCoursesPage() {
                   <Text as="p" className="!text-gray-900 !font-medium">
                     of {courses ? totalPages : 1}
                   </Text>
-                  <Button size="lg" shape="round" className="w-[15%] !rounded-md" onClick={() => pageHandler('next')}>
-                    <Img src="images/img_arrow_right.svg" />
+                  <Button size="lg" shape="round" className="w-[15%] !rounded-md !bg-white-A700 hover:!bg-red-300_01"
+                    onClick={() => pageHandler('next')}
+                    onMouseOver={() => {
+                      const img = document.getElementById('next')
+                      img.src = "images/img_arrow_right.svg"
+                      img.className = img.className.replace("rotate-180", "rotate-0")
+                    }}
+                    onMouseLeave={() => {
+                      const img = document.getElementById('next')
+                      img.src = "images/img_arrow_left.svg"
+                      img.className = img.className.replace("rotate-0", "rotate-180")
+                    }}
+                  >
+                    <Img src="images/img_arrow_left.svg" className="rotate-180" id="next" />
                   </Button>
                 </div>
               </div>
@@ -281,8 +309,7 @@ export default function EduviCoursesPage() {
             </div>
           </div>
         </div>
-        <footer className="flex flex-col items-center justify-center w-full">
-        </footer>
+        <Footer className="flex flex-col items-center justify-center w-full" />
       </div>
     </>
   );

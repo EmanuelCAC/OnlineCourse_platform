@@ -120,7 +120,7 @@ export default function EduviShopPage() {
                   <div
                     key={book._id}
                     onClick={() => navigate(book._id)}
-                    className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px] cursor-pointer">
+                    className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px] cursor-pointer hover:shadow-xs">
                     <Img
                       src={book.image}
                       alt="popular_books"
@@ -147,9 +147,6 @@ export default function EduviShopPage() {
                   </div>
                 ))}
               </div>
-              <Text size="lg" as="p" className="!text-red-300_01">
-                See More
-              </Text>
             </div>
             <div className="flex flex-col items-start justify-start w-full gap-4">
               <Heading size="xl" as="h3" className="!text-black-900_02">
@@ -160,7 +157,7 @@ export default function EduviShopPage() {
                   <div
                     key={book._id}
                     onClick={() => navigate(book._id)}
-                    className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px] cursor-pointer">
+                    className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px] cursor-pointer hover:shadow-xs">
                     <Img
                       src={book.image}
                       alt="popular_books"
@@ -187,24 +184,21 @@ export default function EduviShopPage() {
                   </div>
                 ))}
               </div>
-              <Text size="lg" as="p" className="!text-red-300_01">
-                See More
-              </Text>
             </div>
           </div>
           <div className="flex flex-col items-center justify-start w-[65%] md:w-full gap-10">
             <div className="flex flex-col items-center justify-start w-full gap-[30px]">
               <div className="flex flex-row md:flex-col justify-start w-full gap-6 md:gap-5">
-                <Button onClick={() => setActive("All Books")} color={active == "All Books" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[131px] rounded-[10px]">
+                <Button onClick={() => setActive("All Books")} color={active == "All Books" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[131px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
                   All Books
                 </Button>
-                <Button onClick={() => setActive("Kindergarten")} color={active == "Kindergarten" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[212px] rounded-[10px]">
+                <Button onClick={() => setActive("Kindergarten")} color={active == "Kindergarten" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[212px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
                   Kindergarten
                 </Button>
-                <Button onClick={() => setActive("High School")} color={active == "High School" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[212px] rounded-[10px]">
+                <Button onClick={() => setActive("High School")} color={active == "High School" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[212px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
                   High School
                 </Button>
-                <Button onClick={() => setActive("College")} color={active == "College" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[212px] rounded-[10px]">
+                <Button onClick={() => setActive("College")} color={active == "College" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[212px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
                   College
                 </Button>
               </div>
@@ -242,7 +236,7 @@ export default function EduviShopPage() {
                     key={i}
                     onClick={() => navigate(book._id)}
                   >
-                    <div className="flex flex-col items-center justify-start w-full md:h-auto p-5 bg-white-A700 rounded-[10px]">
+                    <div className="flex flex-col items-center justify-start w-full md:h-auto p-5 bg-white-A700 rounded-[10px] hover:shadow-xs">
                       <div className="flex flex-col items-center justify-start w-full md:px-5 max-w-[230px]">
                         <Img
                           src={book.image}
@@ -270,8 +264,20 @@ export default function EduviShopPage() {
               </div>
             </div>
             <div className="flex flex-row justify-between items-center w-[35%] md:w-full">
-              <Button color="white_A700" size="lg" shape="round" className="w-[15%] !rounded-md" onClick={() => pageHandler('prev')}>
-                <Img src="images/img_arrow_left.svg" />
+              <Button size="lg" shape="round" className="w-[15%] !rounded-md !bg-white-A700 hover:!bg-red-300_01"
+                onClick={() => pageHandler('prev')}
+                onMouseOver={() => {
+                  const img = document.getElementById('prev')
+                  img.src = "images/img_arrow_right.svg"
+                  img.className = img.className.replace("rotate-0", "rotate-180")
+                }}
+                onMouseLeave={() => {
+                  const img = document.getElementById('prev')
+                  img.src = "images/img_arrow_left.svg"
+                  img.className = img.className.replace("rotate-180", "rotate-0")
+                }}
+              >
+                <Img src="images/img_arrow_left.svg" id="prev" className="rotate-0" />
               </Button>
               <Text as="p" className="!text-gray-900 !font-medium">
                 Page
@@ -282,8 +288,20 @@ export default function EduviShopPage() {
               <Text as="p" className="!text-gray-900 !font-medium">
                 of {books ? totalPages : 1}
               </Text>
-              <Button size="lg" shape="round" className="w-[15%] !rounded-md" onClick={() => pageHandler('next')}>
-                <Img src="images/img_arrow_right.svg" />
+              <Button size="lg" shape="round" className="w-[15%] !rounded-md !bg-white-A700 hover:!bg-red-300_01"
+                onClick={() => pageHandler('next')}
+                onMouseOver={() => {
+                  const img = document.getElementById('next')
+                  img.src = "images/img_arrow_right.svg"
+                  img.className = img.className.replace("rotate-180", "rotate-0")
+                }}
+                onMouseLeave={() => {
+                  const img = document.getElementById('next')
+                  img.src = "images/img_arrow_left.svg"
+                  img.className = img.className.replace("rotate-0", "rotate-180")
+                }}
+              >
+                <Img src="images/img_arrow_left.svg" className="rotate-180" id="next" />
               </Button>
             </div>
           </div>

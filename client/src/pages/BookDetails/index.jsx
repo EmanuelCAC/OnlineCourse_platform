@@ -223,7 +223,7 @@ export default function BookDetails() {
                       <Text size="lg" className="text-black-900_02" >+</Text>
                     </Button>
                   </div>
-                  <Button className="ml-auto" onClick={() => { addToCart() }}>
+                  <Button className="ml-auto" onClick={() => { addToCart() }} hover={true}>
                     Add to Cart
                   </Button>
                 </div>

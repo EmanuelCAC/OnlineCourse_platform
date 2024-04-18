@@ -158,14 +158,24 @@ export default function Header({ updateCart, ...props }) {
                   dropdown.className = dropdown.className.replace("flex ", "hidden")
                 }}
               >
-                <Text as="button" className="!text-gray-900 !font-medium" onClick={() => navigate(item.slug, { state: item.state })}>
+                <Text as="button" className="!text-gray-900 !font-medium" onClick={() => {
+                  navigate(item.slug, { state: item.state })
+                  if (item.state) history.pushState(item.state, "")
+                }}>
                   {item.name}
                 </Text>
                 {item.img && (<Img {...item.img} />)}
                 {item.dropdown && (
                   <div className="flex-col absolute border-2 border-gray-300 bg-gray-100 top-6 -left-1 rounded-xl z-50 hidden" id="dropdown">
                     {item.dropdown.map((dd_item, i) => (
-                      <Text as="p" className={`!text-gray-700 !font-medium whitespace-nowrap px-3 py-1 hover:bg-gray-200 bg-clip-border ${i == 0 && 'rounded-t-lg border-gray-300'} ${i == item.dropdown.length - 1 && 'rounded-b-lg'}`} onClick={() => navigate(item.slug, { state: { category: dd_item } })}>
+                      <Text
+                        as="p"
+                        className={`!text-gray-700 !font-medium whitespace-nowrap px-3 py-1 hover:bg-gray-200 bg-clip-border ${i == 0 && 'rounded-t-lg border-gray-300'} ${i == item.dropdown.length - 1 && 'rounded-b-lg'}`}
+                        onClick={() => {
+                          navigate(item.slug, { state: { category: dd_item } })
+                          history.pushState({ category: dd_item }, "")
+                          console.log(history.state)
+                        }}>
                         {dd_item}
                       </Text>
                     ))}
