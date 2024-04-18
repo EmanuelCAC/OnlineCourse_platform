@@ -6,6 +6,7 @@ import NotFound from "pages/NotFound";
 import BookDetails from "pages/BookDetails";
 import Cart from "pages/Cart";
 import Courses from "pages/Courses"
+import MentorDetails from "pages/MentorDetails"
 import { param } from "express/lib/router";
 
 const ProjectRoutes = () => {
@@ -15,6 +16,7 @@ const ProjectRoutes = () => {
     { path: "/shop/:id", element: <BookDetails /> },
     { path: "/cart", element: <Cart /> },
     { path: "/courses", element: <Courses /> },
+    { path: "/mentor/:id", element: <MentorDetails /> },
     { path: "*", element: <NotFound /> },
   ]);
 
