@@ -9,6 +9,7 @@ import authRouter from '../routes/auth.js'
 import bookReviewRouter from '../routes/bookReview.js'
 import cartRouter from '../routes/cart.js'
 import courseRouter from '../routes/course.js'
+import mentorRouter from '../routes/mentor.js'
 import notFoundMiddleware from '../middleware/not-found.js'
 import errorHandlerMiddleware from '../middleware/error-handler.js'
 import authenticateUser from '../middleware/authentication.js'
@@ -27,6 +28,8 @@ app.use('/api/v1/book', bookRouter)
 app.use('/api/v1/review', bookReviewRouter)
 app.use('/api/v1/cart', authenticateUser, cartRouter)
 app.use('/api/v1/course', courseRouter)
+app.use('/api/v1/mentor', mentorRouter)
+
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
