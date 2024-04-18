@@ -24,11 +24,11 @@ const getByUser = async (req, res) => {
 }
 
 const remove = async (req, res) => {
-  const _id = req.body._id
-  const item = await Cart.findOneAndDelete(_id)
+  const id = req.body.id
+  const item = await Cart.findOneAndDelete({ _id: id })
 
   if (!item) {
-    throw new NotFoundError(`No item on the cart with id ${_id}`)
+    throw new NotFoundError(`No item on the cart with id ${id}`)
   }
 
   res.status(StatusCodes.OK).send()
@@ -36,13 +36,13 @@ const remove = async (req, res) => {
 
 const edit = async (req, res) => {
   const item = await Cart.findByIdAndUpdate(
-    { _id: req.body._id },
+    { _id: req.body.id },
     { ...req.body },
     { new: true, runValidators: true }
   )
 
   if (!item) {
-    throw new NotFoundError(`No item on the cart with id ${_id}`)
+    throw new NotFoundError(`No item on the cart with id ${req.body.id}`)
   }
 
   res.status(StatusCodes.OK).send(item)

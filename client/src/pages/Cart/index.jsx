@@ -39,7 +39,7 @@ export default function Cart() {
               authorization: `Bearer ${localStorage.getItem('token')}`
             },
             data: {
-              _id: item._id,
+              id: item._id,
             }
           },
         )
@@ -52,7 +52,7 @@ export default function Cart() {
       try {
         const { data } = await axios.patch('http://localhost:3001/api/v1/cart',
           {
-            _id: item._id,
+            id: item._id,
             amount: item.amount + n
           },
           {
@@ -117,7 +117,7 @@ export default function Cart() {
                   <Text className="text-black-900_02 !text-3xl !font-medium">Items</Text>
                   {cart.map((item) => (
                     <>
-                      <div className="flex flex-row pb-5 pt-3" key={item.productId} >
+                      <div className="flex flex-row pb-5 pt-3" key={item._id} >
                         <Img src={item.image} className={'w-24 mr-3 border-2 cursor-pointer'} onClick={() => (navigate('/shop/' + item.productId))} />
                         <div className="flex flex-col justify-between w-full">
                           <Text className=" text-black-900_02 !text-lg cursor-pointer" onClick={() => (navigate('/shop/' + item.productId))}>{item.productName}</Text>
