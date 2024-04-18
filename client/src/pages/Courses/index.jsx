@@ -14,7 +14,7 @@ const dropDownOptions = [
 
 export default function EduviCoursesPage() {
   const [searchBarValue, setSearchBarValue] = useState("");
-  const [active, setActive] = useState("")
+  const [active, setActive] = useState(history.state.usr.category)
   const [courses, setCourses] = useState([])
   const [popularCourses, setPopularCourses] = useState([])
   const [sortBy, setSortBy] = useState("-createdAt")
@@ -32,7 +32,6 @@ export default function EduviCoursesPage() {
   const getTotalPages = async () => {
     const data = await fetch(`http://localhost:3001/api/v1/course?search=${searchBarValue}&sort=${sortBy}&category=${active}`)
     const result = await data.json()
-    console.log(result)
     setTotalPages(Math.ceil(result.length / 8))
   }
 

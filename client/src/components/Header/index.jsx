@@ -78,12 +78,14 @@ export default function Header({ updateCart, ...props }) {
     },
     {
       name: "Courses",
-      slug: "#",
+      slug: "/courses",
       img: {
         src: "images/img_arrow_down.svg",
         alt: "arrowdown_one",
         className: "h-[24px] w-[24px]"
       },
+      state: { category: "" },
+      dropdown: ["Kindergarten", "High School", "College", "Technology", "Science", "Language", "Mathematics", "Social Studies"],
       active: true
     },
     {
@@ -142,11 +144,34 @@ export default function Header({ updateCart, ...props }) {
         <ul className="flex flex-row md:flex-col justify-start items-center w-[58%] md:w-full gap-6 md:gap-5">
           {
             navItems.map((item) => item.active ? (
-              <li key={item.name} className="flex flex-row justify-start items-center">
-                <Text as="button" className="!text-gray-900 !font-medium" onClick={() => navigate(item.slug)}>
+              <li
+                id={item.name}
+                className="flex flex-row justify-start items-center relative"
+                onMouseOver={() => {
+                  const navitem = document.getElementById(item.name)
+                  const dropdown = navitem.querySelector("#dropdown")
+                  dropdown.className = dropdown.className.replace("hidden", "flex ")
+                }}
+                onMouseOut={() => {
+                  const navitem = document.getElementById(item.name)
+                  const dropdown = navitem.querySelector("#dropdown")
+                  dropdown.className = dropdown.className.replace("flex ", "hidden")
+                }}
+              >
+                <Text as="button" className="!text-gray-900 !font-medium" onClick={() => navigate(item.slug, { state: item.state })}>
                   {item.name}
                 </Text>
                 {item.img && (<Img {...item.img} />)}
+                {item.dropdown && (
+                  <div className="flex-col absolute border-2 border-gray-300 bg-gray-100 top-6 -left-1 rounded-xl z-50 hidden" id="dropdown">
+                    {item.dropdown.map((dd_item, i) => (
+                      <Text as="p" className={`!text-gray-700 !font-medium whitespace-nowrap px-3 py-1 hover:bg-gray-200 bg-clip-border ${i == 0 && 'rounded-t-lg border-gray-300'} ${i == item.dropdown.length - 1 && 'rounded-b-lg'}`} onClick={() => navigate(item.slug, { state: { category: dd_item } })}>
+                        {dd_item}
+                      </Text>
+                    ))}
+                  </div>
+                )}
+
               </li>
             ) : null)
           }
