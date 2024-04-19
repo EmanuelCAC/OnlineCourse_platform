@@ -7,7 +7,7 @@ import BookDetails from "pages/BookDetails";
 import Cart from "pages/Cart";
 import Courses from "pages/Courses"
 import MentorDetails from "pages/MentorDetails"
-import { param } from "express/lib/router";
+import CourseDetails from "pages/CourseDetails";
 
 const ProjectRoutes = () => {
   let element = useRoutes([
@@ -16,6 +16,7 @@ const ProjectRoutes = () => {
     { path: "/shop/:id", element: <BookDetails /> },
     { path: "/cart", element: <Cart /> },
     { path: "/courses", element: <Courses /> },
+    { path: "/courses/:id", element: <CourseDetails /> },
     { path: "/mentor/:id", element: <MentorDetails /> },
     { path: "*", element: <NotFound /> },
   ]);

@@ -25,7 +25,7 @@ export default function SinglementordetailsPage() {
         setLanguage(data.language.join(", "))
       }
     } catch (error) {
-      console.log(error.response.data.msg)
+      console.log(error)
     }
   }
 
@@ -34,16 +34,18 @@ export default function SinglementordetailsPage() {
       const { data } = await axios.get(`http://localhost:3001/api/v1/course?instructorId=${id}`)
       if (data) setCourses(data)
     } catch (error) {
-      console.log(error.response.data.msg)
+      console.log(error)
     }
   }
 
   const getReviews = async () => {
-    try {
-      const { data } = await axios.post(`http://localhost:3001/api/v1/mentor/review/all`, { instructorId: mentor._id })
-      if (data) console.log(data);
-    } catch (error) {
-      console.log(error.response.data.msg)
+    if (mentor?.id) {
+      try {
+        const { data } = await axios.post(`http://localhost:3001/api/v1/mentor/review/all`, { instructorId: mentor._id })
+        if (data) console.log(data);
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 

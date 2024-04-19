@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { CloseSVG } from "../../assets/images";
 import { Button, Img, Text, SelectBox, Input, Heading, Header, BreadCrumbs, RatingBar, Footer } from "../../components";
+import { useNavigate } from "react-router-dom";
+
 
 const dropDownOptions = [
   { label: "Latest", value: "-createdAt" },
@@ -20,6 +22,7 @@ export default function EduviCoursesPage() {
   const [sortBy, setSortBy] = useState("-createdAt")
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
+  const navigate = useNavigate()
 
   const pageHandler = (action) => {
     if (action === "next") {
@@ -189,6 +192,7 @@ export default function EduviCoursesPage() {
                           variant="outline"
                           shape="round"
                           className="my-3 sm:px-5 font-medium min-w-[159px] sm:min-w-full hover:text-white-A700 hover:bg-red-300_01"
+                          onClick={() => { navigate(course._id) }}
                         >
                           Course Details
                         </Button>
@@ -268,6 +272,7 @@ export default function EduviCoursesPage() {
                       const child = button.querySelector('#child')
                       child.src = "images/img_shopping_bag_24_white_a700.svg"
                     }}
+                    onClick={() => { navigate(course._id) }}
                   >
                     <div className="flex flex-row sm:flex-col justify-start items-center w-[89%] md:w-full gap-[15px] sm:gap-5">
                       <div className="flex flex-row justify-start w-[35%] sm:w-full">
