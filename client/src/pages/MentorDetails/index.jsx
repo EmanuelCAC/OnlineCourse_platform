@@ -177,13 +177,13 @@ export default function SinglementordetailsPage() {
                                 const button = document.getElementById(course._id)
                                 button.className = button.className.replace('bg-red-300_01', 'bg-red-100')
                                 const child = button.querySelector('#child')
-                                child.src = "http://localhost:5173/images/img_shopping_bag_24.svg"
+                                child.src = "/images/img_shopping_bag_24.svg"
                               }}
                               onMouseOver={() => {
                                 const button = document.getElementById(course._id)
                                 button.className = button.className.replace('bg-red-100', 'bg-red-300_01')
                                 const child = button.querySelector('#child')
-                                child.src = "http://localhost:5173/images/img_shopping_bag_24_white_a700.svg"
+                                child.src = "/images/img_shopping_bag_24_white_a700.svg"
                               }}
                             >
                               <div className="flex flex-row sm:flex-col justify-start items-center w-[89%] md:w-full gap-[15px] sm:gap-5">

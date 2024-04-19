@@ -5,8 +5,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function CourseDetails() {
-  const { id } = useParams()
+  let { id } = useParams()
   const [course, setCourse] = useState()
+  const [similarCourses, setSimilarCourses] = useState([])
   const [instructor, setInstructor] = useState("")
   const navigate = useNavigate()
 
@@ -16,6 +17,18 @@ export default function CourseDetails() {
       if (data) setCourse(data)
     } catch (error) {
       console.log(error.response)
+    }
+  }
+
+  const getSimilarCourses = async () => {
+    if (course?.category) {
+      try {
+        const { data } = await axios.get(`http://localhost:3001/api/v1/course?category=${course.category[1]}`)
+        if (data) setSimilarCourses(data)
+        console.log(data)
+      } catch (error) {
+        console.log(error.response)
+      }
     }
   }
 
@@ -32,10 +45,11 @@ export default function CourseDetails() {
 
   useEffect(() => {
     getCourse()
-  }, [])
+  }, [id])
 
   useEffect(() => {
     getInstructor()
+    getSimilarCourses()
   }, [course])
 
   return (
@@ -372,14 +386,74 @@ export default function CourseDetails() {
           </div>
         </div>
         <div className="flex flex-row justify-center w-full">
-          <div className="flex flex-col items-start justify-start w-full gap-12 md:px-5 max-w-7xl">
+          {similarCourses[1] && <div className="flex flex-col items-start justify-start w-full gap-12 md:px-5 max-w-7xl">
             <Heading size="3xl" as="h2" className="!font-metropolis">
               Similar Courses
             </Heading>
             <div className="w-full gap-10 grid-cols-2 md:grid-cols-1 md:gap-5 grid">
-
+              {similarCourses.map((similarCourse) => (
+                <>
+                  {
+                    similarCourse._id != course._id &&
+                    <div
+                      className="flex flex-row justify-start w-full gap-6 p-[15px] bg-white-A700 cursor-pointer rounded-[10px] hover:shadow-xs"
+                      key={similarCourse._id}
+                      onMouseLeave={() => {
+                        const button = document.getElementById(similarCourse._id)
+                        button.className = button.className.replace('bg-red-300_01', 'bg-red-100')
+                        const child = button.querySelector('#child')
+                        child.src = "/images/img_shopping_bag_24.svg"
+                      }}
+                      onMouseOver={() => {
+                        const button = document.getElementById(similarCourse._id)
+                        button.className = button.className.replace('bg-red-100', 'bg-red-300_01')
+                        const child = button.querySelector('#child')
+                        child.src = "/images/img_shopping_bag_24_white_a700.svg"
+                      }}
+                      onClick={() => {
+                        navigate('/courses/' + similarCourse._id)
+                        id = similarCourse._id
+                      }}
+                    >
+                      <div className="flex flex-row sm:flex-col justify-start items-center w-[89%] md:w-full gap-[15px] sm:gap-5">
+                        <div className="flex flex-row justify-start w-[35%] sm:w-full">
+                          <Img
+                            src={similarCourse.image}
+                            alt="image"
+                            className="w-full md:h-auto sm:w-full object-cover rounded-[10px]"
+                          />
+                        </div>
+                        <div className="flex flex-col items-start justify-start w-[67%] sm:w-full gap-2">
+                          <div>
+                            <Heading size="md" as="h1">
+                              {similarCourse.name}
+                            </Heading>
+                          </div>
+                          <RatingBar
+                            value={similarCourse.rating}
+                            isEditable={false}
+                            size={18}
+                            className="flex justify-between"
+                          />
+                          <Heading size="md" as="h2" className="!text-deep_orange-400">
+                            ${similarCourse.price.toFixed(2)}
+                          </Heading>
+                          <div className="flex flex-row gap-3">
+                            {similarCourse.category.map((courseCat) => (
+                              <span key={courseCat} className="py-1 px-2 rounded-full bg-gray-200 text-black-900_02 text-xs">{courseCat}</span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <Button size="lg" shape="round" className="w-[44px] !rounded-md bg-red-100" id={similarCourse._id}>
+                        <Img src="images/img_shopping_bag_24.svg" id="child" />
+                      </Button>
+                    </div>
+                  }
+                </>
+              ))}
             </div>
-          </div>
+          </div>}
         </div>
         <Footer className="flex flex-col items-center justify-center w-full" />
       </div>
