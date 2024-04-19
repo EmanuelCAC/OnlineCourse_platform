@@ -120,7 +120,11 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <Text size="lg" as="a" className="!text-red-300_01 ml-auto cursor-pointer" onClick={() => { navigate('/courses') }}>
+            <Text size="lg" as="a" className="!text-red-300_01 ml-auto cursor-pointer"
+              onClick={() => {
+                navigate('/courses')
+                history.pushState({ category: "" }, "")
+              }}>
               See More
             </Text>
           </div>

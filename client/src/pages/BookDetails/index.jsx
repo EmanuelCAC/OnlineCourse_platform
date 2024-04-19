@@ -30,7 +30,7 @@ export default function BookDetails() {
   }
 
   const getReviews = async () => {
-    const { data } = await axios.post(`http://localhost:3001/api/v1/review/all`, { bookId: id })
+    const { data } = await axios.post(`http://localhost:3001/api/v1/book/review/all`, { bookId: id })
     const reviewsList = data.map(async (review) => {
       const data = await fetch(`http://localhost:3001/api/v1/user/${review.createdBy}`)
       const user = await data.json()
@@ -45,7 +45,7 @@ export default function BookDetails() {
   const toogleLike = async (review) => {
     if (review.like.includes(authData.userId)) {
       try {
-        const { data } = await axios.patch(`http://localhost:3001/api/v1/review/${review._id}`,
+        const { data } = await axios.patch(`http://localhost:3001/api/v1/book/review/${review._id}`,
           {
             like: review.like.filter((id) => {
               return id != authData.userId
@@ -62,7 +62,7 @@ export default function BookDetails() {
     } else {
       review.like.push(authData.userId)
       try {
-        const { data } = await axios.patch(`http://localhost:3001/api/v1/review/${review._id}`,
+        const { data } = await axios.patch(`http://localhost:3001/api/v1/book/review/${review._id}`,
           {
             like: review.like
           },
@@ -122,7 +122,7 @@ export default function BookDetails() {
     e.preventDefault()
 
     try {
-      const { data } = await axios.post(`http://localhost:3001/api/v1/review/`,
+      const { data } = await axios.post(`http://localhost:3001/api/v1/book/review/`,
         {
           createdBy: authData.userId,
           bookId: book._id,

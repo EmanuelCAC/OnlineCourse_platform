@@ -35,7 +35,7 @@ const BookSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 BookSchema.pre('findOneAndUpdate', async function (next) {
-  const { data } = await axios.post(`http://localhost:3001/api/v1/review/all`, { bookId: this._conditions._id._id })
+  const { data } = await axios.post(`http://localhost:3001/api/v1/book/review/all`, { bookId: this._conditions._id._id })
   try {
     let average = 0
     let i

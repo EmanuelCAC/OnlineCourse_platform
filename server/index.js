@@ -10,6 +10,8 @@ import bookReviewRouter from '../routes/bookReview.js'
 import cartRouter from '../routes/cart.js'
 import courseRouter from '../routes/course.js'
 import mentorRouter from '../routes/mentor.js'
+import courseReviewRouter from '../routes/courseReview.js'
+import mentorReviewRouter from '../routes/mentorReview.js'
 import notFoundMiddleware from '../middleware/not-found.js'
 import errorHandlerMiddleware from '../middleware/error-handler.js'
 import authenticateUser from '../middleware/authentication.js'
@@ -25,7 +27,9 @@ app.use(cors())
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/book', bookRouter)
-app.use('/api/v1/review', bookReviewRouter)
+app.use('/api/v1/book/review', bookReviewRouter)
+app.use('/api/v1/course/review', courseReviewRouter)
+app.use('/api/v1/mentor/review', mentorReviewRouter)
 app.use('/api/v1/cart', authenticateUser, cartRouter)
 app.use('/api/v1/course', courseRouter)
 app.use('/api/v1/mentor', mentorRouter)
