@@ -4,11 +4,15 @@ import { StatusCodes } from 'http-status-codes'
 import { BadRequestError, UnauthenticatedError, NotFoundError } from '../errors/index.js'
 
 const getAll = async (req, res) => {
-  const { sort, search, category } = req.query
+  const { sort, search, category, instructorId } = req.query
   const queryObject = {}
 
   if (category) {
     queryObject.category = category
+  }
+
+  if (instructorId) {
+    queryObject.instructorId = instructorId
   }
 
   let result = Course.find(queryObject)
@@ -19,7 +23,7 @@ const getAll = async (req, res) => {
   }
 
   const page = Number(req.query.page) || 1
-  const limit = Number(req.query.limit)
+  const limit = Number(req.query.limit) || 8
   const skip = (page - 1) * limit
   result = result.skip(skip).limit(limit)
 

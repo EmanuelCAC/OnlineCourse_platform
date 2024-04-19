@@ -149,13 +149,17 @@ export default function Header({ updateCart, ...props }) {
                 className="flex flex-row justify-start items-center relative"
                 onMouseOver={() => {
                   const navitem = document.getElementById(item.name)
-                  const dropdown = navitem.querySelector("#dropdown")
-                  dropdown.className = dropdown.className.replace("hidden", "flex ")
+                  if (navitem && item.dropdown) {
+                    const dropdown = navitem.querySelector("#dropdown")
+                    dropdown.className = dropdown.className.replace("hidden", "flex ")
+                  }
                 }}
                 onMouseOut={() => {
                   const navitem = document.getElementById(item.name)
-                  const dropdown = navitem.querySelector("#dropdown")
-                  dropdown.className = dropdown.className.replace("flex ", "hidden")
+                  if (navitem && item.dropdown) {
+                    const dropdown = navitem.querySelector("#dropdown")
+                    dropdown.className = dropdown.className.replace("flex ", "hidden")
+                  }
                 }}
               >
                 <Text as="button" className="!text-gray-900 !font-medium" onClick={() => {
@@ -174,7 +178,6 @@ export default function Header({ updateCart, ...props }) {
                         onClick={() => {
                           navigate(item.slug, { state: { category: dd_item } })
                           history.pushState({ category: dd_item }, "")
-                          console.log(history.state)
                         }}>
                         {dd_item}
                       </Text>

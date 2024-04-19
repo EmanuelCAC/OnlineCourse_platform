@@ -29,9 +29,9 @@ const CourseSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  instructor: {
-    type: String,
-    required: [true, 'Please provide a instructor'],
+  instructorId: {
+    type: mongoose.ObjectId,
+    required: [true, 'Please provide a instructor id'],
   },
   duration: {
     type: Number,

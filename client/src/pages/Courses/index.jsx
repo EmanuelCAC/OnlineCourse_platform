@@ -14,7 +14,7 @@ const dropDownOptions = [
 
 export default function EduviCoursesPage() {
   const [searchBarValue, setSearchBarValue] = useState("");
-  const [active, setActive] = useState(history.state.category || "")
+  const [active, setActive] = useState("")
   const [courses, setCourses] = useState([])
   const [popularCourses, setPopularCourses] = useState([])
   const [sortBy, setSortBy] = useState("-createdAt")
@@ -58,7 +58,7 @@ export default function EduviCoursesPage() {
   }, [active])
 
   useEffect(() => {
-    setActive(history.state.category)
+    if (history.state.category) setActive(history.state.category)
   }, [history.state.category])
 
   useEffect(() => {
