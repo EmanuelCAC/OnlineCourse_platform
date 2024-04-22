@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Text, Button, Img, Slider, Heading, Header, Footer, BreadCrumbs } from "../../components";
-import { TabPanel, TabList, Tab, Tabs } from "react-tabs";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Mentors() {
-  const [sliderState, setSliderState] = React.useState(0);
-  const sliderRef = React.useRef(null);
+  const [mentors, setMentors] = useState([])
+  const navigate = useNavigate()
+
+  const getMentors = async () => {
+    try {
+      const { data } = await axios.get(`http://localhost:3001/api/v1/mentor`)
+      if (data) {
+        const newMentors = data.map((mentor) => {
+          mentor.role = mentor.role.join(' & ')
+          return mentor
+        })
+        setMentors(newMentors)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+  useEffect(() => {
+    getMentors()
+  }, [])
 
   return (
     <>
@@ -50,76 +70,22 @@ export default function Mentors() {
         <div className="flex flex-col justify-center w-full gap-[50px]">
           <Heading size="3xl" as="h1" className="text-center" >Our Mentors</Heading>
           <div className="flex flex-row flex-wrap md:flex-col justify-between w-[85%] gap-3 md:gap-5 mx-auto">
-            <div className="flex flex-col items-center justify-start w-[23%] md:w-full gap-2.5 mx-auto">
-              <Img src="images/mentors/img_bg_11.png" alt="bg_one" className="w-full md:h-auto object-cover rounded-[10px]" />
-              <div className="flex flex-row justify-start items-start w-full gap-6">
-                <div className="flex flex-col items-start justify-start w-[84%] pt-[5px] gap-[13px]">
+            {mentors[0] && mentors.map((mentor) => (
+              <div
+              className="flex flex-col items-center justify-start w-[23%] md:w-full gap-2.5 mx-auto bg-white-A700 hover:shadow-xs rounded-[20px] p-3 cursor-pointer"
+              onClick={() => {navigate('/mentor/' + mentor._id)}}
+              >
+                <Img src={mentor.image} alt="bg_one" className="w-full md:h-auto object-cover rounded-[20px]" />
+                <div className="flex flex-col items-start justify-start w-full pl-1 gap-1">
                   <Text as="p" className="!text-black-900_02 !font-medium">
-                    Nada
+                    {mentor.name}
                   </Text>
-                  <Text size="xs" as="p">
-                    Nada
+                  <Text size="xs" as="p" className="!text-gray-500">
+                    {mentor.role}
                   </Text>
                 </div>
-                <Img src="images/img_arrow_down_black_900_02.svg" alt="arrowdown_nine" className="h-[24px] w-[24px]" />
               </div>
-            </div>
-            <div className="flex flex-col items-center justify-start w-[23%] md:w-full gap-2.5 mx-auto">
-              <Img src="images/mentors/img_bg_11.png" alt="bg_one" className="w-full md:h-auto object-cover rounded-[10px]" />
-              <div className="flex flex-row justify-start items-start w-full gap-6">
-                <div className="flex flex-col items-start justify-start w-[84%] pt-[5px] gap-[13px]">
-                  <Text as="p" className="!text-black-900_02 !font-medium">
-                    Nada
-                  </Text>
-                  <Text size="xs" as="p">
-                    Nada
-                  </Text>
-                </div>
-                <Img src="images/img_arrow_down_black_900_02.svg" alt="arrowdown_nine" className="h-[24px] w-[24px]" />
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-start w-[23%] md:w-full gap-2.5 mx-auto">
-              <Img src="images/mentors/img_bg_11.png" alt="bg_one" className="w-full md:h-auto object-cover rounded-[10px]" />
-              <div className="flex flex-row justify-start items-start w-full gap-6">
-                <div className="flex flex-col items-start justify-start w-[84%] pt-[5px] gap-[13px]">
-                  <Text as="p" className="!text-black-900_02 !font-medium">
-                    Nada
-                  </Text>
-                  <Text size="xs" as="p">
-                    Nada
-                  </Text>
-                </div>
-                <Img src="images/img_arrow_down_black_900_02.svg" alt="arrowdown_nine" className="h-[24px] w-[24px]" />
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-start w-[23%] md:w-full gap-2.5 mx-auto">
-              <Img src="images/mentors/img_bg_11.png" alt="bg_one" className="w-full md:h-auto object-cover rounded-[10px]" />
-              <div className="flex flex-row justify-start items-start w-full gap-6">
-                <div className="flex flex-col items-start justify-start w-[84%] pt-[5px] gap-[13px]">
-                  <Text as="p" className="!text-black-900_02 !font-medium">
-                    Nada
-                  </Text>
-                  <Text size="xs" as="p">
-                    Nada
-                  </Text>
-                </div>
-                <Img src="images/img_arrow_down_black_900_02.svg" alt="arrowdown_nine" className="h-[24px] w-[24px]" />
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-start w-[23%] md:w-full gap-2.5 mx-auto">
-              <Img src="images/mentors/img_bg_11.png" alt="bg_one" className="w-full md:h-auto object-cover rounded-[10px]" />
-              <div className="flex flex-row justify-start items-start w-full gap-6">
-                <div className="flex flex-col items-start justify-start w-[84%] pt-[5px] gap-[13px]">
-                  <Text as="p" className="!text-black-900_02 !font-medium">
-                    Nada
-                  </Text>
-                  <Text size="xs" as="p">
-                    Nada
-                  </Text>
-                </div>
-                <Img src="images/img_arrow_down_black_900_02.svg" alt="arrowdown_nine" className="h-[24px] w-[24px]" />
-              </div>
-            </div>
+            ))}
           </div>
         </div>
         <Footer className="flex flex-col items-center justify-center w-full" />
