@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Text, Button, Img, Slider, Heading, Header, Footer, BreadCrumbs } from "../../components";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import MentorCard from "components/MentorCard";
 
 export default function Mentors() {
   const [mentors, setMentors] = useState([])
-  const navigate = useNavigate()
 
   const getMentors = async () => {
     try {
@@ -71,20 +70,7 @@ export default function Mentors() {
           <Heading size="3xl" as="h1" className="text-center" >Our Mentors</Heading>
           <div className="flex flex-row flex-wrap md:flex-col justify-between w-[85%] gap-3 md:gap-5 mx-auto">
             {mentors[0] && mentors.map((mentor) => (
-              <div
-              className="flex flex-col items-center justify-start w-[23%] md:w-full gap-2.5 mx-auto bg-white-A700 hover:shadow-xs rounded-[20px] p-3 cursor-pointer"
-              onClick={() => {navigate('/mentor/' + mentor._id)}}
-              >
-                <Img src={mentor.image} alt="bg_one" className="w-full md:h-auto object-cover rounded-[20px]" />
-                <div className="flex flex-col items-start justify-start w-full pl-1 gap-1">
-                  <Text as="p" className="!text-black-900_02 !font-medium">
-                    {mentor.name}
-                  </Text>
-                  <Text size="xs" as="p" className="!text-gray-500">
-                    {mentor.role}
-                  </Text>
-                </div>
-              </div>
+              <MentorCard mentor={mentor} />
             ))}
           </div>
         </div>
