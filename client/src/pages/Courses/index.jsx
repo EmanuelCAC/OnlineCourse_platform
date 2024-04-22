@@ -3,6 +3,8 @@ import { Helmet } from "react-helmet";
 import { CloseSVG } from "../../assets/images";
 import { Button, Img, Text, SelectBox, Input, Heading, Header, BreadCrumbs, RatingBar, Footer } from "../../components";
 import { useNavigate } from "react-router-dom";
+import CourseCard1 from "components/CourseCard1";
+import CourseCard2 from "components/CourseCard2";
 
 
 const dropDownOptions = [
@@ -174,30 +176,7 @@ export default function EduviCoursesPage() {
               <div className="flex flex-row justify-start w-full">
                 <div className="w-full gap-10 md:gap-5 flex-row flex flex-wrap justify-center">
                   {courses[0] && courses.map((course) => (
-                    <div className="flex flex-col items-center justify-start w-full max-w-fit" key={course._id}>
-                      <div className="flex flex-col items-center justify-between w-full h-full p-[15px] bg-white-A700 rounded-[15px]">
-                        <div className="flex flex-col items-center justify-start w-full gap-3 md:px-5 max-w-[260px]">
-                          <Img src={course.image} alt="image" />
-                          <div className="flex flex-col items-center justify-start w-full gap-1">
-                            <Heading as="h1" className="text-center !font-bold">
-                              {course.name}
-                            </Heading>
-                            <Text as="p" className="!text-gray-700_01 text-center !leading-[20px] !text-sm">
-                              {course.description}
-                            </Text>
-                          </div>
-                        </div>
-                        <Button
-                          size="md"
-                          variant="outline"
-                          shape="round"
-                          className="my-3 sm:px-5 font-medium min-w-[159px] sm:min-w-full hover:text-white-A700 hover:bg-red-300_01"
-                          onClick={() => { navigate(course._id) }}
-                        >
-                          Course Details
-                        </Button>
-                      </div>
-                    </div>
+                    <CourseCard1 course={course} key={course._id} />
                   ))}
                 </div>
               </div>
@@ -207,16 +186,16 @@ export default function EduviCoursesPage() {
                     onClick={() => pageHandler('prev')}
                     onMouseOver={() => {
                       const img = document.getElementById('prev')
-                      img.src = "images/img_arrow_right.svg"
+                      img.src = "/images/img_arrow_right.svg"
                       img.className = img.className.replace("rotate-0", "rotate-180")
                     }}
                     onMouseLeave={() => {
                       const img = document.getElementById('prev')
-                      img.src = "images/img_arrow_left.svg"
+                      img.src = "/images/img_arrow_left.svg"
                       img.className = img.className.replace("rotate-180", "rotate-0")
                     }}
                   >
-                    <Img src="images/img_arrow_left.svg" id="prev" className="rotate-0" />
+                    <Img src="/images/img_arrow_left.svg" id="prev" className="rotate-0" />
                   </Button>
                   <Text as="p" className="!text-gray-900 !font-medium">
                     Page
@@ -231,16 +210,16 @@ export default function EduviCoursesPage() {
                     onClick={() => pageHandler('next')}
                     onMouseOver={() => {
                       const img = document.getElementById('next')
-                      img.src = "images/img_arrow_right.svg"
+                      img.src = "/images/img_arrow_right.svg"
                       img.className = img.className.replace("rotate-180", "rotate-0")
                     }}
                     onMouseLeave={() => {
                       const img = document.getElementById('next')
-                      img.src = "images/img_arrow_left.svg"
+                      img.src = "/images/img_arrow_left.svg"
                       img.className = img.className.replace("rotate-0", "rotate-180")
                     }}
                   >
-                    <Img src="images/img_arrow_left.svg" className="rotate-180" id="next" />
+                    <Img src="/images/img_arrow_left.svg" className="rotate-180" id="next" />
                   </Button>
                 </div>
               </div>
@@ -257,58 +236,7 @@ export default function EduviCoursesPage() {
               </div>
               <div className="justify-center w-full gap-10 grid-cols-2 md:grid-cols-1 md:gap-5 grid">
                 {popularCourses[0] && popularCourses.map((course) => (
-                  <div
-                    className="flex flex-row justify-start w-full gap-6 p-[15px] bg-white-A700 cursor-pointer rounded-[10px] hover:shadow-xs"
-                    key={course._id}
-                    onMouseLeave={() => {
-                      const button = document.getElementById(course._id)
-                      button.className = button.className.replace('bg-red-300_01', 'bg-red-100')
-                      const child = button.querySelector('#child')
-                      child.src = "images/img_shopping_bag_24.svg"
-                    }}
-                    onMouseOver={() => {
-                      const button = document.getElementById(course._id)
-                      button.className = button.className.replace('bg-red-100', 'bg-red-300_01')
-                      const child = button.querySelector('#child')
-                      child.src = "images/img_shopping_bag_24_white_a700.svg"
-                    }}
-                    onClick={() => { navigate(course._id) }}
-                  >
-                    <div className="flex flex-row sm:flex-col justify-start items-center w-[89%] md:w-full gap-[15px] sm:gap-5">
-                      <div className="flex flex-row justify-start w-[35%] sm:w-full">
-                        <Img
-                          src={course.image}
-                          alt="image"
-                          className="w-full md:h-auto sm:w-full object-cover rounded-[10px]"
-                        />
-                      </div>
-                      <div className="flex flex-col items-start justify-start w-[67%] sm:w-full gap-2">
-                        <div>
-                          <Heading size="md" as="h1">
-                            {course.name}
-                          </Heading>
-                          <Text as="p" size="s" className="!text-gray-700_01">{course.instructor}</Text>
-                        </div>
-                        <RatingBar
-                          value={course.rating}
-                          isEditable={false}
-                          size={18}
-                          className="flex justify-between"
-                        />
-                        <Heading size="md" as="h2" className="!text-deep_orange-400">
-                          ${course.price.toFixed(2)}
-                        </Heading>
-                        <div className="flex flex-row gap-3">
-                          {course.category.map((courseCat) => (
-                            <span key={courseCat} className="py-1 px-2 rounded-full bg-gray-200 text-black-900_02 text-xs">{courseCat}</span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    <Button size="lg" shape="round" className="w-[44px] !rounded-md bg-red-100" id={course._id}>
-                      <Img src="images/img_shopping_bag_24.svg" id="child" />
-                    </Button>
-                  </div>
+                  <CourseCard2 course={course} key={course._id} />
                 ))}
               </div>
             </div>

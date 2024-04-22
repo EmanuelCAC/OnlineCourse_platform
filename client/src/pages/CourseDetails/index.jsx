@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { Heading, Button, RatingBar, Text, Img, Header, Footer, BreadCrumbs } from "../../components";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import CourseCard2 from "components/CourseCard2";
 
 export default function CourseDetails() {
   let { id } = useParams()
@@ -392,65 +393,7 @@ export default function CourseDetails() {
             </Heading>
             <div className="w-full gap-10 grid-cols-2 md:grid-cols-1 md:gap-5 grid">
               {similarCourses.map((similarCourse) => (
-                <>
-                  {
-                    similarCourse._id != course._id &&
-                    <div
-                      className="flex flex-row justify-start w-full gap-6 p-[15px] bg-white-A700 cursor-pointer rounded-[10px] hover:shadow-xs"
-                      key={similarCourse._id}
-                      onMouseLeave={() => {
-                        const button = document.getElementById(similarCourse._id)
-                        button.className = button.className.replace('bg-red-300_01', 'bg-red-100')
-                        const child = button.querySelector('#child')
-                        child.src = "/images/img_shopping_bag_24.svg"
-                      }}
-                      onMouseOver={() => {
-                        const button = document.getElementById(similarCourse._id)
-                        button.className = button.className.replace('bg-red-100', 'bg-red-300_01')
-                        const child = button.querySelector('#child')
-                        child.src = "/images/img_shopping_bag_24_white_a700.svg"
-                      }}
-                      onClick={() => {
-                        navigate('/courses/' + similarCourse._id)
-                        id = similarCourse._id
-                      }}
-                    >
-                      <div className="flex flex-row sm:flex-col justify-start items-center w-[89%] md:w-full gap-[15px] sm:gap-5">
-                        <div className="flex flex-row justify-start w-[35%] sm:w-full">
-                          <Img
-                            src={similarCourse.image}
-                            alt="image"
-                            className="w-full md:h-auto sm:w-full object-cover rounded-[10px]"
-                          />
-                        </div>
-                        <div className="flex flex-col items-start justify-start w-[67%] sm:w-full gap-2">
-                          <div>
-                            <Heading size="md" as="h1">
-                              {similarCourse.name}
-                            </Heading>
-                          </div>
-                          <RatingBar
-                            value={similarCourse.rating}
-                            isEditable={false}
-                            size={18}
-                            className="flex justify-between"
-                          />
-                          <Heading size="md" as="h2" className="!text-deep_orange-400">
-                            ${similarCourse.price.toFixed(2)}
-                          </Heading>
-                          <div className="flex flex-row gap-3">
-                            {similarCourse.category.map((courseCat) => (
-                              <span key={courseCat} className="py-1 px-2 rounded-full bg-gray-200 text-black-900_02 text-xs">{courseCat}</span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                      <Button size="lg" shape="round" className="w-[44px] !rounded-md bg-red-100" id={similarCourse._id}>
-                        <Img src="images/img_shopping_bag_24.svg" id="child" />
-                      </Button>
-                    </div>
-                  }
-                </>
+                similarCourse._id != course._id && (<CourseCard2 course={similarCourse} key={similarCourse._id} />)
               ))}
             </div>
           </div>}
