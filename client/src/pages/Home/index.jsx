@@ -83,7 +83,6 @@ export default function Home() {
                     child.src = "images/img_shopping_bag_24_white_a700.svg"
                   }}
                   onClick={() => { navigate('/courses/' + course._id) }}
-
                 >
                   <div className="flex flex-row sm:flex-col justify-start items-center w-[89%] md:w-full gap-[15px] sm:gap-5">
                     <div className="flex flex-row justify-start w-[35%] sm:w-full">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Text, Heading, Img, Button, Header, Footer, BreadCrumbs, RatingBar } from "../../components";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
@@ -15,6 +15,7 @@ export default function SinglementordetailsPage() {
   const [reviews, setReviews] = useState([])
   const [active, setActive] = useState("About")
   const authData = useSelector((state) => state.auth.userData)
+  const navigate = useNavigate()
 
   const getMentor = async () => {
     try {
@@ -42,7 +43,7 @@ export default function SinglementordetailsPage() {
     if (mentor?.id) {
       try {
         const { data } = await axios.post(`http://localhost:3001/api/v1/mentor/review/all`, { instructorId: mentor._id })
-        if (data) console.log(data);
+        if (data) setReviews(data)
       } catch (error) {
         console.log(error)
       }
@@ -80,7 +81,7 @@ export default function SinglementordetailsPage() {
                           },
                           {
                             name: "Mentor",
-                            path: "#"
+                            path: "/mentor"
                           },
                           {
                             name: mentor?.name,
@@ -185,6 +186,7 @@ export default function SinglementordetailsPage() {
                                 const child = button.querySelector('#child')
                                 child.src = "/images/img_shopping_bag_24_white_a700.svg"
                               }}
+                              onClick={() => { navigate('/courses/' + course._id) }}
                             >
                               <div className="flex flex-row sm:flex-col justify-start items-center w-[89%] md:w-full gap-[15px] sm:gap-5">
                                 <div className="flex flex-row justify-start w-[35%] sm:w-full">

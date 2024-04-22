@@ -8,6 +8,7 @@ import Cart from "pages/Cart";
 import Courses from "pages/Courses"
 import MentorDetails from "pages/MentorDetails"
 import CourseDetails from "pages/CourseDetails";
+import Mentors from "pages/Mentors";
 
 const ProjectRoutes = () => {
   let element = useRoutes([
@@ -18,6 +19,7 @@ const ProjectRoutes = () => {
     { path: "/courses", element: <Courses /> },
     { path: "/courses/:id", element: <CourseDetails /> },
     { path: "/mentor/:id", element: <MentorDetails /> },
+    { path: "/mentor", element: <Mentors /> },
     { path: "*", element: <NotFound /> },
   ]);
 
