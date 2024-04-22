@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { CloseSVG } from "../../assets/images";
 import { Header, Text, Heading, Img, RatingBar, Button, Footer, BreadCrumbs } from "components";
 import { useNavigate } from "react-router-dom";
+import BookCard1 from "components/BookCard1";
 
 
 export default function Home() {
@@ -135,34 +136,7 @@ export default function Home() {
             </Heading>
             <div className="flex flex-row w-full gap-[25px]">
               {books && books.map((book) => (
-                <div
-                  key={book._id}
-                  onClick={() => navigate(`shop/${book._id}`)}
-                  className="flex flex-col justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px] cursor-pointer hover:shadow-xs">
-                  <Img
-                    src={book.image}
-                    alt="popular_books"
-                    className="w-[60%] md:h-auto sm:w-full ml-[3px] object-cover rounded-[5px]"
-                  />
-                  <div className="flex flex-col items-start justify-start w-[73%] mr-[3px] gap-2.5">
-                    <RatingBar
-                      value={book.rating}
-                      isEditable={false}
-                      size={16}
-                      className="flex justify-between"
-                    />
-                    <Heading as="h3" className="!text-black-900_02">
-                      <>
-                        {book.name}, by
-                        <br />
-                        {book.author}
-                      </>
-                    </Heading>
-                    <Heading as="h4" className="!text-red-300_01">
-                      ${book.price}
-                    </Heading>
-                  </div>
-                </div>
+                <BookCard1 book={book} />
               ))}
             </div>
             <Text size="lg" as="a" className="!text-red-300_01 ml-auto cursor-pointer" onClick={() => { navigate('/shop') }}>

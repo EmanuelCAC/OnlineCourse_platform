@@ -5,6 +5,8 @@ import { Button, Img, Text, SelectBox, Input, Heading, RatingBar, BreadCrumbs } 
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import { useNavigate } from "react-router-dom";
+import BookCard2 from "components/BookCard2";
+import BookCard3 from "components/BookCard3";
 
 const dropDownOptions = [
   { label: "Latest", value: "-createdAt" },
@@ -117,34 +119,7 @@ export default function EduviShopPage() {
               </Heading>
               <div className="flex flex-col w-full gap-[15px]">
                 {popularBooks && popularBooks.map((book) => (
-                  <div
-                    key={book._id}
-                    onClick={() => navigate(book._id)}
-                    className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px] cursor-pointer hover:shadow-xs">
-                    <Img
-                      src={book.image}
-                      alt="popular_books"
-                      className="w-[21%] md:h-auto sm:w-full ml-[3px] object-cover rounded-[5px]"
-                    />
-                    <div className="flex flex-col items-start justify-start w-[73%] mr-[3px] gap-2.5">
-                      <RatingBar
-                        value={book.rating}
-                        isEditable={false}
-                        size={16}
-                        className="flex justify-between"
-                      />
-                      <Heading as="h3" className="!text-black-900_02">
-                        <>
-                          {book.name}, by
-                          <br />
-                          {book.author}
-                        </>
-                      </Heading>
-                      <Heading as="h4" className="!text-red-300_01">
-                        ${book.price.toFixed(2)}
-                      </Heading>
-                    </div>
-                  </div>
+                  <BookCard2 book={book} />
                 ))}
               </div>
             </div>
@@ -154,34 +129,7 @@ export default function EduviShopPage() {
               </Heading>
               <div className="flex flex-col w-full gap-[15px]">
                 {newArrivals && newArrivals.map((book) => (
-                  <div
-                    key={book._id}
-                    onClick={() => navigate(book._id)}
-                    className="flex flex-row justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px] cursor-pointer hover:shadow-xs">
-                    <Img
-                      src={book.image}
-                      alt="popular_books"
-                      className="w-[21%] md:h-auto sm:w-full ml-[3px] object-cover rounded-[5px]"
-                    />
-                    <div className="flex flex-col items-start justify-start w-[73%] mr-[3px] gap-2.5">
-                      <RatingBar
-                        value={book.rating}
-                        isEditable={false}
-                        size={16}
-                        className="flex justify-between"
-                      />
-                      <Heading as="h3" className="!text-black-900_02">
-                        <>
-                          {book.name}, by
-                          <br />
-                          {book.author}
-                        </>
-                      </Heading>
-                      <Heading as="h4" className="!text-red-300_01">
-                        ${book.price.toFixed(2)}
-                      </Heading>
-                    </div>
-                  </div>
+                  <BookCard2 book={book} />
                 ))}
               </div>
             </div>
@@ -230,36 +178,8 @@ export default function EduviShopPage() {
                 />
               </div>
               <div className="justify-center w-full gap-[15px] grid-cols-3 md:grid-cols-2 md:gap-5 sm:grid-cols-1 grid">
-                {books && books.map((book, i) => (
-                  <div
-                    className="flex flex-col items-center justify-start w-full gap-2 cursor-pointer"
-                    key={i}
-                    onClick={() => navigate(book._id)}
-                  >
-                    <div className="flex flex-col items-center justify-start w-full md:h-auto p-5 bg-white-A700 rounded-[10px] hover:shadow-xs">
-                      <div className="flex flex-col items-center justify-start w-full md:px-5 max-w-[230px]">
-                        <Img
-                          src={book.image}
-                          alt="image_one"
-                          className="w-full md:h-auto sm:w-full object-cover rounded-[10px]"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-start justify-start w-full gap-[9px]">
-                      <Heading as="h1">{book.name}</Heading>
-                      <div className="flex flex-row justify-between items-center w-full">
-                        <Heading as="h2" className="!text-red-300_01">
-                          {book.price.toFixed(2)}
-                        </Heading>
-                        <RatingBar
-                          value={book.rating}
-                          isEditable={false}
-                          size={16}
-                          className="flex justify-between"
-                        />
-                      </div>
-                    </div>
-                  </div>
+                {books && books.map((book) => (
+                  <BookCard3 book={book} />
                 ))}
               </div>
             </div>
