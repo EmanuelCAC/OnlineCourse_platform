@@ -2,12 +2,12 @@ import React from "react";
 import { Img, RatingBar, Heading } from "./..";
 import { useNavigate } from "react-router-dom";
 
-export default function BookCard1({book}) {
+export default function BookCard1({book, ...props}) {
   const navigate = useNavigate()
   
   return (
     <div
-      key={book._id}
+      {...props}
       onClick={() => navigate(`shop/${book._id}`)}
       className="flex flex-col justify-start items-center w-full gap-[15px] p-[21px] sm:p-5 bg-white-A700 rounded-[10px] cursor-pointer hover:shadow-xs">
       <Img

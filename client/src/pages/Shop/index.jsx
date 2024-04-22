@@ -119,7 +119,7 @@ export default function EduviShopPage() {
               </Heading>
               <div className="flex flex-col w-full gap-[15px]">
                 {popularBooks && popularBooks.map((book) => (
-                  <BookCard2 book={book} />
+                  <BookCard2 book={book} key={book._id} />
                 ))}
               </div>
             </div>
@@ -129,7 +129,7 @@ export default function EduviShopPage() {
               </Heading>
               <div className="flex flex-col w-full gap-[15px]">
                 {newArrivals && newArrivals.map((book) => (
-                  <BookCard2 book={book} />
+                  <BookCard2 book={book} key={book._id} />
                 ))}
               </div>
             </div>
@@ -179,7 +179,7 @@ export default function EduviShopPage() {
               </div>
               <div className="justify-center w-full gap-[15px] grid-cols-3 md:grid-cols-2 md:gap-5 sm:grid-cols-1 grid">
                 {books && books.map((book) => (
-                  <BookCard3 book={book} />
+                  <BookCard3 book={book} key={book._id} />
                 ))}
               </div>
             </div>

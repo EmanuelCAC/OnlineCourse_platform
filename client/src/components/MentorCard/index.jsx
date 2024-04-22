@@ -2,11 +2,12 @@ import React from "react";
 import { Img, Text } from "./..";
 import { useNavigate } from "react-router-dom";
 
-export default function MentorCard({mentor}) {
+export default function MentorCard({mentor, ...props}) {
   const navigate = useNavigate()
 
   return (
     <div
+    {...props}
     className="flex flex-col items-center justify-start w-[23%] md:w-full gap-2.5 mx-auto bg-white-A700 hover:shadow-xs rounded-[20px] p-3 cursor-pointer"
     onClick={() => {navigate('/mentor/' + mentor._id)}}
     >

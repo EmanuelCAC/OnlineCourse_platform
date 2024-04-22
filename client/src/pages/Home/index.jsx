@@ -86,7 +86,7 @@ export default function Home() {
             </Heading>
             <div className="flex flex-row w-full gap-[25px]">
               {books && books.map((book) => (
-                <BookCard1 book={book} />
+                <BookCard1 book={book} key={book._id} />
               ))}
             </div>
             <Text size="lg" as="a" className="!text-red-300_01 ml-auto cursor-pointer" onClick={() => { navigate('/shop') }}>

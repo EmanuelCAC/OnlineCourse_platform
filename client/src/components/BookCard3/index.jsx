@@ -2,13 +2,13 @@ import React from "react";
 import { Img, RatingBar, Heading } from "./..";
 import { useNavigate } from "react-router-dom";
 
-export default function BookCard3({book}) {
+export default function BookCard3({book, ...props}) {
   const navigate = useNavigate()
   
   return (
     <div
       className="flex flex-col items-center justify-start w-full gap-2 cursor-pointer"
-      key={book._id}
+      {...props}
       onClick={() => navigate(book._id)}
     >
       <div className="flex flex-col items-center justify-start w-full md:h-auto p-5 bg-white-A700 rounded-[10px] hover:shadow-xs">

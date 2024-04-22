@@ -143,9 +143,10 @@ export default function Header({ updateCart, ...props }) {
         </button>
         <ul className="flex flex-row md:flex-col justify-start items-center w-[58%] md:w-full gap-6 md:gap-5">
           {
-            navItems.map((item) => item.active ? (
+            navItems.map((item, i) => item.active ? (
               <li
                 id={item.name}
+                key={i}
                 className="flex flex-row justify-start items-center relative"
                 onMouseOver={() => {
                   const navitem = document.getElementById(item.name)

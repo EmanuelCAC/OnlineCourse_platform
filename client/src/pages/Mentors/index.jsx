@@ -70,7 +70,7 @@ export default function Mentors() {
           <Heading size="3xl" as="h1" className="text-center" >Our Mentors</Heading>
           <div className="flex flex-row flex-wrap md:flex-col justify-between w-[85%] gap-3 md:gap-5 mx-auto">
             {mentors[0] && mentors.map((mentor) => (
-              <MentorCard mentor={mentor} />
+              <MentorCard mentor={mentor} key={mentor._id} />
             ))}
           </div>
         </div>

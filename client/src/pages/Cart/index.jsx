@@ -116,8 +116,8 @@ export default function Cart() {
                 <div className="flex flex-col w-2/3 bg-white-A700 rounded-[20px] p-5 md:px-5 mt-3">
                   <Text className="text-black-900_02 !text-3xl !font-medium">Items</Text>
                   {cart.map((item) => (
-                    <>
-                      <div className="flex flex-row pb-5 pt-3" key={item._id} >
+                    <div key={item._id}>
+                      <div className="flex flex-row pb-5 pt-3" >
                         <Img src={item.image} className={'w-24 mr-3 border-2 cursor-pointer'} onClick={() => (navigate('/shop/' + item.productId))} />
                         <div className="flex flex-col justify-between w-full">
                           <Text className=" text-black-900_02 !text-lg cursor-pointer" onClick={() => (navigate('/shop/' + item.productId))}>{item.productName}</Text>
@@ -141,19 +141,17 @@ export default function Cart() {
                         </div>
                       </div>
                       <hr />
-                    </>
+                    </div>
                   ))}
                 </div>
                 <div className="flex flex-col w-1/3">
                   <div className="  bg-white-A700 rounded-[20px] p-5 md:px-5 mt-3">
                     <Text className="text-black-900_02 !text-3xl !font-medium mb-3">Resume</Text>
                     {cart.map((item) => (
-                      <>
-                        <div className="flex flex-row w-full justify-between py-2 gap-2">
-                          <Text size="sm" className="text-gray-600">{item.productName}</Text>
-                          <Text size="sm" className="!font-semibold min-w-fit">R$ {(item.price * item.amount).toFixed(2)}</Text>
-                        </div>
-                      </>
+                      <div className="flex flex-row w-full justify-between py-2 gap-2" key={item._id}>
+                        <Text size="sm" className="text-gray-600">{item.productName}</Text>
+                        <Text size="sm" className="!font-semibold min-w-fit">R$ {(item.price * item.amount).toFixed(2)}</Text>
+                      </div>
                     ))}
                     <div className="flex flex-row mt-3 justify-between">
                       <Text className="text-black-900_02 !font-semibold !text-xl ">Total</Text>
