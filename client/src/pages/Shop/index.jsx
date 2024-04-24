@@ -4,9 +4,9 @@ import { CloseSVG } from "../../assets/images";
 import { Button, Img, Text, SelectBox, Input, Heading, RatingBar, BreadCrumbs } from "../../components";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import { useNavigate } from "react-router-dom";
 import BookCard2 from "components/BookCard2";
 import BookCard3 from "components/BookCard3";
+import PagesButton from "components/PagesButton";
 
 const dropDownOptions = [
   { label: "Latest", value: "-createdAt" },
@@ -26,8 +26,6 @@ export default function EduviShopPage() {
   const [active, setActive] = useState("All Books")
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
-
-  const navigate = useNavigate()
 
   const getPopularBooks = async () => {
     const data = await fetch('http://localhost:3001/api/v1/book?limit=3&sort=-rating')
@@ -183,47 +181,7 @@ export default function EduviShopPage() {
                 ))}
               </div>
             </div>
-            <div className="flex flex-row justify-between items-center w-[35%] md:w-full">
-              <Button size="lg" shape="round" className="w-[15%] !rounded-md !bg-white-A700 hover:!bg-red-300_01"
-                onClick={() => pageHandler('prev')}
-                onMouseOver={() => {
-                  const img = document.getElementById('prev')
-                  img.src = "images/img_arrow_right.svg"
-                  img.className = img.className.replace("rotate-0", "rotate-180")
-                }}
-                onMouseLeave={() => {
-                  const img = document.getElementById('prev')
-                  img.src = "images/img_arrow_left.svg"
-                  img.className = img.className.replace("rotate-180", "rotate-0")
-                }}
-              >
-                <Img src="images/img_arrow_left.svg" id="prev" className="rotate-0" />
-              </Button>
-              <Text as="p" className="!text-gray-900 !font-medium">
-                Page
-              </Text>
-              <Button color="white_A700" size="sm" className="!text-gray-700_01 font-medium min-w-[42px] rounded-lg cursor-default">
-                {page}
-              </Button>
-              <Text as="p" className="!text-gray-900 !font-medium">
-                of {books ? totalPages : 1}
-              </Text>
-              <Button size="lg" shape="round" className="w-[15%] !rounded-md !bg-white-A700 hover:!bg-red-300_01"
-                onClick={() => pageHandler('next')}
-                onMouseOver={() => {
-                  const img = document.getElementById('next')
-                  img.src = "images/img_arrow_right.svg"
-                  img.className = img.className.replace("rotate-180", "rotate-0")
-                }}
-                onMouseLeave={() => {
-                  const img = document.getElementById('next')
-                  img.src = "images/img_arrow_left.svg"
-                  img.className = img.className.replace("rotate-0", "rotate-180")
-                }}
-              >
-                <Img src="images/img_arrow_left.svg" className="rotate-180" id="next" />
-              </Button>
-            </div>
+            <PagesButton items={books} page={page} pageHandler={pageHandler} totalPages={totalPages} />
           </div>
         </div>
         <Footer className="flex flex-col items-center justify-center w-full" />
