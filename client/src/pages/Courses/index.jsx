@@ -202,7 +202,7 @@ export default function EduviCoursesPage() {
             </div>
           </div>
         </div>
-        <Footer className="flex flex-col items-center justify-center w-full" />
+        <Footer className="flex justify-center items-center w-full px-14 py-20 md:p-5 bg-gray-100" />
       </div>
     </>
   );

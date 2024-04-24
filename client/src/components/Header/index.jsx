@@ -42,38 +42,23 @@ export default function Header({ updateCart, ...props }) {
 
   const navItems = [
     {
+      name: "Home",
+      slug: "/",
+      active: true
+    },
+    {
+      name: "Pricing",
+      slug: "/pricing",
+      active: true
+    },
+    {
       name: "Shop",
       slug: "/shop",
       active: true
     },
     {
-      name: "For Kindergarten",
-      slug: "#",
-      img: {
-        src: "images/img_arrow_down.svg",
-        alt: "arrowdown_one",
-        className: "h-[24px] w-[24px]"
-      },
-      active: true
-    },
-    {
-      name: "For High School",
-      slug: "#",
-      img: {
-        src: "images/img_arrow_down.svg",
-        alt: "arrowdown_one",
-        className: "h-[24px] w-[24px]"
-      },
-      active: true
-    },
-    {
-      name: "For College",
-      slug: "#",
-      img: {
-        src: "images/img_arrow_down.svg",
-        alt: "arrowdown_one",
-        className: "h-[24px] w-[24px]"
-      },
+      name: "Mentors",
+      slug: "/mentor",
       active: true
     },
     {
@@ -87,12 +72,8 @@ export default function Header({ updateCart, ...props }) {
       state: { category: "" },
       dropdown: ["Kindergarten", "High School", "College", "Technology", "Science", "Language", "Mathematics", "Social Studies"],
       active: true
-    },
-    {
-      name: "Mentors",
-      slug: "/mentor",
-      active: true
     }
+    
   ]
 
   const navAuthItems = [

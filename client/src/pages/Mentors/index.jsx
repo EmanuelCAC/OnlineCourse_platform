@@ -29,7 +29,7 @@ export default function Mentors() {
   return (
     <>
       <Helmet>
-        <title>Emanuel's Application1</title>
+        <title>Online Course Platform</title>
         <meta name="description" content="Web site created using create-react-app" />
       </Helmet>
       <div className="flex flex-col items-center justify-start w-full gap-[100px] bg-gray-100">
@@ -74,7 +74,7 @@ export default function Mentors() {
             ))}
           </div>
         </div>
-        <Footer className="flex flex-col items-center justify-center w-full" />
+        <Footer className="flex justify-center items-center w-full px-14 py-20 md:p-5 bg-gray-100" />
       </div>
     </>
   );
