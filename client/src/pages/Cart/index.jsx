@@ -114,27 +114,27 @@ export default function Cart() {
             {cart[0] &&
               <div className="flex flex-row w-full gap-5">
                 <div className="flex flex-col w-2/3 bg-white-A700 rounded-[20px] p-5 md:px-5 mt-3">
-                  <Text className="text-black-900_02 !text-3xl !font-medium">Items</Text>
+                  <Text className="!text-black-900_02 !text-3xl !font-medium">Items</Text>
                   {cart.map((item) => (
                     <div key={item._id}>
                       <div className="flex flex-row pb-5 pt-3" >
                         <Img src={item.image} className={'w-24 mr-3 border-2 cursor-pointer'} onClick={() => (navigate('/shop/' + item.productId))} />
                         <div className="flex flex-col justify-between w-full">
-                          <Text className=" text-black-900_02 !text-lg cursor-pointer" onClick={() => (navigate('/shop/' + item.productId))}>{item.productName}</Text>
+                          <Text className=" !text-black-900_02 !text-lg cursor-pointer" onClick={() => (navigate('/shop/' + item.productId))}>{item.productName}</Text>
                           <div className="flex flex-row justify-between ">
                             <Text size="lg" className=" font-extrabold">R$ {item.price}</Text>
                             <div className="flex border-2 border-gray-200 h-[32px] my-auto">
                               <Button className="h-[30px] px-0 bg-gray-200 aspect-square" onClick={() => { editAmount(item, -1) }}>
-                                <Text size="lg" className="text-black-900_02">-</Text>
+                                <Text size="lg" className="!text-black-900_02">-</Text>
                               </Button>
                               <Input
-                                className="h-[30px] text-black-900_02 !px-5"
+                                className="h-[30px] !text-black-900_02 !px-5"
                                 type="number"
                                 value={item.amount}
                                 inputClass="text-center w-8 font-semibold"
                               />
                               <Button className="h-[30px] px-0 bg-gray-200 aspect-square" onClick={() => { editAmount(item, 1) }}>
-                                <Text size="lg" className="text-black-900_02" >+</Text>
+                                <Text size="lg" className="!text-black-900_02" >+</Text>
                               </Button>
                             </div>
                           </div>
@@ -145,8 +145,8 @@ export default function Cart() {
                   ))}
                 </div>
                 <div className="flex flex-col w-1/3">
-                  <div className="  bg-white-A700 rounded-[20px] p-5 md:px-5 mt-3">
-                    <Text className="text-black-900_02 !text-3xl !font-medium mb-3">Resume</Text>
+                  <div className="bg-white-A700 rounded-[20px] p-5 md:px-5 mt-3">
+                    <Text className="!text-black-900_02 !text-3xl !font-medium mb-3">Resume</Text>
                     {cart.map((item) => (
                       <div className="flex flex-row w-full justify-between py-2 gap-2" key={item._id}>
                         <Text size="sm" className="text-gray-600">{item.productName}</Text>
@@ -154,7 +154,7 @@ export default function Cart() {
                       </div>
                     ))}
                     <div className="flex flex-row mt-3 justify-between">
-                      <Text className="text-black-900_02 !font-semibold !text-xl ">Total</Text>
+                      <Text className="!text-black-900_02 !font-semibold !text-xl ">Total</Text>
                       <Text className="!font-semibold !text-xl min-w-fit">R$ {total}</Text>
                     </div>
                     <Button shape="round" className="mt-4 w-full" hover={true}>Complete the purchase</Button>

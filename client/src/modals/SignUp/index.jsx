@@ -11,7 +11,10 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
   const sliderRef = React.useRef(null);
   const [name, setName] = React.useState("")
   const [email, setEmail] = React.useState("")
-  const [password, setPassword] = React.useState("")
+  const [password1, setPassword1] = React.useState("")
+  const [password2, setPassword2] = React.useState("")
+  const [passType1, setPassType1] = React.useState("password")
+  const [passType2, setPassType2] = React.useState("password")
   const [error, setError] = React.useState(null)
   const dispatch = useDispatch()
 
@@ -19,11 +22,12 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
     e.preventDefault()
 
     try {
-      const { data } = await axios.post("http://localhost:3001/api/v1/auth/signup", { name, email, password })
+      const { data } = await axios.post("http://localhost:3001/api/v1/auth/signup", { name, email, password1, password2 })
       localStorage.setItem('token', data.token)
       setName("")
       setEmail("")
-      setPassword("")
+      setPassword1("")
+      setPassword2("")
       setError(null)
       dispatch(authLogin(data.token))
       close()
@@ -120,11 +124,11 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
                         <Input
                           color="white_A700"
                           size="xs"
-                          type="password"
-                          name="password"
+                          type={passType1}
+                          name="password1"
                           placeholder="*************"
-                          value={password}
-                          onChange={(e) => setPassword(e)}
+                          value={password1}
+                          onChange={(e) => setPassword1(e)}
                           prefix={
                             <Img
                               src="images/img_lockpad_locksafesecurityprotectedlock_alt_24_outline.svg"
@@ -132,7 +136,28 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
                             />
                           }
                           suffix={
-                            <div className="flex justify-center items-center w-[15px] h-[11px]">
+                            <div className="flex justify-center items-center w-[15px] h-[11px]" onClick={() => passType1=="password" ? setPassType1("text") : setPassType1("password")}>
+                              <Img src="images/img_vector.svg" alt="Vector" />
+                            </div>
+                          }
+                          className="w-full sm:w-full gap-[15px] rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"
+                        />
+                        <Input
+                          color="white_A700"
+                          size="xs"
+                          type={passType2}
+                          name="password2"
+                          placeholder="*************"
+                          value={password2}
+                          onChange={(e) => setPassword2(e)}
+                          prefix={
+                            <Img
+                              src="images/img_lockpad_locksafesecurityprotectedlock_alt_24_outline.svg"
+                              alt="lock,pad lock,safe,security,protected,lock alt, / 24 / Outline"
+                            />
+                          }
+                          suffix={
+                            <div className="flex justify-center items-center w-[15px] h-[11px]"onClick={() => passType2=="password" ? setPassType2("text") : setPassType2("password")}>
                               <Img src="images/img_vector.svg" alt="Vector" />
                             </div>
                           }

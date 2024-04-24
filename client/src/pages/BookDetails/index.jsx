@@ -190,25 +190,25 @@ export default function BookDetails() {
                 <div className="mt-8">
                   <Heading children='Category' size="s" />
                   <div className="flex flex-row gap-3 mt-1">
-                    <Text as="span" className="border-2 py-1 px-2 rounded-full bg-gray-100 text-black-900_02">{book ? book.category : ""}</Text>
+                    <Text as="span" className="border-2 py-1 px-2 rounded-full bg-gray-100 !text-black-900_02">{book ? book.category : ""}</Text>
                   </div>
                 </div>
                 <div className="mt-8">
                   <Heading children='Description' size="s" />
-                  <Text as="p" className="text-black-900_02 my-1 mx-3">
+                  <Text as="p" className="!text-black-900_02 my-1 mx-3">
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta praesentium vero suscipit veniam ipsum facere facilis qui deleniti repudiandae totam veritatis doloremque repellat ipsam eaque mollitia, consequatur quam dolorum necessitatibus!
                   </Text>
                 </div>
                 <div className="flex flew-row mt-auto">
-                  <Text as="p" className="text-black-900_02 my-auto mx-3 h-8" size="lg">
+                  <Text as="p" className="!text-black-900_02 my-auto mx-3 h-8" size="lg">
                     Amount:
                   </Text>
                   <div className="flex border-2 border-gray-200 h-[32px] my-auto">
                     <Button className="h-[30px] px-0 bg-gray-200 aspect-square" onClick={() => { if (amount > 1) setAmount(amount - 1) }}>
-                      <Text size="lg" className="text-black-900_02" >-</Text>
+                      <Text size="lg" className="!text-black-900_02" >-</Text>
                     </Button>
                     <Input
-                      className="h-[30px] text-black-900_02 !px-5"
+                      className="h-[30px] !text-black-900_02 !px-5"
                       type="number"
                       value={amount}
                       onChange={(e) => {
@@ -220,7 +220,7 @@ export default function BookDetails() {
                       inputClass="text-center w-8 font-semibold"
                     />
                     <Button className="h-[30px] px-0 bg-gray-200 aspect-square" onClick={() => setAmount(amount + 1)}>
-                      <Text size="lg" className="text-black-900_02" >+</Text>
+                      <Text size="lg" className="!text-black-900_02" >+</Text>
                     </Button>
                   </div>
                   <Button className="ml-auto" onClick={() => { addToCart() }} hover={true}>
