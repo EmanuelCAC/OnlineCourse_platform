@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Img, Button, Input, Text, Heading } from "./..";
+import axios from "axios";
 
-export default function Subscribe({
-  subscribefor = (
-    <>
-      Subscribe For Get Update
-      <br />
-      Every New Courses
-    </>
-  ),
-  p20kstudents = "20k+ students daily learn with Educatsy. Subscribe for new courses.",
-  subscribe = "Subscribe",
-  ...props
-}) {
+export default function Subscribe({ ...props }) {
+  const [email, setEmail] = useState("")
+
+
+  const submitHandler = async (e) => {
+    e.preventDefault()
+
+    try {
+      const {data} = await axios.post(`http://localhost:3001/api/v1/subscribe`, {
+        email: email
+      })
+      setEmail("")
+    } catch (error) {
+      console.log(error.response.data.msg);
+    }
+  }
+
   return (
     <div {...props}>
       <div className="flex flex-row justify-center w-full p-[50px] md:p-5 bg-black-900_01 max-w-7xl rounded-[20px]">
@@ -38,23 +44,27 @@ export default function Subscribe({
             <div className="flex flex-col items-center justify-start w-[66%] md:w-full gap-10">
               <div className="flex flex-col items-center justify-start w-full pb-[3px] gap-[26px]">
                 <Heading size="2xl" as="h1" className="!text-white-A700 !font-metropolis text-center leading-[55px]">
-                  {subscribefor}
+                  Subscribe For Get Update
+                  <br />
+                  Every New Courses
                 </Heading>
                 <Text as="p" className="!text-white-A700_b2 text-center">
-                  {p20kstudents}
+                  20k+ students daily learn with Educatsy. Subscribe for new courses.
                 </Text>
               </div>
-              <div className="flex flex-row sm:flex-col justify-center w-full sm:gap-5">
+              <form className="flex flex-row sm:flex-col justify-center w-full sm:gap-5" onSubmit={(e) => submitHandler(e)}>
                 <Input
                   shape="round"
                   name="email"
                   placeholder="enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e)}
                   className="w-[77%] md:w-full font-medium"
                 />
-                <Button size="3xl" className="sm:px-5 rounded-tr-[10px] rounded-br-[10px] font-medium min-w-[138px]">
-                  {subscribe}
+                <Button size="3xl" type='submit' className="sm:px-5 rounded-tr-[10px] rounded-br-[10px] font-medium min-w-[138px]">
+                  Subscribe
                 </Button>
-              </div>
+              </form>
             </div>
             <div className="flex flex-col items-end justify-start w-[22%] md:w-full gap-[57px]">
               <Img
