@@ -35,9 +35,14 @@ export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
       {...props}
       appElement={document.getElementById("root")}
       isOpen={isOpen}
-      className="w-full"
+      className="w-[80%]"
+      style={{
+        overlay: {
+          backgroundColor: 'rgba(255, 255, 255, 0.5)'
+        },
+      }}
     >
-      <div className="flex flex-row justify-center w-full">
+      <div className="flex flex-row justify-center min-h-[80vh] max-h-fit">
         <div className="flex flex-row justify-center w-full px-14 py-[71px] md:p-5 bg-white-A700 rounded-[15px] outline-none">
           <div className="flex flex-row justify-center w-[97%]">
             <div className="flex flex-row justify-center w-full p-2">
@@ -47,7 +52,7 @@ export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
                     {<Slider
                       autoPlay
                       autoPlayInterval={2000}
-                      responsive={{ 0: { items: 1 }, 550: { items: 1 }, 1050: { items: 3 } }}
+                      responsive={{ 0: { items: 0 }, 550: { items: 0 }, 1050: { items: 0 } }}
                       disableDotsControls
                       activeIndex={sliderState}
                       onSlideChanged={(e) => {
@@ -71,7 +76,7 @@ export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
                     />}
                     <div className="flex justify-center w-[36px] h-[10px] sm:w-full" />
                   </div>
-                  <div className="h-[641px] w-px md:w-full md:h-px bg-gradient" />
+                  <div className="h-full w-px md:w-full md:h-px bg-gradient" />
                   <div className="flex flex-col items-center justify-start w-[42%] md:w-full">
                     <Button
                       color="white_A700"
