@@ -16,20 +16,17 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
   const [passType1, setPassType1] = React.useState("password")
   const [passType2, setPassType2] = React.useState("password")
   const [error, setError] = React.useState(null)
-  const dispatch = useDispatch()
 
   const submitHandler = (async (e) => {
     e.preventDefault()
 
     try {
       const { data } = await axios.post("http://localhost:3001/api/v1/auth/signup", { name, email, password1, password2 })
-      localStorage.setItem('token', data.token)
       setName("")
       setEmail("")
       setPassword1("")
       setPassword2("")
       setError(null)
-      dispatch(authLogin(data.token))
       close()
     } catch (error) {
       setError(error.response.data.msg)

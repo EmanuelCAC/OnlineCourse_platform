@@ -24,7 +24,10 @@ const subscribe = (req, res) => {
     from: 'emanuelc279@gmail.com', // Use the email address or domain you verified above
     subject: 'test2',
     text: 'test2',
-    html: '<strong>Thank tou for subscribing</strong>',
+    html: 
+    `
+    <strong>Thank tou for subscribing</strong>
+    `,
   };
 
   sgMail
