@@ -9,22 +9,22 @@ const getAll = async (req, res) => {
 const getOne = async (req, res) => {
   const { _id, name, email } = await User.findById({ _id: req.params.id })
   const user = { _id, name, email }
-  res.status(StatusCodes.OK).json({ user })
+  res.status(StatusCodes.OK).json(user)
 }
 
 const create = async (req, res) => {
   const user = await User.create(req.body)
-  res.status(StatusCodes.OK).json({ user })
+  res.status(StatusCodes.OK).json(user)
 }
 
 const edit = async (req, res) => {
   const user = await User.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
-  res.status(StatusCodes.OK).json({ user })
+  res.status(StatusCodes.OK).json(user)
 }
 
 const remove = async (req, res) => {
   const user = await User.findByIdAndDelete({ _id: req.params.id })
-  res.status(StatusCodes.OK).json({ user })
+  res.status(StatusCodes.OK).json(user)
 }
 
 export {

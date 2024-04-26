@@ -1,8 +1,7 @@
 import mongoose from "mongoose"
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 
-const UserSchema = new mongoose.Schema({
+const TempUserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Please provide a name'],
@@ -20,21 +19,24 @@ const UserSchema = new mongoose.Schema({
     required: [true, 'Please provide a password'],
     minlength: 6,
   },
-})
+  code: {
+    type: String,
+    required: [true, 'Please provide a password'],
+    maxlength: 4,
+    minlength: 4
+  }
+}, { timestamps: true })
 
-UserSchema.pre('save', async function (next) {
+TempUserSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 10)
   next()
 })
 
-UserSchema.methods.createJWT = function () {
-  return jwt.sign({ userId: this._id, name: this.name }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_LIFETIME })
-}
+TempUserSchema.pre('findOneAndUpdate', async function (next) {
+  const pass = toString(this._update.password)
+  const hash = await bcrypt.hash(pass, 10)
+  this.set({password: hash})
+  next()
+})
 
-UserSchema.methods.comparePassword = async function (cadidatePassword) {
-  const isMatch = await bcrypt.compare(cadidatePassword, this.password)
-  return isMatch
-}
-
-
-export default mongoose.model('User', UserSchema)
+export default mongoose.model('TempUser', TempUserSchema)
