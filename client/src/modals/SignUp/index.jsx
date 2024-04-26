@@ -19,18 +19,19 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
 
   const submitHandler = (async (e) => {
     e.preventDefault()
+    const code = Math.floor(1000 + Math.random() * 9000);
 
     try {
-      const { data } = await axios.post("http://localhost:3001/api/v1/auth/signup", { name, email, password1, password2 })
+      const { data } = await axios.post("http://localhost:3001/api/v1/tempUser", { name, email, password1, password2, code })
       if (data) {
-        history.pushState({email: email}, "")
         setName("")
         setEmail("")
         setPassword1("")
         setPassword2("")
         setError(null)
         close()
-        navigate('confirmAccount')
+        navigate('confirmAccount', { state: { account: data }})
+        history.pushState({account: data}, "")
       }
     } catch (error) {
       setError(error.response.data.msg)

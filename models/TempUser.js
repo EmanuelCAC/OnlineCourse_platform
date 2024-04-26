@@ -21,22 +21,11 @@ const TempUserSchema = new mongoose.Schema({
   },
   code: {
     type: String,
-    required: [true, 'Please provide a password'],
+    required: [true, 'Please provide a code'],
     maxlength: 4,
     minlength: 4
   }
 }, { timestamps: true })
 
-TempUserSchema.pre('save', async function (next) {
-  this.password = await bcrypt.hash(this.password, 10)
-  next()
-})
-
-TempUserSchema.pre('findOneAndUpdate', async function (next) {
-  const pass = toString(this._update.password)
-  const hash = await bcrypt.hash(pass, 10)
-  this.set({password: hash})
-  next()
-})
 
 export default mongoose.model('TempUser', TempUserSchema)
