@@ -3,8 +3,7 @@ import { Text, CheckBox, Button, Input, Img, Heading, Slider } from "../../compo
 import SignUpInputfield from "../../components/SignUpInputfield";
 import { default as ModalProvider } from "react-modal";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { login as authLogin } from "store/authSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
   const [sliderState, setSliderState] = React.useState(0);
@@ -16,18 +15,23 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
   const [passType1, setPassType1] = React.useState("password")
   const [passType2, setPassType2] = React.useState("password")
   const [error, setError] = React.useState(null)
+  const navigate = useNavigate()
 
   const submitHandler = (async (e) => {
     e.preventDefault()
 
     try {
       const { data } = await axios.post("http://localhost:3001/api/v1/auth/signup", { name, email, password1, password2 })
-      setName("")
-      setEmail("")
-      setPassword1("")
-      setPassword2("")
-      setError(null)
-      close()
+      if (data) {
+        history.pushState({email: email}, "")
+        setName("")
+        setEmail("")
+        setPassword1("")
+        setPassword2("")
+        setError(null)
+        close()
+        navigate('confirmAccount')
+      }
     } catch (error) {
       setError(error.response.data.msg)
     }
