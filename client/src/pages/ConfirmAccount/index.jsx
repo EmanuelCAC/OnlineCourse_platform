@@ -10,23 +10,18 @@ export default function ConfirmAccount() {
   const email = history.state.category || 'teste@gmail.com'
   const sensorEmail = email.replace(email.slice(1, email.indexOf('@')-1), '*'.repeat(email.indexOf('@')-2))
 
-  const [time, setTime] = useState(60)
-
-  const countDown = () => {
-    if (time>0) {
-      setTime(time-1)
-      console.log(time);
-    } else {
-      setTime(0)
-    }
-  }
-
-  useEffect(() => {
-    setInterval(countDown, 1000);
-  }, [])
-
-  
-
+  const initialSeconds = 60
+    const [seconds, setSeconds ] =  useState(initialSeconds);
+    useEffect(()=>{
+      let myInterval = setInterval(() => {
+        if (seconds > 0) {
+          setSeconds(seconds - 1);
+        }
+      }, 500)
+      return ()=> {
+        clearInterval(myInterval);
+      };
+    });
 
   return (
     <>
@@ -60,7 +55,7 @@ export default function ConfirmAccount() {
               type="number"
             />
           </div>
-          <Text size="xs" className="!text-gray-500">{time}</Text>
+          <Text size="s" className={(seconds > 0 ? '!text-gray-300 cursor-default' : "cursor-pointer ")} >{seconds > 0 ? `resend(${seconds}s)` : "resend"}</Text>
         </div>
       </div>
     </>
