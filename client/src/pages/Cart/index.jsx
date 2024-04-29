@@ -74,7 +74,14 @@ export default function Cart() {
       sum += cart[i].price * cart[i].amount
     }
     setTotal(sum.toFixed(2))
+  }
 
+  const purchase = () => {
+    const data = cart.map((item) => {
+      return {name: item.productName, price: item.price * item.amount}
+    })
+    navigate('/payment', {state: {data: data}})
+    history.pushState({data: data}, "")
   }
 
   useEffect(() => {
@@ -157,7 +164,7 @@ export default function Cart() {
                       <Text className="!text-black-900_02 !font-semibold !text-xl ">Total</Text>
                       <Text className="!font-semibold !text-xl min-w-fit">R$ {total}</Text>
                     </div>
-                    <Button shape="round" className="mt-4 w-full" hover={true}>Complete the purchase</Button>
+                    <Button shape="round" className="mt-4 w-full" hover onClick={purchase}>Complete the purchase</Button>
                   </div>
                 </div>
               </div>

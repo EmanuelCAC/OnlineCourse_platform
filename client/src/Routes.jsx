@@ -11,6 +11,7 @@ import CourseDetails from "pages/CourseDetails";
 import Mentors from "pages/Mentors";
 import Pricing from "pages/Pricing";
 import ConfirmAccount from "pages/ConfirmAccount";
+import Payment from "pages/Payment";
 
 const ProjectRoutes = () => {
   let element = useRoutes([
@@ -24,6 +25,7 @@ const ProjectRoutes = () => {
     { path: "/mentor/:id", element: <MentorDetails /> },
     { path: "/pricing", element: <Pricing /> },
     { path: "/confirmAccount", element: <ConfirmAccount /> },
+    { path: "/payment", element: <Payment /> },
     { path: "*", element: <NotFound /> },
   ]);
 
