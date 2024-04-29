@@ -27,5 +27,10 @@ const TempUserSchema = new mongoose.Schema({
   }
 }, { timestamps: true })
 
+TempUserSchema.pre('save', async function (next) {
+  console.log(this.password)
+  this.password = await bcrypt.hash(this.password, 10)
+  next()
+})
 
 export default mongoose.model('TempUser', TempUserSchema)

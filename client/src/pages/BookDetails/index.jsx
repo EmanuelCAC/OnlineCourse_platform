@@ -34,7 +34,7 @@ export default function BookDetails() {
     const reviewsList = data.map(async (review) => {
       const data = await fetch(`http://localhost:3001/api/v1/user/${review.createdBy}`)
       const user = await data.json()
-      if (user) review.userName = user.user.name
+      if (user) review.userName = user.name
       review.likeAmount = review.like.length
       return review
     })
@@ -57,7 +57,7 @@ export default function BookDetails() {
             }
           })
       } catch (error) {
-        console.log(error.response.data.msg)
+        console.log(error.response)
       }
     } else {
       review.like.push(authData.userId)
@@ -300,7 +300,7 @@ export default function BookDetails() {
                         <div className="flex flex-row w-full gap-2">
                           <Img src="images/img_profile_24_outline.svg" className="h-[30px] w-[30px]" />
                           <Text className="!text-gray-600 !font-medium h-5 my-auto">{review.userName}</Text>
-                          <Text className="!text-gray-500 !font-medium h-4 my-auto ml-auto" size="xs">{review.updatedAt.substr(0, 10)}</Text>
+                          <Text className="!text-gray-500 !font-medium h-4 my-auto ml-auto" size="xs">{review.createdAt.substr(0, 10)}</Text>
                         </div>
                         <RatingBar value={review.rating} />
                         <Text className="!text-gray-800 !font-medium">

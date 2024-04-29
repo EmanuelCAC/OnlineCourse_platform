@@ -73,12 +73,9 @@ const create = async (req, res) => {
     };
   
     sgMail
-      .send(msg, (error, result) => {
+      .send(msg, (error) => {
         if (error) {
           console.log(error);
-        }
-        else {
-          console.log(result);
         }
       });
 
@@ -100,12 +97,9 @@ const create = async (req, res) => {
   };
 
   sgMail
-    .send(msg, (error, result) => {
+    .send(msg, (error) => {
       if (error) {
         console.log(error);
-      }
-      else {
-        console.log(result);
       }
     });
 
@@ -128,12 +122,9 @@ const edit = async (req, res) => {
   };
 
   sgMail
-    .send(msg, (error, result) => {
+    .send(msg, (error) => {
       if (error) {
         console.log(error);
-      }
-      else {
-        console.log(result);
       }
     });
 

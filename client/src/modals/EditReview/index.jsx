@@ -13,7 +13,7 @@ export default function EditReview({ isOpen, isSignupOpen, close, review, ...pro
 
   const remove = async () => {
     try {
-      const { data } = await axios.delete(`http://localhost:3001/api/v1/review/${review._id}`, {
+      const { data } = await axios.delete(`http://localhost:3001/api/v1/book/review/${review._id}`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -28,7 +28,7 @@ export default function EditReview({ isOpen, isSignupOpen, close, review, ...pro
     e.preventDefault()
 
     try {
-      const { data } = await axios.patch(`http://localhost:3001/api/v1/review/${review._id}`,
+      const { data } = await axios.patch(`http://localhost:3001/api/v1/book/review/${review._id}`,
         {
           comment,
           rating
