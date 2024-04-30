@@ -33,6 +33,7 @@ export default function Payment() {
       </Helmet>
       <div className="flex flex-col items-center justify-start w-full gap-[100px] bg-gray-100">
         <div className="flex flex-col items-center justify-start w-full gap-12">
+        <Header className="flex justify-center items-center w-full md:h-auto p-[22px] sm:p-5 bg-gray-100" />
           <div className="flex flex-col items-start justify-start w-full gap-[5px] p-5 md:px-5 max-w-7xl">
             <Text className="!text-black-900_02 !text-3xl !font-medium">Form of Payment</Text>
             <div className="flex flex-row w-full gap-5">
@@ -44,16 +45,15 @@ export default function Payment() {
                   </div>
                   {selectedValue == "Card" && (
                     <div className="flex flex-row pt-4">
-                      <div className="flex flex-col w-1/2 gap-3">
+                      <div className="flex flex-col w-1/2 gap-5">
                         <div>
                           <label className="pl-2 pb-1">Card number</label>
                           <Input
                           color="white_A700"
                           size="xs"
-                          type="text"
+                          type="number"
                           name="card number"
-                          className="w-full sm:w-full rounded-[10px] border-gray-300 border border-solid"
-                          required
+                          className="w-full rounded-[10px] border-gray-300 border border-solid"
                           />
                         </div>
                         <div>
@@ -63,7 +63,7 @@ export default function Payment() {
                           size="xs"
                           type="text"
                           name="full name"
-                          className="w-full sm:w-full rounded-[10px] border-gray-300 border border-solid  "
+                          className="w-full rounded-[10px] border-gray-300 border border-solid  "
                           />
                         </div>
                         <div className="flex flex-row w-full gap-5">
@@ -74,7 +74,7 @@ export default function Payment() {
                             size="xs"
                             type="text"
                             name="expiration data"
-                            className="w-full sm:w-full rounded-[10px] border-gray-300 border border-solid  "
+                            className="w-full rounded-[10px] border-gray-300 border border-solid  "
                             />
                           </div>
                           <div>
@@ -82,9 +82,9 @@ export default function Payment() {
                             <Input
                             color="white_A700"
                             size="xs"
-                            type="text"
+                            type="number"
                             name="security code"
-                            className="w-full sm:w-full rounded-[10px] border-gray-300 border border-solid  "
+                            className="w-full rounded-[10px] border-gray-300 border border-solid  "
                             />
                           </div>
                         </div>
@@ -93,23 +93,79 @@ export default function Payment() {
                           <Input
                           color="white_A700"
                           size="xs"
-                          type="text"
+                          type="number"
                           name="cardholder's cpf"
-                          className="w-full sm:w-full rounded-[10px] border-gray-300 border border-solid  "
+                          className="w-full rounded-[10px] border-gray-300 border border-solid  "
                           />
                         </div>
                       </div>
-                      <div></div>
+                      <div className="w-1/2 pl-4">
+                        <Img src="/images/creditCard.png" className={"mx-auto h-full aspect-square w-3/4"} />
+                      </div>
                     </div>
                   )}
                 </div>
-                <div className="w-full bg-white-A700 flex flex-row gap-2 p-4 rounded-2xl cursor-pointer" onClick={() => {setSelectedValue("Pix")}}>
-                  <input type="radio" checked={selectedValue == "Pix"} className="my-auto" />
-                  <Text className="!text-black-900_02 !text-2xl !font-medium">Pix</Text>
+                <div className="w-full bg-white-A700 p-4 rounded-2xl">
+                  <div className="flex flex-row gap-2 cursor-pointer" onClick={() => {setSelectedValue("Pix")}}>
+                    <input type="radio" checked={selectedValue == "Pix"} className="my-auto" />
+                    <Text className="!text-black-900_02 !text-2xl !font-medium">Pix</Text>
+                  </div>
+                  {selectedValue == "Pix" && (
+                    <div className="flex flex-row pt-4 w-full gap-5">
+                      <div className="w-full">
+                        <label className="pl-2 pb-1">CPF</label>
+                        <Input
+                        color="white_A700"
+                        size="xs"
+                        type="number"
+                        name="card number"
+                        className="w-full rounded-[10px] border-gray-300 border border-solid"
+                        />
+                      </div>
+                      <div className="w-full">
+                        <label className="pl-2 pb-1">Full name</label>
+                        <Input
+                        color="white_A700"
+                        size="xs"
+                        type="text"
+                        name="full name"
+                        className="w-full rounded-[10px] border-gray-300 border border-solid  "
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div className="w-full bg-white-A700 flex flex-row gap-2 p-4 rounded-2xl cursor-pointer" onClick={() => {setSelectedValue("Payment slip")}}>
-                  <input type="radio" checked={selectedValue == "Payment slip"} className="my-auto" />
-                  <Text className="!text-black-900_02 !text-2xl !font-medium">Payment slip</Text>
+                <div className="w-full bg-white-A700 p-4 rounded-2xl">
+                  <div className="flex flex-row gap-2 cursor-pointer" onClick={() => {setSelectedValue("Payment slip")}}>
+                    <input type="radio" checked={selectedValue == "Payment slip"} className="my-auto" />
+                    <Text className="!text-black-900_02 !text-2xl !font-medium">Payment slip</Text>
+                  </div>
+                  
+                  {selectedValue == "Payment slip" && (
+                    <div className="flex flex-row pt-4 w-full gap-5">
+                      <div className="w-full">
+                        <label className="pl-2 pb-1">CPF</label>
+                        <Input
+                        color="white_A700"
+                        size="xs"
+                        type="number"
+                        name="card number"
+                        helper="Informe um CPF válido para continuar."
+                        className="w-full rounded-[10px] border-gray-300 border border-solid"
+                        />
+                      </div>
+                      <div className="w-full">
+                        <label className="pl-2 pb-1">Full name</label>
+                        <Input
+                        color="white_A700"
+                        size="xs"
+                        type="text"
+                        name="full name"
+                        className="w-full rounded-[10px] border-gray-300 border border-solid  "
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="flex flex-col w-1/3">
@@ -126,6 +182,7 @@ export default function Payment() {
                     <Text className="!font-semibold !text-xl min-w-fit">R$ {total}</Text>
                   </div>
                 </div>
+                <Button shape="round" className="mt-4 w-full" hover>Complete</Button>
               </div>
             </div>
           </div>
