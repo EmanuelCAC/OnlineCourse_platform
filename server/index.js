@@ -15,6 +15,7 @@ import courseReviewRouter from '../routes/courseReview.js'
 import mentorReviewRouter from '../routes/mentorReview.js'
 import subscribeRoute from '../routes/subscribe.js'
 import ownedBookRoute from '../routes/ownedBook.js'
+import ownedCourseRoute from '../routes/ownedCourse.js'
 
 import notFoundMiddleware from '../middleware/not-found.js'
 import errorHandlerMiddleware from '../middleware/error-handler.js'
@@ -40,7 +41,7 @@ app.use('/api/v1/course', courseRouter)
 app.use('/api/v1/mentor', mentorRouter)
 app.use('/api/v1/subscribe', subscribeRoute)
 app.use('/api/v1/ownedBook', ownedBookRoute)
-
+app.use('/api/v1/ownedCourse', ownedCourseRoute)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
