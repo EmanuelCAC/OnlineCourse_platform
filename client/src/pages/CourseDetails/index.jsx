@@ -4,13 +4,16 @@ import { Heading, Button, RatingBar, Text, Img, Header, Footer, BreadCrumbs } fr
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import CourseCard2 from "components/CourseCard2";
+import { useSelector } from "react-redux";
 
 export default function CourseDetails() {
   let { id } = useParams()
   const [course, setCourse] = useState()
+  const [updateCart, setUpdateCart] = useState(false)
   const [similarCourses, setSimilarCourses] = useState([])
   const [instructor, setInstructor] = useState("")
   const navigate = useNavigate()
+  const authData = useSelector((state) => state.auth.userData)
 
   const getCourse = async () => {
     try {
@@ -26,7 +29,6 @@ export default function CourseDetails() {
       try {
         const { data } = await axios.get(`http://localhost:3001/api/v1/course?category=${course.category[1]}`)
         if (data) setSimilarCourses(data)
-        console.log(data)
       } catch (error) {
         console.log(error.response)
       }
@@ -41,6 +43,29 @@ export default function CourseDetails() {
       } catch (error) {
         console.log(error.response)
       }
+    }
+  }
+
+  const purchase = async () => {
+    try {
+      const { data } = await axios.post(`http://localhost:3001/api/v1/cart/new`,
+        {
+          userId: authData.userId,
+          productId: id,
+          productName: course.name,
+          image: course.image,
+          price: course.price,
+          type: "course"
+        },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+      )
+      setUpdateCart(!updateCart)
+    } catch (error) {
+      console.log(error.response)
     }
   }
 
@@ -61,7 +86,7 @@ export default function CourseDetails() {
       </Helmet>
       <div className="flex flex-col items-center justify-start w-full gap-[99px] bg-gray-100">
         <div className="flex flex-col items-center justify-start w-full gap-12">
-          <Header className="flex justify-center items-center w-full md:h-auto p-[22px] sm:p-5 bg-gray-100" />
+          <Header className="flex justify-center items-center w-full md:h-auto p-[22px] sm:p-5 bg-gray-100" updateCart={updateCart} />
           <div className="flex flex-row md:flex-col justify-between items-start w-full p-6 md:gap-10 md:px-5 sm:p-5 bg-gray-200_01 max-w-7xl rounded-[20px]">
             <div className="flex flex-col items-start justify-start w-[63%] md:w-full ml-[5px] gap-[29px]">
               <BreadCrumbs routes={[
@@ -380,7 +405,7 @@ export default function CourseDetails() {
                   </Heading>
                 </div>
               </div>
-              <Button size="2xl" shape="round" className="w-full sm:px-5 font-medium" hover={true}>
+              <Button size="2xl" shape="round" className="w-full sm:px-5 font-medium" hover onClick={purchase}>
                 Purchase Course
               </Button>
             </div>

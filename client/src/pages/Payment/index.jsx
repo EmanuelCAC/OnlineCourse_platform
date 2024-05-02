@@ -48,7 +48,7 @@ export default function Payment() {
 
       await courses.map(async (course) => {
         try {
-          const { data } = await axios.post("http://localhost:3001/api/v1/ownedBook", {userId: authData.userId, courseId: course.productId})
+          const { data } = await axios.post("http://localhost:3001/api/v1/ownedCourse", {userId: authData.userId, courseId: course.productId})
         } catch (error) {
           console.log(error.response.data.msg)
         }

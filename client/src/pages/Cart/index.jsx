@@ -123,11 +123,14 @@ export default function Cart() {
                   {cart.map((item) => (
                     <div key={item._id}>
                       <div className="flex flex-row pb-5 pt-3" >
-                        <Img src={item.image} className={'w-24 mr-3 border-2 cursor-pointer'} onClick={() => (navigate('/shop/' + item.productId))} />
+                        <Img src={item.image} className={'w-28 mr-3 border-2 cursor-pointer'} onClick={() => (navigate('/shop/' + item.productId))} />
                         <div className="flex flex-col justify-between w-full">
+                          <div>
                           <Text className=" !text-black-900_02 !text-lg cursor-pointer" onClick={() => (navigate('/shop/' + item.productId))}>{item.productName}</Text>
+                          <Text size="sm" className="!text-gray-400">{item.type}</Text>
+                          </div>
                           <div className="flex flex-row justify-between ">
-                            <Text size="lg" className=" font-extrabold">R$ {item.price}</Text>
+                            <Text size="lg" className=" font-extrabold">R$ {item.price.toFixed(2)}</Text>
                             {item.type == "book" && <div className="flex border-2 border-gray-200 h-[32px] my-auto">
                               <Button className="h-[30px] px-0 bg-gray-200 aspect-square" onClick={() => { editAmount(item, -1) }}>
                                 <Text size="lg" className="!text-black-900_02">-</Text>

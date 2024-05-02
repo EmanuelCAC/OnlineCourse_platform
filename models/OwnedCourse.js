@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 const OwnedCourseSchema = new mongoose.Schema({
   courseId: {
     type: mongoose.ObjectId,
-    required: [true, "Please provide the book id"]
+    required: [true, "Please provide the course id"]
   },
   userId: {
     type: mongoose.ObjectId,
