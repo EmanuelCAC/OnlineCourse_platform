@@ -9,10 +9,6 @@ const OwnedCourseSchema = new mongoose.Schema({
     type: mongoose.ObjectId,
     required: [true, "Please provide the user id"]
   },
-  mentorId: {
-    type: mongoose.ObjectId,
-    required: [true, "Please provide the mentor id"]
-  },
 })
 
 export default mongoose.model('OwnedCourse', OwnedCourseSchema)

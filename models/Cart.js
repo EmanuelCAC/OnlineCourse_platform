@@ -26,6 +26,10 @@ const CartSchema = new mongoose.Schema({
   amount: {
     type: Number,
     default: 1
+  },
+  type: {
+    type: String,
+    required: [true, "Please provide a type"]
   }
 })
 

@@ -11,18 +11,71 @@ export default function Payment() {
   const items = history.state.data
   const [total, setTotal] = useState(0)
   const [selectedValue, setSelectedValue] = useState("")
+  const [books, setBooks] = useState()
+  const [courses, setCourses] = useState()
 
   const getTotal = () => {
     let sum = 0;
     history.state.data.map((item) => {
-      sum += item.price
+      sum += (item.price * item.amount)
     })
 
     setTotal(sum.toFixed(2))
   }
 
+  const separeteProducts = () => {
+    const books = items.filter((item) => {
+      return item.type == "book"
+    })
+    setBooks(books)
+
+    const courses = items.filter((item) => {
+      return item.type == "course"
+    })
+    setCourses(courses)
+  }
+
+
+  const handleComplete = async () => {
+    if (selectedValue != "") {
+      await books.map(async (book) => {
+        try {
+          const { data } = await axios.post("http://localhost:3001/api/v1/ownedBook", {userId: authData.userId, bookId: book.productId})
+        } catch (error) {
+          console.log(error.response.data.msg)
+        }
+      })
+
+      await courses.map(async (course) => {
+        try {
+          const { data } = await axios.post("http://localhost:3001/api/v1/ownedBook", {userId: authData.userId, courseId: course.productId})
+        } catch (error) {
+          console.log(error.response.data.msg)
+        }
+      })
+      
+      await items.map(async (item) => {
+        try {
+          const {data} = await axios.delete(`http://localhost:3001/api/v1/cart`, {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem('token')}`
+            },
+            data: {
+              id: item._id
+            }
+          })
+        } catch (error) {
+          console.log(error.response.data.msg)
+        }
+      })
+
+      navigate('/')
+    }
+  }
+
   useEffect(() => {
     getTotal()
+    separeteProducts()
   }, [])
 
   return (
@@ -43,6 +96,7 @@ export default function Payment() {
                     <input type="radio" checked={selectedValue == "Card"} className="my-auto" />
                     <Text className="!text-black-900_02 !text-2xl !font-medium">Card</Text>
                   </div>
+
                   {selectedValue == "Card" && (
                     <div className="flex flex-row pt-4">
                       <div className="flex flex-col w-1/2 gap-5">
@@ -110,6 +164,7 @@ export default function Payment() {
                     <input type="radio" checked={selectedValue == "Pix"} className="my-auto" />
                     <Text className="!text-black-900_02 !text-2xl !font-medium">Pix</Text>
                   </div>
+
                   {selectedValue == "Pix" && (
                     <div className="flex flex-row pt-4 w-full gap-5">
                       <div className="w-full">
@@ -173,7 +228,7 @@ export default function Payment() {
                   <Text className="!text-black-900_02 !text-3xl !font-medium mb-3">Resume</Text>
                   {items.map((item, i) => (
                     <div className="flex flex-row w-full justify-between py-2 gap-2" key={i}>
-                      <Text size="sm" className="text-gray-600">{item.name}</Text>
+                      <Text size="sm" className="text-gray-600">{item.productName} ({item.amount})</Text>
                       <Text size="sm" className="!font-semibold min-w-fit">R$ {item.price}</Text>
                     </div>
                   ))}
@@ -182,7 +237,7 @@ export default function Payment() {
                     <Text className="!font-semibold !text-xl min-w-fit">R$ {total}</Text>
                   </div>
                 </div>
-                <Button shape="round" className="mt-4 w-full" hover>Complete</Button>
+                <Button shape="round" className="mt-4 w-full" hover onClick={handleComplete}>Complete</Button>
               </div>
             </div>
           </div>

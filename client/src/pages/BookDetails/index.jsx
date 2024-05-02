@@ -104,7 +104,8 @@ export default function BookDetails() {
           productName: book.name,
           image: book.image,
           price: book.price,
-          amount
+          amount,
+          type: "book"
         },
         {
           headers: {

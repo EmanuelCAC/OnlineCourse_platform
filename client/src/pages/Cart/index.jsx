@@ -77,9 +77,7 @@ export default function Cart() {
   }
 
   const purchase = () => {
-    const data = cart.map((item) => {
-      return {name: item.productName, price: item.price * item.amount}
-    })
+    const data = cart
     navigate('/payment', {state: {data: data}})
     history.pushState({data: data}, "")
   }
@@ -130,7 +128,7 @@ export default function Cart() {
                           <Text className=" !text-black-900_02 !text-lg cursor-pointer" onClick={() => (navigate('/shop/' + item.productId))}>{item.productName}</Text>
                           <div className="flex flex-row justify-between ">
                             <Text size="lg" className=" font-extrabold">R$ {item.price}</Text>
-                            <div className="flex border-2 border-gray-200 h-[32px] my-auto">
+                            {item.type == "book" && <div className="flex border-2 border-gray-200 h-[32px] my-auto">
                               <Button className="h-[30px] px-0 bg-gray-200 aspect-square" onClick={() => { editAmount(item, -1) }}>
                                 <Text size="lg" className="!text-black-900_02">-</Text>
                               </Button>
@@ -143,7 +141,7 @@ export default function Cart() {
                               <Button className="h-[30px] px-0 bg-gray-200 aspect-square" onClick={() => { editAmount(item, 1) }}>
                                 <Text size="lg" className="!text-black-900_02" >+</Text>
                               </Button>
-                            </div>
+                            </div>}
                           </div>
                         </div>
                       </div>
@@ -156,7 +154,7 @@ export default function Cart() {
                     <Text className="!text-black-900_02 !text-3xl !font-medium mb-3">Resume</Text>
                     {cart.map((item) => (
                       <div className="flex flex-row w-full justify-between py-2 gap-2" key={item._id}>
-                        <Text size="sm" className="text-gray-600">{item.productName}</Text>
+                        <Text size="sm" className="text-gray-600">{item.productName} ({item.amount})</Text>
                         <Text size="sm" className="!font-semibold min-w-fit">R$ {(item.price * item.amount).toFixed(2)}</Text>
                       </div>
                     ))}
