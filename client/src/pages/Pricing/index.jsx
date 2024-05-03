@@ -38,7 +38,7 @@ export default function Pricing() {
                     <Img
                       src="/images/pricing_banner.png"
                       alt="speechbubble"
-                      className="w-[100%] mr-10 md:mr-5 z-[1]"
+                      className="w-[100%] mr-10 md:mr-5 z-[0]"
                     />
                   </div>
                 </div>

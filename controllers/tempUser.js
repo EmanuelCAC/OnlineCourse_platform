@@ -97,10 +97,11 @@ const create = async (req, res) => {
   };
 
   sgMail
-    .send(msg, (error) => {
+    .send(msg, (error, result) => {
       if (error) {
         console.log(error);
       }
+      console.log(result);
     });
 
   res.status(StatusCodes.OK).json(user)
@@ -122,10 +123,11 @@ const edit = async (req, res) => {
   };
 
   sgMail
-    .send(msg, (error) => {
+    .send(msg, (error, result) => {
       if (error) {
         console.log(error);
       }
+      console.log(result);
     });
 
   res.status(StatusCodes.OK).json(user)

@@ -3,10 +3,12 @@ import { Text, CheckBox, Button, Input, Img, Heading, Slider, RatingBar } from "
 import { default as ModalProvider } from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { logout as authLogut } from "store/authSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Menu({ isOpen, close, ...props }) {
   const authData = useSelector((state) => state.auth.userData)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (document) {
@@ -29,7 +31,7 @@ export default function Menu({ isOpen, close, ...props }) {
         },
       }}
     >
-      <div className="flex flex-row justify-center w-full h-full">
+      <div className="flex flex-row justify-center w-full h-full ">
         <div className="flex flex-row justify-center w-full px-6 py-8 bg-white-A700 rounded-l-[15px] outline-none  relative">
           <Button
             shape="round"
@@ -46,6 +48,8 @@ export default function Menu({ isOpen, close, ...props }) {
                 <hr />
                 <Text as="button" className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left">Your profile</Text>
                 <Text as="button" className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left">Add account</Text>
+                <hr />
+                <Text as="button" className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left" onClick={() => navigate('/review')}>Add review</Text>
                 <hr />
                 <Text as="button" className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left">Your books</Text>
                 <Text as="button" className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left">Your courses</Text>

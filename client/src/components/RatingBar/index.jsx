@@ -14,7 +14,7 @@ const RatingBar = ({
     <>
       <ReactStars
         edit={isEditable}
-        classNames={className}
+        classNames={`z-[0] ` + className}
         count={starCount}
         isHalf={true}
         color={color}
