@@ -5,7 +5,7 @@ import { Header, Text, Heading, Img, RatingBar, Button, Footer, BreadCrumbs, Inp
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import EditReview from "modals/EditReview";
+import ReviewModal from "modals/Review";
 
 export default function BookDetails() {
   const { id } = useParams()
@@ -371,7 +371,7 @@ export default function BookDetails() {
                   ))
                 ) : null}
               </div>
-              <EditReview isOpen={editReview} close={() => setEditReview(false)} onRequestClose={() => setEditReview(false)} review={review} />
+              <ReviewModal isOpen={editReview} close={() => setEditReview(false)} onRequestClose={() => setEditReview(false)} review={review} target={"book"} />
             </div>
           </div>
         </div>

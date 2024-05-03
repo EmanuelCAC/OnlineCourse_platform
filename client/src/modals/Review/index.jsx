@@ -1,15 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, CheckBox, Button, Input, Img, Heading, Slider, RatingBar } from "../../components";
-import SignUpInputfield from "../../components/SignUpInputfield";
 import { default as ModalProvider } from "react-modal";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { login as authLogin } from "store/authSlice";
+import { useSelector } from "react-redux";
 
-export default function EditReview({ isOpen, isSignupOpen, close, review, ...props }) {
-  const [comment, setComment] = React.useState("")
-  const [rating, setRating] = React.useState(0)
-  const [confirm, setConfirm] = React.useState(false)
+export default function ReviewModal({ isOpen, isSignupOpen, close, review, target, id, ...props }) {
+  const [comment, setComment] = useState("")
+  const [rating, setRating] = useState(0)
+  const [confirm, setConfirm] = useState(false)
+  const authData = useSelector((state) => state.auth.userData)
 
   const remove = async () => {
     try {
@@ -18,6 +17,7 @@ export default function EditReview({ isOpen, isSignupOpen, close, review, ...pro
           authorization: `Bearer ${localStorage.getItem('token')}`
         }
       })
+      updateTarget()
       if (data) alert('Review Deleted Successifully')
     } catch (error) {
       console.log(error.response.data.msg)
@@ -28,7 +28,7 @@ export default function EditReview({ isOpen, isSignupOpen, close, review, ...pro
     e.preventDefault()
 
     try {
-      const { data } = await axios.patch(`http://localhost:3001/api/v1/book/review/${review._id}`,
+      const { data } = await axios.patch(`http://localhost:3001/api/v1/${target}/review/${review._id}`,
         {
           comment,
           rating
@@ -40,18 +40,61 @@ export default function EditReview({ isOpen, isSignupOpen, close, review, ...pro
         })
       setComment("")
       setRating(0)
+      updateTarget()
       close()
     } catch (error) {
       console.log(error.response.data.msg)
     }
   }
 
-  useEffect(() => {
-    if (review) {
-      setComment(review.comment)
-      setRating(review.rating)
+  const addReview = async (e) => {
+    e.preventDefault()
+
+    try {
+      if (target == "book") {
+      const { data } = await axios.post(`http://localhost:3001/api/v1/${target}/review/`,
+        {
+          createdBy: authData.userId,
+          bookId: id,
+          comment,
+          rating
+        },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+      } else if (target == "course") {
+        const { data } = await axios.post(`http://localhost:3001/api/v1/${target}/review/`,
+        {
+          createdBy: authData.userId,
+          courseId: id,
+          comment,
+          rating
+        },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+      }
+      setComment("")
+      setRating(0)
+      updateTarget()
+      close()
+    } catch (error) {
+      console.log(error.response.data.msg)
     }
-  }, [isOpen])
+  }
+
+  const updateTarget = async () => {
+    try {
+      const {data} = await axios.patch(`http://localhost:3001/api/v1/${target}/${id}`)
+      console.log(data);
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
 
   return (
     <ModalProvider
@@ -71,12 +114,12 @@ export default function EditReview({ isOpen, isSignupOpen, close, review, ...pro
             <div className="flex flex-row justify-center w-full p-2">
               <div className="flex flex-row justify-center w-full">
                 <div className="flex flex-row md:flex-col justify-between items-center w-full md:gap-10">
-                  <div className="flex flex-col justify-start w-full">
+                  {review && <div className="flex flex-col justify-start w-full">
                     <Heading
                       size='lg'
                       className="mb-4"
                     >
-                      {review && review.userName}
+                      {review.userName}
                     </Heading>
                     <form className="flex flex-col gap-3 w-full" onSubmit={(e) => submitHandler(e)} method="post">
                       <div className="flex flex-row gap-1">
@@ -153,7 +196,52 @@ export default function EditReview({ isOpen, isSignupOpen, close, review, ...pro
                         />
                       </div>}
                     </form>
-                  </div>
+                  </div>}
+                  {!review && <div className="flex flex-col justify-start w-full">
+                    <form className="flex flex-col gap-3 w-full" onSubmit={(e) => addReview(e)} method="post">
+                      <div className="flex flex-row gap-1">
+                        <RatingBar
+                          isEditable={true}
+                          onChange={(e) => setRating(e)}
+                          value={rating}
+                          size={25}
+                        />
+                        <Text size="lg" >({rating})</Text>
+                      </div>
+                      <Input
+                        color="white_A700"
+                        size="xs"
+                        type="text"
+                        name="comment"
+                        placeholder="Put your comment here..."
+                        maxLength={200}
+                        onChange={(e) => setComment(e)}
+                        value={comment}
+                        className="w-full sm:w-full rounded-tr-[10px] rounded-br-[10px] border-gray-400 border border-solid"
+                      />
+                      <Text as="p" size="xs" className="text-right px-1 mt-[-12px]">{comment.length}/200</Text>
+                      <div className="flex flex-row gap-3 mt-[-10px]">
+                        <Button
+                          className="rounded-full"
+                          size="xs"
+                          children={'Save'}
+                          type="submit"
+                        />
+                        <Button
+                          className="rounded-full border-2 border-gray-300 !text-gray-400"
+                          size="xs"
+                          color="white_A700"
+                          children={'Cancel'}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            setComment("")
+                            setRating(0)
+                            close()
+                          }}
+                        />
+                      </div>
+                    </form>
+                  </div>}
                 </div>
               </div>
             </div>

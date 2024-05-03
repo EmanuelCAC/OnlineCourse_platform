@@ -3,18 +3,21 @@ import { Helmet } from "react-helmet";
 import { Header, Text, Heading, Img, RatingBar, Button, Footer, BreadCrumbs, Input } from "components";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import ReviewModal from "modals/Review";
 import axios from "axios";
 
 export default function Review() {
   const authData = useSelector((state) => state.auth.userData)
-  const navigate = useNavigate();
-  const [updateCart, setUpdateCart] = useState(false)
+  const navigate = useNavigate()
   const [books, setBooks] = useState()
   const [courses, setCourses] = useState()
   const [booksToReview, setBooksToReview] = useState()
   const [coursesToReview, setCoursesToReview] = useState()
   const [bookInfo, setBookInfo] = useState()
   const [courseInfo, setCourseInfo] = useState()
+  const [reviewModal, setReviewModal] = useState(false)
+  const [target, setTarget] = useState()
+  const [id, setId] = useState()
 
   const getBooks = async () => {
     try {
@@ -112,7 +115,7 @@ export default function Review() {
       getBooksToReview()
     if (courses)
       getCoursesToReview()
-  }, [books, courses])
+  }, [books, courses, reviewModal])
 
   useEffect(() => {
     if (booksToReview)
@@ -129,7 +132,7 @@ export default function Review() {
       </Helmet>
       <div className="flex flex-col items-center justify-start w-full gap-[100px] bg-gray-100">
         <div className="flex flex-col items-center justify-start w-full gap-12">
-          <Header className="flex justify-center items-center w-full md:h-auto p-[22px] sm:p-5 bg-gray-100" updateCart={updateCart} />
+          <Header className="flex justify-center items-center w-full md:h-auto p-[22px] sm:p-5 bg-gray-100" />
           <div className="flex flex-col items-start justify-start w-[70%] gap-[5px] p-5 md:px-5 max-w-7xl ">
             <BreadCrumbs routes={[
               {
@@ -161,7 +164,11 @@ export default function Review() {
                           </div>
                           <div className="flex flex-row justify-between ">
                             <Text size="lg" className=" font-extrabold">R$ {item.price.toFixed(2)}</Text>
-                            <Button variant="outline" className="rounded-[15px] !h-fit !py-0 !px-3 hover:bg-red-300_01 hover:text-white-A700">Review</Button>
+                            <Button variant="outline" className="rounded-[15px] !h-fit !py-0 !px-3 hover:bg-red-300_01 hover:text-white-A700" onClick={() => {
+                              setId(item._id)
+                              setTarget("course")
+                              setReviewModal(true)
+                            }}>Review</Button>
                           </div>
                         </div>
                       </div>
@@ -178,7 +185,11 @@ export default function Review() {
                           </div>
                           <div className="flex flex-row justify-between ">
                             <Text size="lg" className=" font-extrabold">R$ {item.price.toFixed(2)}</Text>
-                            <Button variant="outline" className="rounded-[15px] !h-fit !py-0 !px-3 hover:bg-red-300_01 hover:text-white-A700">Review</Button>
+                            <Button variant="outline" className="rounded-[15px] !h-fit !py-0 !px-3 hover:bg-red-300_01 hover:text-white-A700" onClick={() => {
+                              setId(item._id)
+                              setTarget("book")
+                              setReviewModal(true)
+                            }}>Review</Button>
                           </div>
                         </div>
                       </div>
@@ -189,6 +200,7 @@ export default function Review() {
               </div>
             }
           </div>
+          <ReviewModal isOpen={reviewModal} close={() => setReviewModal(false)} onRequestClose={() => setReviewModal(false)} target={target} id={id} />
           <Footer className="flex justify-center items-center w-full px-14 py-20 md:p-5 bg-gray-100" />
         </div>
       </div >
