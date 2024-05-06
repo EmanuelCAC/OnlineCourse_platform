@@ -12,7 +12,7 @@ export default function ReviewModal({ isOpen, isSignupOpen, close, review, targe
 
   const remove = async () => {
     try {
-      const { data } = await axios.delete(`http://localhost:3001/api/v1/book/review/${review._id}`, {
+      const { data } = await axios.delete(`http://localhost:3001/api/v1/${target}/review/${review._id}`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem('token')}`
         }

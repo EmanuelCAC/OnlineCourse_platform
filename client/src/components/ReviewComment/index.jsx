@@ -3,13 +3,13 @@ import { Text, Img, Button, RatingBar } from "components";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
-const ReviewComment = ({review, getReviews, setReview, setEditReview}) => {
+const ReviewComment = ({review, getReviews, setReview, setEditReview, target}) => {
   const authData = useSelector((state) => state.auth.userData)
 
   const toogleLike = async (review) => {
     if (review.like.includes(authData.userId)) {
       try {
-        const { data } = await axios.patch(`http://localhost:3001/api/v1/book/review/${review._id}`,
+        const { data } = await axios.patch(`http://localhost:3001/api/v1/${target}/review/${review._id}`,
           {
             like: review.like.filter((id) => {
               return id != authData.userId
@@ -26,7 +26,7 @@ const ReviewComment = ({review, getReviews, setReview, setEditReview}) => {
     } else {
       review.like.push(authData.userId)
       try {
-        const { data } = await axios.patch(`http://localhost:3001/api/v1/book/review/${review._id}`,
+        const { data } = await axios.patch(`http://localhost:3001/api/v1/${target}/review/${review._id}`,
           {
             like: review.like
           },

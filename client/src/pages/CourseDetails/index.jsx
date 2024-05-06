@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Heading, Button, RatingBar, Text, Img, Header, Footer, BreadCrumbs } from "../../components";
+import { Heading, Button, RatingBar, Text, Img, Header, Footer, BreadCrumbs, ReviewComment } from "../../components";
+import ReviewModal from "modals/Review";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import CourseCard2 from "components/CourseCard2";
@@ -12,6 +13,10 @@ export default function CourseDetails() {
   const [updateCart, setUpdateCart] = useState(false)
   const [similarCourses, setSimilarCourses] = useState([])
   const [instructor, setInstructor] = useState("")
+  const [reviews, setReviews] = useState([])
+  const [review, setReview] = useState()
+  const [editReview, setEditReview] = useState(false)
+  const [totalReviews, setTotalReviews] = useState(0)
   const navigate = useNavigate()
   const authData = useSelector((state) => state.auth.userData)
 
@@ -22,6 +27,19 @@ export default function CourseDetails() {
     } catch (error) {
       console.log(error.response)
     }
+  }
+
+  const getReviews = async () => {
+    const { data } = await axios.post(`http://localhost:3001/api/v1/course/review/all`, { courseId: id })
+    const reviewsList = data.map(async (review) => {
+      const data = await fetch(`http://localhost:3001/api/v1/user/${review.createdBy}`)
+      const user = await data.json()
+      if (user) review.userName = user.name
+      review.likeAmount = review.like.length
+      return review
+    })
+
+    if (reviewsList) Promise.all(reviewsList).then((result) => setReviews(result))
   }
 
   const getSimilarCourses = async () => {
@@ -69,6 +87,11 @@ export default function CourseDetails() {
     }
   }
 
+  const updateCourse = async () => {
+    const { data } = await axios.patch(`http://localhost:3001/api/v1/course/${id}`)
+    setCourse(data)
+  }
+
   useEffect(() => {
     getCourse()
   }, [id])
@@ -76,7 +99,18 @@ export default function CourseDetails() {
   useEffect(() => {
     getInstructor()
     getSimilarCourses()
+    getReviews()
   }, [course])
+
+  useEffect(() => {
+    getCourse()
+    updateCourse()
+    if (reviews.length > 0) {
+      setTotalReviews(reviews.length)
+    } else if (reviews.lenght == 0) {
+      setTotalReviews(0)
+    }
+  }, [reviews])
 
   return (
     <>
@@ -423,6 +457,23 @@ export default function CourseDetails() {
             </div>
           </div>}
         </div>
+        <div className="flex flex-col mt-10 px-8 w-[85%] !mx-auto bg-white-A700 rounded-[15px]">
+          <Heading size="lg" className="py-8 font-normal">Reviews</Heading>
+          <div className="flex flex-row h-[60px] gap-3">
+            <Text as="span" className="text-5xl font-extrabold h-[36px] my-auto">{course?.rating || 0}</Text>
+            <div className="flex flex-col my-auto">
+              <RatingBar value={course?.rating || 0} size={20} />
+              <Text size="md">{totalReviews} reviews</Text>
+            </div>
+          </div>
+          <div className="flex flex-col w-[70%] pl-3 pr-6 gap-2 my-5">
+            {reviews && reviews.map((review) => (
+              <ReviewComment review={review} getReviews={() => getReviews()} setEditReview={() => setEditReview(!editReview)} setReview={() => setReview(review)} target={"course"} />
+            ))}
+          </div>
+          <ReviewModal isOpen={editReview} close={() => setEditReview(false)} onRequestClose={() => setEditReview(false)} review={review} target={"course"} id={id} />
+        </div>
+        
         <Footer className="flex justify-center items-center w-full px-14 py-20 md:p-5 bg-gray-100" />
       </div>
     </>
