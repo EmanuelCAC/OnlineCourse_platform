@@ -63,12 +63,16 @@ const CourseSchema = new mongoose.Schema({
 CourseSchema.pre('findOneAndUpdate', async function (next) {
   try {
     const { data } = await axios.post(`http://localhost:3001/api/v1/course/review/all`, { courseId: this._conditions._id })
-    let average = 0
-    let i
-    for (i = 0; i < data.length; i++) {
-      average += data[i].rating
+    if (data[0]) {
+      let average = 0
+      let i
+      for (i = 0; i < data.length; i++) {
+        average += data[i].rating
+      }
+      this.set({ rating: (Number((average / i).toFixed(2))) })
+    } else {
+      this.set({ rating: 0 })
     }
-    this.set({ rating: (Number((average / i).toFixed(2))) })
   } catch (error) {
     console.log(error)
   }

@@ -61,7 +61,8 @@ const remove = async (req, res) => {
 
 const edit = async (req, res) => {
   const bookId = req.params.id
-  const book = await Book.findByIdAndUpdate(
+
+  const book = await Book.findOneAndUpdate(
     { _id: bookId },
     req.body,
     { new: true, runValidators: true }
