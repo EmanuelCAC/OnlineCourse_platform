@@ -90,11 +90,17 @@ export default function ReviewModal({ isOpen, isSignupOpen, close, review, targe
   const updateTarget = async () => {
     try {
       const {data} = await axios.patch(`http://localhost:3001/api/v1/${target}/${id}`)
-      console.log(data);
     } catch (error) {
       console.log(error.response)
     }
   }
+
+  useEffect(() => {
+    if (review) {
+      setRating(review.rating)
+      setComment(review.comment)
+    }
+  }, [review])
 
   return (
     <ModalProvider
