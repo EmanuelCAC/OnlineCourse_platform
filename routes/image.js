@@ -1,8 +1,8 @@
 import express from 'express'
-import { teste } from '../controllers/image.js'
+import { UploadProfilePic } from '../controllers/image.js'
 
 const router = express.Router()
 
-router.route('/:id').post(teste)
+router.route('/:id').post(UploadProfilePic)
 
 export default router

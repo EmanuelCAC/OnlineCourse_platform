@@ -24,7 +24,7 @@ const uploadImg = async (imagePath) => {
   }
 }
 
-const teste = async (req, res) => {
+const UploadProfilePic = async (req, res) => {
   const image = await uploadImg(req.file.path)
 
   if (!image) {
@@ -41,9 +41,10 @@ const teste = async (req, res) => {
     throw new NotFoundError("No user with id: " + req.params.id)
   }
 
-  res.status(StatusCodes.OK).json({user})
+  const token = user.createJWT()
+  res.status(StatusCodes.OK).json({token})
 }
 
 export {
-  teste
+  UploadProfilePic
 }

@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout as authLogut } from "store/authSlice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import ProfilePic from "modals/ProfilePic";
 
 export default function Menu({ isOpen, close, ...props }) {
+  const [profilePic, setProfilePic] = useState(false)
   const authData = useSelector((state) => state.auth.userData)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -51,7 +53,7 @@ export default function Menu({ isOpen, close, ...props }) {
       }}
     >
       <div className="flex flex-row justify-center w-full h-full ">
-        <div className="flex flex-row justify-center w-full px-6 py-8 bg-white-A700 rounded-l-[15px] outline-none  relative">
+        <div className="flex flex-row justify-center w-full px-6 py-8 bg-white-A700 rounded-l-[15px] outline-none relative">
           <Button
             shape="round"
             onClick={() => close()}
@@ -60,11 +62,7 @@ export default function Menu({ isOpen, close, ...props }) {
           <div className="flex flex-row justify-center w-full">
             <div className="flex flex-col w-full gap-4">
               <div className="flex flex-col w-full items-center">
-                <Img src={authData?.img || "images/img_profile_24_outline.svg"} className="h-40 w-40" />
-                <form onSubmit={(e) => submitHandler(e)}>
-                  <input type="file" name="photo" id="photo" />
-                  <button type="submit" id="button">Send img</button>
-                </form>
+                <Img src={authData?.img || "images/img_profile_24_outline.svg"} className="h-40 w-40 rounded-full mb-2 cursor-pointer" onClick={() => setProfilePic(true)} />
                 <Text className="text-gray-500">{authData?.name}</Text>
               </div>
               <div className="flex flex-col w-full h-full gap-1">
@@ -93,6 +91,7 @@ export default function Menu({ isOpen, close, ...props }) {
             </div>
           </div>
         </div>
+        <ProfilePic isOpen={profilePic} close={() => setProfilePic(false)}/>
       </div>
     </ModalProvider>
   );
