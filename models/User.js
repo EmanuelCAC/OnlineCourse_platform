@@ -20,10 +20,13 @@ const UserSchema = new mongoose.Schema({
     required: [true, 'Please provide a password'],
     minlength: 6,
   },
+  image: {
+    type: String
+  }
 })
 
 UserSchema.methods.createJWT = function () {
-  return jwt.sign({ userId: this._id, name: this.name }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_LIFETIME })
+  return jwt.sign({ userId: this._id, name: this.name, img: this?.image }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_LIFETIME })
 }
 
 UserSchema.methods.comparePassword = async function (cadidatePassword) {

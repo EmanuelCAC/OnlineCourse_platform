@@ -2,7 +2,9 @@ import dotenv from 'dotenv'
 import expreessAsyncErrors from 'express-async-errors'
 import express from 'express'
 import cors from 'cors'
+import multer from 'multer'
 import connectDB from '../db/connect.js'
+
 import bookRouter from '../routes/book.js'
 import userRouter from '../routes/user.js'
 import tempUserRouter from '../routes/tempUser.js'
@@ -16,12 +18,13 @@ import mentorReviewRouter from '../routes/mentorReview.js'
 import subscribeRoute from '../routes/subscribe.js'
 import ownedBookRoute from '../routes/ownedBook.js'
 import ownedCourseRoute from '../routes/ownedCourse.js'
+import imageRoute from '../routes/image.js'
 
 import notFoundMiddleware from '../middleware/not-found.js'
 import errorHandlerMiddleware from '../middleware/error-handler.js'
 import authenticateUser from '../middleware/authentication.js'
 
-
+const upload = multer({ dest: 'uploads/' })
 dotenv.config()
 const app = express()
 
@@ -42,6 +45,7 @@ app.use('/api/v1/mentor', mentorRouter)
 app.use('/api/v1/subscribe', subscribeRoute)
 app.use('/api/v1/ownedBook', ownedBookRoute)
 app.use('/api/v1/ownedCourse', ownedCourseRoute)
+app.use('/api/v1/image', upload.single('photo'), imageRoute)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)

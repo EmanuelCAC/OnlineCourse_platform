@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, CheckBox, Button, Input, Img, Heading, Slider, RatingBar } from "../../components";
 import { default as ModalProvider } from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { logout as authLogut } from "store/authSlice";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Menu({ isOpen, close, ...props }) {
   const authData = useSelector((state) => state.auth.userData)
@@ -15,6 +16,24 @@ export default function Menu({ isOpen, close, ...props }) {
       document.body.style.overflow = isOpen ? 'hidden' : 'auto'
     }
   }, [isOpen])
+
+  const submitHandler = async (e) => {
+    e.preventDefault()
+    const image = document.querySelector('#photo')
+    
+    const formdata = new FormData()
+    formdata.append('photo', image.files[0])
+    try {
+      const {data} = await axios.post(`http://localhost:3001/api/v1/image/${authData.userId}`, formdata, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+    )
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
 
@@ -42,6 +61,10 @@ export default function Menu({ isOpen, close, ...props }) {
             <div className="flex flex-col w-full gap-4">
               <div className="flex flex-col w-full items-center">
                 <Img src={authData?.img || "images/img_profile_24_outline.svg"} className="h-40 w-40" />
+                <form onSubmit={(e) => submitHandler(e)}>
+                  <input type="file" name="photo" id="photo" />
+                  <button type="submit" id="button">Send img</button>
+                </form>
                 <Text className="text-gray-500">{authData?.name}</Text>
               </div>
               <div className="flex flex-col w-full h-full gap-1">
