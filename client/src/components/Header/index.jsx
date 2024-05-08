@@ -65,7 +65,7 @@ export default function Header({ updateCart, ...props }) {
       name: "Courses",
       slug: "/courses",
       img: {
-        src: "images/img_arrow_down.svg",
+        src: "/images/img_arrow_down.svg",
         alt: "arrowdown_one",
         className: "h-[24px] w-[24px]"
       },
@@ -81,7 +81,7 @@ export default function Header({ updateCart, ...props }) {
       name: `Cart (${cartItems})`,
       slug: "/cart",
       img: {
-        src: "images/img_shopping_bag_24.svg",
+        src: "/images/img_shopping_bag_24.svg",
         alt: "shoppingbagtwen",
         className: "h-[30px] w-[30px]"
       },
@@ -89,12 +89,12 @@ export default function Header({ updateCart, ...props }) {
       active: authStatus
     },
     {
-      name: authData ? authData.name : "My Account",
+      name: authData?.name || "My Account",
       slug: "#",
       img: {
-        src: "images/img_profile_24_outline.svg",
+        src: authData?.img || "/images/img_profile_24_outline.svg",
         alt: "profiletwentyfo",
-        className: "h-[30px] w-[30px]"
+        className: "h-[30px] w-[30px] rounded-full"
       },
       action: () => {
         setMenu(true)
@@ -105,7 +105,7 @@ export default function Header({ updateCart, ...props }) {
       name: "Login",
       slug: "#",
       img: {
-        src: "images/img_profile_24_outline.svg",
+        src: "/images/img_profile_24_outline.svg",
         alt: "profiletwentyfo",
         className: "h-[30px] w-[30px]"
       },
@@ -120,7 +120,7 @@ export default function Header({ updateCart, ...props }) {
     <header {...props}>
       <div className="flex flex-row md:flex-col justify-between w-full mx-auto md:gap-10 md:px-5 max-w-7xl">
         <button onClick={() => navigate("/")}>
-          <Img src="images/img_logo.svg" alt="logo_one" className="h-[30px]" />
+          <Img src="/images/img_logo.svg" alt="logo_one" className="h-[30px]" />
         </button>
         <ul className="flex flex-row md:flex-col justify-start items-center w-[58%] md:w-full gap-6 md:gap-5">
           {

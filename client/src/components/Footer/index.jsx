@@ -9,14 +9,14 @@ export default function Footer({ ...props }) {
         <div className="flex flex-row md:flex-col justify-between items-center w-full mx-auto md:gap-10 max-w-7xl">
           <div className="flex flex-col items-center justify-start w-[15%] md:w-full pb-[3px] gap-[46px]">
             <div className="flex flex-col items-center justify-start w-[97%] md:w-full gap-[22px]">
-              <Img src="images/img_logo.svg" alt="logo_three" className="h-[30px]" />
+              <Img src="/images/img_logo.svg" alt="logo_three" className="h-[30px]" />
               <div className="flex flex-row justify-between items-center w-[85%] md:w-full">
-                <Img src="images/img_facebook_logo_1.svg" alt="facebooklogoone" className="h-[22px] w-[22px]" />
+                <Img src="/images/img_facebook_logo_1.svg" alt="facebooklogoone" className="h-[22px] w-[22px]" />
                 <Button color="deep_orange_400" size="xs" shape="circle" className="w-[36px]">
-                  <Img src="images/img_instagram_icon.svg" />
+                  <Img src="/images/img_instagram_icon.svg" />
                 </Button>
-                <Img src="images/img_twitter_logo.svg" alt="twitterlogo" className="h-[17px]" />
-                <Img src="images/img_linkedin_icon.svg" alt="linkedinicon" className="h-[18px]" />
+                <Img src="/images/img_twitter_logo.svg" alt="twitterlogo" className="h-[17px]" />
+                <Img src="/images/img_linkedin_icon.svg" alt="linkedinicon" className="h-[18px]" />
               </div>
             </div>
             <div className="flex flex-col items-start justify-start w-full gap-[13px]">

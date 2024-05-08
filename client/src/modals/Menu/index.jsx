@@ -62,7 +62,7 @@ export default function Menu({ isOpen, close, ...props }) {
           <div className="flex flex-row justify-center w-full">
             <div className="flex flex-col w-full gap-4">
               <div className="flex flex-col w-full items-center">
-                <Img src={authData?.img || "images/img_profile_24_outline.svg"} className="h-40 w-40 rounded-full mb-2 cursor-pointer" onClick={() => setProfilePic(true)} />
+                <Img src={authData?.img || "/images/img_profile_24_outline.svg"} className="h-40 w-40 rounded-full mb-2 cursor-pointer" onClick={() => setProfilePic(true)} />
                 <Text className="text-gray-500">{authData?.name}</Text>
               </div>
               <div className="flex flex-col w-full h-full gap-1">

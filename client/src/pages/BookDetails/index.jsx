@@ -31,8 +31,12 @@ export default function BookDetails() {
     const reviewsList = data.map(async (review) => {
       const data = await fetch(`http://localhost:3001/api/v1/user/${review.createdBy}`)
       const user = await data.json()
-      if (user) review.userName = user.name
-      review.likeAmount = review.like.length
+      if (user) {
+        review.userName = user.name
+        review.image = user?.image || "/images/img_profile_24_outline.svg"
+        review.likeAmount = review.like.length
+      } 
+      
       return review
     })
 
@@ -100,35 +104,35 @@ export default function BookDetails() {
                 path: "/shop"
               },
               {
-                name: book ? book.name : "",
+                name: book?.name,
                 path: "#"
               },
             ]} />
             <div className="flex flex-row w-full mt-3">
               <div className="w-[50%] flex flex-row gap-5 mr-3">
                 <div className="flex flex-col" onClick={() => (setDisplay(book.image))}>
-                  <Img src={book ? book.image : null} className={'w-16 hover:border-black-900_02 hover:border-2 mb-1 mx-3'} />
+                  <Img src={book?.image} className={'w-16 hover:border-black-900_02 hover:border-2 mb-1 mx-3'} />
                 </div>
                 <div>
-                  <Img src={display || book ? book.image : null} />
+                  <Img src={display || book?.image} />
                 </div>
               </div>
               <div className="flex flex-col m-5 w-[50%]">
-                <Heading children={book ? book.name : ""} size="xl" />
+                <Heading children={book?.name} size="xl" />
                 <div className="flex flex-rol w-full justify-between">
                   <Text>
-                    By {book ? book.author : ""}
+                    By {book?.author}
                   </Text>
                   <div className="flex flex-rol gap-2">
-                    <Text className="h-5 my-auto">{book ? book.rating : 0}</Text>
-                    <RatingBar value={book ? book.rating : 0} size={20} />
+                    <Text className="h-5 my-auto">{book?.rating}</Text>
+                    <RatingBar value={book?.rating} size={20} />
                     <Text className="h-5 my-auto">({totalReviews})</Text>
                   </div>
                 </div>
                 <div className="mt-8">
                   <Heading children='Category' size="s" />
                   <div className="flex flex-row gap-3 mt-1">
-                    <Text as="span" className="border-2 py-1 px-2 rounded-full bg-gray-100 !text-black-900_02">{book ? book.category : ""}</Text>
+                    <Text as="span" className="border-2 py-1 px-2 rounded-full bg-gray-100 !text-black-900_02">{book?.category}</Text>
                   </div>
                 </div>
                 <div className="mt-8">
@@ -170,15 +174,15 @@ export default function BookDetails() {
             <div className="flex flex-col mt-10 px-3 w-full">
               <Heading size="lg" className="py-8 font-normal">Reviews</Heading>
               <div className="flex flex-row h-[60px] gap-3">
-                <Text as="span" className="text-5xl font-extrabold h-[36px] my-auto">{book ? book.rating : 0}</Text>
+                <Text as="span" className="text-5xl font-extrabold h-[36px] my-auto">{book?.rating}</Text>
                 <div className="flex flex-col my-auto">
-                  <RatingBar value={book ? book.rating : 0} size={20} />
+                  <RatingBar value={book?.rating} size={20} />
                   <Text size="md">{totalReviews} reviews</Text>
                 </div>
               </div>
               <div className="flex flex-col w-[70%] pl-3 pr-6 gap-2 my-5">
                 {reviews && reviews.map((review) => (
-                  <ReviewComment review={review} getReviews={() => getReviews()} setEditReview={() => setEditReview(!editReview)} setReview={() => setReview(review)} />
+                  <ReviewComment key={review._id} review={review} getReviews={() => getReviews()} setEditReview={() => setEditReview(!editReview)} setReview={() => setReview(review)} />
                 ))}
               </div>
               <ReviewModal isOpen={editReview} close={() => setEditReview(false)} onRequestClose={() => setEditReview(false)} review={review} target={"book"} id={id} />

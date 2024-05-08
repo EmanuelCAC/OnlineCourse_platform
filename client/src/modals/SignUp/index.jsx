@@ -88,7 +88,7 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
                   <div className="flex flex-col items-center justify-start w-[42%] md:w-full">
                     <Button
                       color="white_A700"
-                      leftIcon={<Img src="images/img_googleplus_1_1.svg" alt="google-plus (1) 1" />}
+                      leftIcon={<Img src="/images/img_googleplus_1_1.svg" alt="google-plus (1) 1" />}
                       className="w-full gap-[23px] sm:px-5 !text-gray-700_01 border-gray-300 border border-solid rounded-[10px]"
                     >
                       Sign in with google
@@ -115,7 +115,7 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
                           placeholder="Enter name"
                           value={name}
                           onChange={(e) => setName(e)}
-                          prefix={<Img src="images/img_account_24_outline.svg" alt="account / 24 / Outline" />}
+                          prefix={<Img src="/images/img_account_24_outline.svg" alt="account / 24 / Outline" />}
                           className="w-full gap-[15px] rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"
                         />
                       </div>
@@ -138,13 +138,13 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
                           onChange={(e) => setPassword1(e)}
                           prefix={
                             <Img
-                              src="images/img_lockpad_locksafesecurityprotectedlock_alt_24_outline.svg"
+                              src="/images/img_lockpad_locksafesecurityprotectedlock_alt_24_outline.svg"
                               alt="lock,pad lock,safe,security,protected,lock alt, / 24 / Outline"
                             />
                           }
                           suffix={
                             <div className="flex justify-center items-center w-[15px] h-[11px]" onClick={() => passType1=="password" ? setPassType1("text") : setPassType1("password")}>
-                              <Img src="images/img_vector.svg" alt="Vector" />
+                              <Img src="/images/img_vector.svg" alt="Vector" />
                             </div>
                           }
                           className="w-full sm:w-full gap-[15px] rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"
@@ -159,13 +159,13 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
                           onChange={(e) => setPassword2(e)}
                           prefix={
                             <Img
-                              src="images/img_lockpad_locksafesecurityprotectedlock_alt_24_outline.svg"
+                              src="/images/img_lockpad_locksafesecurityprotectedlock_alt_24_outline.svg"
                               alt="lock,pad lock,safe,security,protected,lock alt, / 24 / Outline"
                             />
                           }
                           suffix={
                             <div className="flex justify-center items-center w-[15px] h-[11px]"onClick={() => passType2=="password" ? setPassType2("text") : setPassType2("password")}>
-                              <Img src="images/img_vector.svg" alt="Vector" />
+                              <Img src="/images/img_vector.svg" alt="Vector" />
                             </div>
                           }
                           className="w-full sm:w-full gap-[15px] rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"

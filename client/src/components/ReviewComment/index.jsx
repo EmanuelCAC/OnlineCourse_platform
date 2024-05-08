@@ -49,7 +49,7 @@ const ReviewComment = ({review, getReviews, setReview, setEditReview, target}) =
     }}>
       <div className="flex flex-col w-full gap-2 my-3">
         <div className="flex flex-row w-full gap-2">
-          <Img src="images/img_profile_24_outline.svg" className="h-[30px] w-[30px]" />
+          <Img src={review.image} className="h-[30px] w-[30px] rounded-full" />
           <Text className="!text-gray-600 !font-medium h-5 my-auto">{review.userName}</Text>
           <Text className="!text-gray-500 !font-medium h-4 my-auto ml-auto" size="xs">{review.createdAt.substr(0, 10)}</Text>
         </div>

@@ -18,7 +18,7 @@ export default function SignUpInputfield({ email = "Email", value, onChange, ...
         placeholder="user@example.com"
         value={value}
         onChange={onChange}
-        prefix={<Img src="images/img_message_24_outline.svg" alt="message / 24 / Outline" />}
+        prefix={<Img src="/images/img_message_24_outline.svg" alt="message / 24 / Outline" />}
         className="w-full gap-[15px] rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"
       />
     </div>

@@ -9,16 +9,16 @@ export default function PagesButton({items, page, pageHandler, totalPages}) {
         onClick={() => pageHandler('prev')}
         onMouseOver={() => {
           const img = document.getElementById('prev')
-          img.src = "images/img_arrow_right.svg"
+          img.src = "/images/img_arrow_right.svg"
           img.className = img.className.replace("rotate-0", "rotate-180")
         }}
         onMouseLeave={() => {
           const img = document.getElementById('prev')
-          img.src = "images/img_arrow_left.svg"
+          img.src = "/images/img_arrow_left.svg"
           img.className = img.className.replace("rotate-180", "rotate-0")
         }}
       >
-        <Img src="images/img_arrow_left.svg" id="prev" className="rotate-0" />
+        <Img src="/images/img_arrow_left.svg" id="prev" className="rotate-0" />
       </Button>
       <Text as="p" className="!text-gray-900 !font-medium">
         Page
@@ -33,16 +33,16 @@ export default function PagesButton({items, page, pageHandler, totalPages}) {
         onClick={() => pageHandler('next')}
         onMouseOver={() => {
           const img = document.getElementById('next')
-          img.src = "images/img_arrow_right.svg"
+          img.src = "/images/img_arrow_right.svg"
           img.className = img.className.replace("rotate-180", "rotate-0")
         }}
         onMouseLeave={() => {
           const img = document.getElementById('next')
-          img.src = "images/img_arrow_left.svg"
+          img.src = "/images/img_arrow_left.svg"
           img.className = img.className.replace("rotate-0", "rotate-180")
         }}
       >
-        <Img src="images/img_arrow_left.svg" className="rotate-180" id="next" />
+        <Img src="/images/img_arrow_left.svg" className="rotate-180" id="next" />
       </Button>
     </div>
   )

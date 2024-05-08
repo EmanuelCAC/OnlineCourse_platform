@@ -36,7 +36,6 @@ export default function EduviCoursesPage() {
   const getTotalPages = async () => {
     const data = await fetch(`http://localhost:3001/api/v1/course?search=${searchBarValue}&sort=${sortBy}&category=${active}`)
     const result = await data.json()
-    console.log(result);
     setTotalPages(Math.ceil(result.length / 8))
   }
 
@@ -106,7 +105,7 @@ export default function EduviCoursesPage() {
               <div className="h-[210px] w-[32%] md:w-full relative">
                 <div className="h-[14px] w-full bottom-[1%] right-0 left-0 m-auto bg-black-900_cc backdrop-opacity-[0.5] blur-[81.00px] absolute rounded-[50%]" />
                 <Img
-                  src="images/img_image_210x374.png"
+                  src="/images/img_image_210x374.png"
                   alt="image_one"
                   className="justify-center h-[210px] w-[97%] sm:w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute"
                 />
@@ -152,7 +151,7 @@ export default function EduviCoursesPage() {
                 searchBarValue?.length > 0 ? (
                   <CloseSVG onClick={() => setSearchBarValue("")} height={24} width={24} fillColor="#0000000" />
                 ) : (
-                  <Img src="images/img_search.svg" alt="search" className="cursor-pointer opacity-0 fill-black-900_02" fill="#0000000" />
+                  <Img src="/images/img_search.svg" alt="search" className="cursor-pointer opacity-0 fill-black-900_02" fill="#0000000" />
                 )
               }
               className="w-[84%] md:w-full gap-[35px] !text-gray-700_99 rounded-tr-[10px] rounded-br-[10px] font-medium"
@@ -160,7 +159,7 @@ export default function EduviCoursesPage() {
             <SelectBox
               size="xs"
               shape="round"
-              indicator={<Img src="images/img_arrowdown_red_300_01.svg" alt="arrow_down" />}
+              indicator={<Img src="/images/img_arrowdown_red_300_01.svg" alt="arrow_down" />}
               name="sortby"
               placeholder="Sort by: Latest"
               options={dropDownOptions}

@@ -34,8 +34,11 @@ export default function CourseDetails() {
     const reviewsList = data.map(async (review) => {
       const data = await fetch(`http://localhost:3001/api/v1/user/${review.createdBy}`)
       const user = await data.json()
-      if (user) review.userName = user.name
-      review.likeAmount = review.like.length
+      if (user) {
+        review.userName = user.name
+        review.image = user?.image || "/images/img_profile_24_outline.svg"
+        review.likeAmount = review.like.length
+      }
       return review
     })
 
@@ -141,7 +144,7 @@ export default function CourseDetails() {
                 <div className="flex flex-row justify-start w-full">
                   <div className="h-[455px] w-full relative">
                     <Img
-                      src="images/img_pexels_vanessa_garcia_6325959.png"
+                      src="/images/img_pexels_vanessa_garcia_6325959.png"
                       alt="pexelsvanessa"
                       className="justify-center h-[455px] w-full sm:w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute rounded-[20px]"
                     />
@@ -150,7 +153,7 @@ export default function CourseDetails() {
                       shape="circle"
                       className="w-[60px] left-0 bottom-0 right-0 top-0 m-auto absolute"
                     >
-                      <Img src="images/img_call_button.svg" />
+                      <Img src="/images/img_call_button.svg" />
                     </Button>
                   </div>
                 </div>
@@ -166,7 +169,7 @@ export default function CourseDetails() {
               <div className="flex flex-col w-full gap-4">
                 <div className="flex flex-row justify-start items-center  gap-2.5 p-2.5 bg-white-A700 cursor-pointer rounded-[10px] hover:shadow-sm">
                   <Img
-                    src="images/img_image.png"
+                    src="/images/img_image.png"
                     alt="image"
                     className="w-[23%] md:h-auto sm:w-full object-cover rounded-[5px]"
                   />
@@ -181,7 +184,7 @@ export default function CourseDetails() {
                 </div>
                 <div className="flex flex-row justify-start items-center w-full gap-2.5 p-2.5 bg-white-A700 shadow-sm cursor-pointer rounded-[10px] hover:shadow-sm">
                   <Img
-                    src="images/img_image.png"
+                    src="/images/img_image.png"
                     alt="image_one"
                     className="w-[23%] md:h-auto sm:w-full object-cover rounded-[5px]"
                   />
@@ -198,12 +201,12 @@ export default function CourseDetails() {
                   <div className="flex flex-row justify-start w-[23%]">
                     <div className="h-[50px] w-full sm:w-full relative">
                       <Img
-                        src="images/img_image_50x80.png"
+                        src="/images/img_image_50x80.png"
                         alt="image_one"
                         className="justify-center h-[50px] w-full sm:w-full left-0 bottom-0 right-0 top-0 m-auto opacity-0.5 object-cover absolute rounded-[5px]"
                       />
                       <div className="flex flex-col items-center justify-center h-max w-max left-0 bottom-0 right-0 top-0 p-1 m-auto bg-white-A700 absolute rounded-[50%]">
-                        <Img src="images/img_lock_pad_lock_s.svg" alt="lockpadlocks" className="h-[10px] w-[10px]" />
+                        <Img src="/images/img_lock_pad_lock_s.svg" alt="lockpadlocks" className="h-[10px] w-[10px]" />
                       </div>
                     </div>
                   </div>
@@ -220,12 +223,12 @@ export default function CourseDetails() {
                   <div className="flex flex-row justify-start w-[23%]">
                     <div className="h-[50px] w-full sm:w-full relative">
                       <Img
-                        src="images/img_image_50x80.png"
+                        src="/images/img_image_50x80.png"
                         alt="image_one"
                         className="justify-center h-[50px] w-full sm:w-full left-0 bottom-0 right-0 top-0 m-auto opacity-0.5 object-cover absolute rounded-[5px]"
                       />
                       <div className="flex flex-col items-center justify-center h-max w-max left-0 bottom-0 right-0 top-0 p-1 m-auto bg-white-A700 absolute rounded-[50%]">
-                        <Img src="images/img_lock_pad_lock_s.svg" alt="lockpadlocks" className="h-[10px] w-[10px]" />
+                        <Img src="/images/img_lock_pad_lock_s.svg" alt="lockpadlocks" className="h-[10px] w-[10px]" />
                       </div>
                     </div>
                   </div>
@@ -242,12 +245,12 @@ export default function CourseDetails() {
                   <div className="flex flex-row justify-start w-[23%]">
                     <div className="h-[50px] w-full sm:w-full relative">
                       <Img
-                        src="images/img_image_50x80.png"
+                        src="/images/img_image_50x80.png"
                         alt="image_one"
                         className="justify-center h-[50px] w-full sm:w-full left-0 bottom-0 right-0 top-0 m-auto opacity-0.5 object-cover absolute rounded-[5px]"
                       />
                       <div className="flex flex-col items-center justify-center h-max w-max left-0 bottom-0 right-0 top-0 p-1 m-auto bg-white-A700 absolute rounded-[50%]">
-                        <Img src="images/img_lock_pad_lock_s.svg" alt="lockpadlocks" className="h-[10px] w-[10px]" />
+                        <Img src="/images/img_lock_pad_lock_s.svg" alt="lockpadlocks" className="h-[10px] w-[10px]" />
                       </div>
                     </div>
                   </div>
@@ -264,12 +267,12 @@ export default function CourseDetails() {
                   <div className="flex flex-row justify-start w-[23%]">
                     <div className="h-[50px] w-full sm:w-full relative">
                       <Img
-                        src="images/img_image_50x80.png"
+                        src="/images/img_image_50x80.png"
                         alt="image_one"
                         className="justify-center h-[50px] w-full sm:w-full left-0 bottom-0 right-0 top-0 m-auto opacity-0.5 object-cover absolute rounded-[5px]"
                       />
                       <div className="flex flex-col items-center justify-center h-max w-max left-0 bottom-0 right-0 top-0 p-1 m-auto bg-white-A700 absolute rounded-[50%]">
-                        <Img src="images/img_lock_pad_lock_s.svg" alt="lockpadlocks" className="h-[10px] w-[10px]" />
+                        <Img src="/images/img_lock_pad_lock_s.svg" alt="lockpadlocks" className="h-[10px] w-[10px]" />
                       </div>
                     </div>
                   </div>
@@ -468,7 +471,7 @@ export default function CourseDetails() {
           </div>
           <div className="flex flex-col w-[70%] pl-3 pr-6 gap-2 my-5">
             {reviews && reviews.map((review) => (
-              <ReviewComment review={review} getReviews={() => getReviews()} setEditReview={() => setEditReview(!editReview)} setReview={() => setReview(review)} target={"course"} />
+              <ReviewComment key={review._id} review={review} getReviews={() => getReviews()} setEditReview={() => setEditReview(!editReview)} setReview={() => setReview(review)} target={"course"} />
             ))}
           </div>
           <ReviewModal isOpen={editReview} close={() => setEditReview(false)} onRequestClose={() => setEditReview(false)} review={review} target={"course"} id={id} />

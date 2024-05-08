@@ -80,7 +80,7 @@ export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
                   <div className="flex flex-col items-center justify-start w-[42%] md:w-full">
                     <Button
                       color="white_A700"
-                      leftIcon={<Img src="images/img_googleplus_1_1.svg" alt="google-plus (1) 1" />}
+                      leftIcon={<Img src="/images/img_googleplus_1_1.svg" alt="google-plus (1) 1" />}
                       className="w-full gap-[23px] sm:px-5 !text-gray-700_01 border-gray-300 border border-solid rounded-[10px]"
                     >
                       Sign in with google
@@ -115,11 +115,11 @@ export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
                             onChange={(e) => setPassword(e)}
                             prefix={
                               <Img
-                                src="images/img_lockpad_locksafesecurityprotectedlock_alt_24_outline.svg"
+                                src="/images/img_lockpad_locksafesecurityprotectedlock_alt_24_outline.svg"
                                 alt="lock,pad lock,safe,security,protected,lock alt, / 24 / Outline"
                               />
                             }
-                            suffix={<Img src="images/img_eye_1_1.svg" alt="eye (1) 1" />}
+                            suffix={<Img src="/images/img_eye_1_1.svg" alt="eye (1) 1" />}
                             className="w-full sm:w-full gap-[15px] rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"
                           />
                         </div>

@@ -25,17 +25,17 @@ export default function Subscribe({ ...props }) {
         <div className="flex flex-row md:flex-col justify-between w-full my-[11px] md:gap-10">
           <div className="flex flex-col items-start justify-start w-[16%] md:w-full gap-[57px]">
             <Img
-              src="images/img_ellipse_169.png"
+              src="/images/img_ellipse_169.png"
               alt="circleimage"
               className="h-[60px] w-[60px] md:h-auto rounded-[50%]"
             />
             <Img
-              src="images/img_ellipse_170.png"
+              src="/images/img_ellipse_170.png"
               alt="circleimage_one"
               className="h-[60px] w-[60px] md:h-auto ml-[127px] md:ml-5 rounded-[50%]"
             />
             <Img
-              src="images/img_ellipse_171.png"
+              src="/images/img_ellipse_171.png"
               alt="circleimage_two"
               className="h-[60px] w-[60px] md:h-auto ml-[30px] md:ml-0 sm:ml-5 rounded-[50%]"
             />
@@ -68,17 +68,17 @@ export default function Subscribe({ ...props }) {
             </div>
             <div className="flex flex-col items-end justify-start w-[22%] md:w-full gap-[57px]">
               <Img
-                src="images/img_ellipse_166.png"
+                src="/images/img_ellipse_166.png"
                 alt="circleimage"
                 className="h-[60px] w-[60px] md:h-auto mr-[30px] sm:mr-5 rounded-[50%]"
               />
               <Img
-                src="images/img_ellipse_167.png"
+                src="/images/img_ellipse_167.png"
                 alt="circleimage"
                 className="h-[60px] w-[60px] md:h-auto mr-[127px] md:mr-5 rounded-[50%]"
               />
               <Img
-                src="images/img_ellipse_168.png"
+                src="/images/img_ellipse_168.png"
                 alt="circleimage"
                 className="h-[60px] w-[60px] md:h-auto rounded-[50%]"
               />

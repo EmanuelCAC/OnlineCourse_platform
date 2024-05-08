@@ -195,7 +195,7 @@ export default function SinglementordetailsPage() {
                           }}>
                             <div className="flex flex-col w-full gap-2 my-3">
                               <div className="flex flex-row w-full gap-2">
-                                <Img src="images/img_profile_24_outline.svg" className="h-[30px] w-[30px]" />
+                                <Img src="/images/img_profile_24_outline.svg" className="h-[30px] w-[30px]" />
                                 <Text className="!text-gray-600 !font-medium h-5 my-auto">{review.userName}</Text>
                                 <Text className="!text-gray-500 !font-medium h-4 my-auto ml-auto" size="xs">{review.updatedAt.substr(0, 10)}</Text>
                               </div>
@@ -322,15 +322,15 @@ export default function SinglementordetailsPage() {
                   </Heading>
                   <div className="flex flex-row justify-between items-center w-auto gap-[15px]">
                     <Img
-                      src="images/img_facebook_logo_1_gray_900.svg"
+                      src="/images/img_facebook_logo_1_gray_900.svg"
                       alt="facebooklogoone"
                       className="h-[22px] w-[22px]"
                     />
                     <Button color="deep_orange_400" size="xs" shape="circle" className="w-[36px]">
-                      <Img src="images/img_instagram_icon.svg" />
+                      <Img src="/images/img_instagram_icon.svg" />
                     </Button>
-                    <Img src="images/img_twitter_logo_gray_900.svg" alt="twitterlogo_one" className="h-[17px]" />
-                    <Img src="images/img_linkedin_icon_gray_900.svg" alt="linkedinicon" className="h-[18px]" />
+                    <Img src="/images/img_twitter_logo_gray_900.svg" alt="twitterlogo_one" className="h-[17px]" />
+                    <Img src="/images/img_linkedin_icon_gray_900.svg" alt="linkedinicon" className="h-[18px]" />
                   </div>
                 </div>
               </div>

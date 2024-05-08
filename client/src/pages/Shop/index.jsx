@@ -102,7 +102,7 @@ export default function EduviShopPage() {
                 </>
               </Heading>
               <Img
-                src="images/img_kisspng_bookcas.png"
+                src="/images/img_kisspng_bookcas.png"
                 alt="kisspngbookcas"
                 className="w-[31%] md:w-full md:h-[210px] object-cover"
               />
@@ -160,14 +160,14 @@ export default function EduviShopPage() {
                     searchBarValue?.length > 0 ? (
                       <CloseSVG onClick={() => setSearchBarValue("")} height={24} width={24} fillColor="#0000000" />
                     ) : (
-                      <Img src="images/img_search.svg" alt="search" className="cursor-pointer opacity-0 fill-black-900_02" fill="#0000000" />
+                      <Img src="/images/img_search.svg" alt="search" className="cursor-pointer opacity-0 fill-black-900_02" fill="#0000000" />
                     )
                   }
                   className="w-[84%] sm:w-full gap-[35px] !text-gray-700_99 rounded-tr-[10px] rounded-br-[10px] font-medium"
                 />
                 <SelectBox
                   shape="round"
-                  indicator={<Img src="images/img_arrowdown_red_300_01.svg" alt="arrow_down" />}
+                  indicator={<Img src="/images/img_arrowdown_red_300_01.svg" alt="arrow_down" />}
                   name="sortby"
                   placeholder="Sort by: Latest"
                   options={dropDownOptions}
