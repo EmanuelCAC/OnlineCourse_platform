@@ -13,6 +13,7 @@ import Pricing from "pages/Pricing";
 import ConfirmAccount from "pages/ConfirmAccount";
 import Payment from "pages/Payment";
 import Review from "pages/Review";
+import YourAccount from "pages/YourAccount";
 
 const ProjectRoutes = () => {
   let element = useRoutes([
@@ -28,6 +29,7 @@ const ProjectRoutes = () => {
     { path: "/confirmAccount", element: <ConfirmAccount /> },
     { path: "/payment", element: <Payment /> },
     { path: "/review", element: <Review /> },
+    { path: "/account", element: <YourAccount />},
     { path: "*", element: <NotFound /> },
   ]);
 
