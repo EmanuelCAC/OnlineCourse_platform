@@ -4,12 +4,14 @@ import { CloseSVG } from "../../assets/images";
 import { Button, Img, Text, SelectBox, Input, Heading, RatingBar, BreadCrumbs } from "../../components";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { login as authLogin } from "store/authSlice";
 import ProfilePic from "modals/ProfilePic";
 import axios from "axios";
 
 export default function YourAccount() {
   const authData = useSelector((state) => state.auth.userData)
+  const dispatch = useDispatch()
   const [profilePic, setProfilePic] = useState(false)
   const [active, setActive] = useState("Books")
   const [books, setBooks] = useState()
@@ -17,6 +19,8 @@ export default function YourAccount() {
   const [courses, setCourses] = useState()
   const [courseInfo, setCourseInfo] = useState()
   const [certificate, setCertificates] = useState()
+  const [editName, setEditName] = useState(false)
+  const [newName, setNewName] = useState()
 
   const getBooks = async (req, res) => {
     try {
@@ -62,6 +66,20 @@ export default function YourAccount() {
    Promise.all(data).then((res) => setCourseInfo(res))
   }
 
+  const changeName = async () => {
+    try {
+      const {data} = await axios.patch(`http://localhost:3001/api/v1/user/${authData.userId}`, {name: newName})
+      if (data) {
+        localStorage.setItem('token', data.token)
+        dispatch(authLogin(data.token))
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
+    setEditName(false)
+    setNewName("")
+  }
+
   useEffect(() => {
     getBooks()
     getCourses()
@@ -86,8 +104,43 @@ export default function YourAccount() {
         </div>
         <div className="flex flex-row md:flex-col justify-start items-start w-[85%] gap-10 md:gap-5 md:px-5 mx-auto">
           <div className="flex flex-col items-center rounded-[15px] bg-white-A700 p-5">
-            <Img src={authData?.img || "/images/img_profile_24_outline.svg"} className="h-60 min-w-[240px] rounded-full mb-2 cursor-pointer" onClick={() => setProfilePic(true)} />
-            <Text className="text-gray-500 !text-4xl">{authData?.name}</Text>
+            <Img src={authData?.img || "/images/img_profile_24_outline.svg"} className="h-60 min-w-[240px] rounded-full mb-4 cursor-pointer" onClick={() => setProfilePic(true)} />
+            {editName ?
+            <div className="flex flex-col gap-3 cursor-pointer">
+              <Input
+                type="text"
+                color="white_A700"
+                size="xs"
+                placeholder="Username"
+                value={newName}
+                onChange={(e) => setNewName(e)}
+                className="w-full sm:w-full gap-[15px] rounded-tr-[10px] rounded-br-[10px] border-gray-300 border border-solid"
+              />
+              <div className="flex flex-row gap-2 w-full">
+                <Button
+                  className="rounded-full"
+                  size="xs"
+                  children={'Save'}
+                  onClick={() => changeName()}
+                />
+                <Button
+                  className="rounded-full border-2 border-gray-300 !text-gray-400"
+                  size="xs"
+                  color="white_A700"
+                  children={'Cancel'}
+                  onClick={() => {
+                    setEditName(false)
+                    setNewName("")
+                  }}
+                />
+              </div>
+            </div>
+            :  
+            <div className="flex flex-row gap-1 cursor-pointer" onClick={() => {setEditName(true)}}>
+              <Text className="text-gray-500 !text-4xl">{authData?.name}</Text>
+              <Img className="h-10 w-10" src="https://img.icons8.com/windows/40/6b7280/edit--v1.png" alt="edit--v1"/>
+            </div>
+            }
           </div>
           <div className="flex flex-col w-full rounded-[15px] gap-4">
             <div className="flex flex-row gap-10">

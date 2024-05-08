@@ -19,7 +19,9 @@ const create = async (req, res) => {
 
 const edit = async (req, res) => {
   const user = await User.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
-  res.status(StatusCodes.OK).json(user)
+
+  const token = user.createJWT()
+  res.status(StatusCodes.OK).json({user, token})
 }
 
 const remove = async (req, res) => {
