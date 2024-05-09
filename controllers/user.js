@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import { StatusCodes } from 'http-status-codes'
+import { BadRequestError, UnauthenticatedError, NotFoundError } from '../errors/index.js'
 
 const getAll = async (req, res) => {
   const list = await User.find()
@@ -8,6 +9,10 @@ const getAll = async (req, res) => {
 
 const getOne = async (req, res) => {
   const { _id, name, email, image } = await User.findById({ _id: req.params.id })
+
+  if (!_id) {
+    throw new NotFoundError("No user with id: " + req.params.id)
+  }
   const user = { _id, name, email, image }
   res.status(StatusCodes.OK).json(user)
 }
@@ -20,12 +25,21 @@ const create = async (req, res) => {
 const edit = async (req, res) => {
   const user = await User.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
 
+  if (!user) {
+    throw new NotFoundError("No user with id: " + req.params.id)
+  }
+
   const token = user.createJWT()
   res.status(StatusCodes.OK).json({user, token})
 }
 
 const remove = async (req, res) => {
   const user = await User.findByIdAndDelete({ _id: req.params.id })
+
+  if (!user) {
+    throw new NotFoundError("No user with id: " + req.params.id)
+  }
+  
   res.status(StatusCodes.OK).json(user)
 }
 

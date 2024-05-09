@@ -50,18 +50,18 @@ export default function Pricing() {
           <div className="flex flex-col items-center justify-start w-full gap-5 md:px-5 max-w-7xl">
             <Heading size="2xl" as="h2" className="!font-metropolis text-center leading-[55px]">
               <>
-                We create a monthly pricing package
+                We create a monthly plan
                 <br />
-                for all standard students
+                for all students
               </>
             </Heading>
             <Text as="p" className="text-center !leading-[30px] !text-black-900_02">
               <>
-                Basically we create this package for those who are really interested and get benefited from our courses
+                Basically we create this plan for those who are really interested and get benefited from our courses
                 or books. <br />
-                We want to make a low cost package for them. So that they can purchase any courses with the package they
+                We want to make a low cost plan for them. So that they can purchase any courses with the plan they
                 buy from us. <br />
-                Also will get free books from every packages.
+                Also will get free books from every plan.
               </>
             </Text>
           </div>
@@ -98,7 +98,7 @@ export default function Pricing() {
                   has: false
                 }
               ]} />
-              <PricingCard title="Standard Pack" price={600} items={[
+              <PricingCard title="Standard" price={600} items={[
                 {
                   description: "8 HD video lessons & tutorials",
                   has: true
@@ -128,7 +128,7 @@ export default function Pricing() {
                   has: false
                 }
               ]} />
-              <PricingCard title="Premium Pack" price={1200} items={[
+              <PricingCard title="Premium" price={1200} items={[
                 {
                   description: "15 HD video lessons & tutorials",
                   has: true

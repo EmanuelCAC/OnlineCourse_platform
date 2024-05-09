@@ -3,11 +3,24 @@ import { Img, Text, Heading, Button } from "./..";
 import LogIn from "modals/LogIn";
 import SignUp from "modals/SignUp";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function PricingCard({title, price, items}) {
   const [login, setLogin] = useState(false)
   const [signup, setSignup] = useState(false)
   const authData = useSelector((state) => state.auth.userData)
+  const navigate = useNavigate()
+
+  const purchase = async () => {
+    const data = [{
+      type: "plan",
+      price: price,
+      productName: title,
+      amount: 1
+    }]
+    navigate('/payment', {state: {data: data}})
+    history.pushState({data: data}, "")
+  }
 
   return (
     <div className="flex flex-col items-start justify-start w-[32%] md:w-full gap-6 p-[30px] sm:p-5 bg-white-A700 cursor-pointer rounded-[20px] hover:shadow-sm">
@@ -32,14 +45,22 @@ export default function PricingCard({title, price, items}) {
       <Heading size="s" as="h3">
         ${price}
       </Heading>
+      {authData?.plan != title ?
       <Button size="2xl" variant="outline" shape="round" className="w-full sm:px-5 font-medium hover:bg-red-300_01 hover:text-white-A700"
       onClick={() => {
         if (!authData) 
           setLogin(true)
+        else
+          purchase()
       }}
       >
-        Purchase Course
+        Purchase
       </Button>
+      :
+      <Button size="2xl" variant="outline" shape="round" className="w-full sm:px-5 font-medium border-gray-300 text-gray-300">
+        Purchase
+      </Button>
+      }
       <LogIn
         isOpen={login}
         isSignupOpen={() => {

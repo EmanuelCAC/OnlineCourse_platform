@@ -145,6 +145,7 @@ export default function YourAccount() {
               <Img className="h-10 w-10" src="https://img.icons8.com/windows/40/6b7280/edit--v1.png" alt="edit--v1"/>
             </div>
             }
+            {authData?.plan != "none" && <Text className="text-gray-500 !text-lg">Plan: {authData?.plan}</Text>}
           </div>
           <div className="flex flex-col w-full rounded-[15px] gap-4">
             <div className="flex flex-row gap-10">

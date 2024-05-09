@@ -2,17 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Header, Text, Heading, Img, RatingBar, Button, Footer, BreadCrumbs, Input } from "components";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { login as authLogin } from "store/authSlice";
 
 export default function Payment() {
   const authData = useSelector((state) => state.auth.userData)
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const items = history.state.data
   const [total, setTotal] = useState(0)
   const [selectedValue, setSelectedValue] = useState("")
   const [books, setBooks] = useState()
   const [courses, setCourses] = useState()
+  const [plan, setPlan] = useState()
 
   const getTotal = () => {
     let sum = 0;
@@ -33,6 +36,11 @@ export default function Payment() {
       return item.type == "course"
     })
     setCourses(courses)
+
+    const plan = items.filter((item) => {
+      return item.type == "plan"
+    })
+    setPlan(plan)
   }
 
 
@@ -53,19 +61,31 @@ export default function Payment() {
           console.log(error.response.data.msg)
         }
       })
+
+      try {
+        const { data } = await axios.patch(`http://localhost:3001/api/v1/user/${authData.userId}`, {plan: plan[0].productName})
+        if (data) {
+          localStorage.setItem('token', data.token)
+          dispatch(authLogin(data.token))
+        }
+      } catch (error) {
+        console.log(error.response.data.msg)
+      }
       
       await items.map(async (item) => {
-        try {
-          const {data} = await axios.delete(`http://localhost:3001/api/v1/cart`, {
-            headers: {
-              authorization: `Bearer ${localStorage.getItem('token')}`
-            },
-            data: {
-              id: item._id
-            }
-          })
-        } catch (error) {
-          console.log(error.response.data.msg)
+        if (item.type != "plan") {
+          try {
+            const {data} = await axios.delete(`http://localhost:3001/api/v1/cart`, {
+              headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`
+              },
+              data: {
+                id: item._id
+              }
+            })
+          } catch (error) {
+            console.log(error.response.data.msg)
+          }
         }
       })
 
