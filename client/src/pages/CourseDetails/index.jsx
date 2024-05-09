@@ -6,6 +6,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import CourseCard2 from "components/CourseCard2";
 import { useSelector } from "react-redux";
+import LogIn from "modals/LogIn";
+import SignUp from "modals/SignUp";
 
 export default function CourseDetails() {
   let { id } = useParams()
@@ -17,6 +19,8 @@ export default function CourseDetails() {
   const [review, setReview] = useState()
   const [editReview, setEditReview] = useState(false)
   const [totalReviews, setTotalReviews] = useState(0)
+  const [login, setLogin] = useState(false)
+  const [signup, setSignup] = useState(false)
   const navigate = useNavigate()
   const authData = useSelector((state) => state.auth.userData)
 
@@ -442,7 +446,12 @@ export default function CourseDetails() {
                   </Heading>
                 </div>
               </div>
-              <Button size="2xl" shape="round" className="w-full sm:px-5 font-medium" hover onClick={purchase}>
+              <Button size="2xl" shape="round" className="w-full sm:px-5 font-medium" hover onClick={() => {
+                if (authData)
+                  purchase()
+                else
+                  setLogin(true)
+              }}>
                 Purchase Course
               </Button>
             </div>
@@ -476,7 +485,24 @@ export default function CourseDetails() {
           </div>
           <ReviewModal isOpen={editReview} close={() => setEditReview(false)} onRequestClose={() => setEditReview(false)} review={review} target={"course"} id={id} />
         </div>
-        
+        <LogIn
+          isOpen={login}
+          isSignupOpen={() => {
+            setLogin(false)
+            setSignup(true)
+          }}
+          close={() => setLogin(false)}
+          onRequestClose={() => setLogin(false)}
+        />
+        <SignUp
+          isOpen={signup}
+          isLoginOpen={() => {
+            setSignup(false)
+            setLogin(true)
+          }}
+          close={() => setSignup(false)}
+          onRequestClose={() => setSignup(false)}
+        />
         <Footer className="flex justify-center items-center w-full px-14 py-20 md:p-5 bg-gray-100" />
       </div>
     </>

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { CloseSVG } from "../../assets/images";
 import { Header, Text, Heading, Img, RatingBar, Button, Footer, BreadCrumbs, Input, ReviewComment } from "components";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ReviewModal from "modals/Review";
+import LogIn from "modals/LogIn";
+import SignUp from "modals/SignUp";
 
 export default function BookDetails() {
   const { id } = useParams()
@@ -17,6 +18,8 @@ export default function BookDetails() {
   const [totalReviews, setTotalReviews] = useState(0)
   const [editReview, setEditReview] = useState(false)
   const [updateCart, setUpdateCart] = useState(false)
+  const [login, setLogin] = useState(false)
+  const [signup, setSignup] = useState(false)
   const authData = useSelector((state) => state.auth.userData)
 
   const getBook = async () => {
@@ -165,7 +168,12 @@ export default function BookDetails() {
                       <Text size="lg" className="!text-black-900_02" >+</Text>
                     </Button>
                   </div>
-                  <Button className="ml-auto" onClick={() => { addToCart() }} hover={true}>
+                  <Button className="ml-auto" hover onClick={() => {
+                    if (authData)
+                      addToCart()
+                    else
+                      setLogin(true)
+                  }} >
                     Add to Cart
                   </Button>
                 </div>
@@ -189,6 +197,24 @@ export default function BookDetails() {
             </div>
           </div>
         </div>
+        <LogIn
+          isOpen={login}
+          isSignupOpen={() => {
+            setLogin(false)
+            setSignup(true)
+          }}
+          close={() => setLogin(false)}
+          onRequestClose={() => setLogin(false)}
+        />
+        <SignUp
+          isOpen={signup}
+          isLoginOpen={() => {
+            setSignup(false)
+            setLogin(true)
+          }}
+          close={() => setSignup(false)}
+          onRequestClose={() => setSignup(false)}
+        />
         <Footer className="flex justify-center items-center w-full px-14 py-20 md:p-5 bg-gray-100" />
       </div>
     </>

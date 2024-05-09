@@ -1,10 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 import { Text, Img, Button, RatingBar } from "components";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import LogIn from "modals/LogIn";
+import SignUp from "modals/SignUp";
+
 
 const ReviewComment = ({review, getReviews, setReview, setEditReview, target}) => {
   const authData = useSelector((state) => state.auth.userData)
+  const [login, setLogin] = useState(false)
+  const [signup, setSignup] = useState(false)
 
   const toogleLike = async (review) => {
     if (review.like.includes(authData.userId)) {
@@ -65,7 +70,12 @@ const ReviewComment = ({review, getReviews, setReview, setEditReview, target}) =
               size="xs"
               rightIcon={<img width="24" height="24" src={`https://img.icons8.com/material-outlined/24/${authData && review.like.includes(authData.userId) ? 'FF6652' : '6B7280'}/facebook-like--v1.png`} alt="facebook-like--v1" />}
               children={<Text className={`text-inherit !font-medium ${authData && review.like.includes(authData.userId) ? '!text-[#FF6652]' : '!text-[#6B7280]'} pt-[2px]`}>Útil</Text>}
-              onClick={() => { if (authData) toogleLike(review) }}
+              onClick={() => { 
+                if (authData) 
+                  toogleLike(review)
+                else
+                  setLogin(true) 
+                }}
             />
           </div>
           <Text className="text-inherit !font-medium !text-gray-400 h-5 my-auto ml-20">{review.likeAmount} Likes</Text>
@@ -108,6 +118,9 @@ const ReviewComment = ({review, getReviews, setReview, setEditReview, target}) =
                 onMouse
                 children={<Text className="text-inherit !font-medium !text-gray-400 pt-[2px]">Report</Text>}
                 onClick={() => {
+                  if (!authData) {
+                    setLogin(true)
+                  }
                   const item = document.getElementsByName(review._id)
                   item[0].className += ' hidden'
                 }}
@@ -117,6 +130,24 @@ const ReviewComment = ({review, getReviews, setReview, setEditReview, target}) =
         </div>
       </div>
       <hr />
+      <LogIn
+        isOpen={login}
+        isSignupOpen={() => {
+          setLogin(false)
+          setSignup(true)
+        }}
+        close={() => setLogin(false)}
+        onRequestClose={() => setLogin(false)}
+      />
+      <SignUp
+        isOpen={signup}
+        isLoginOpen={() => {
+          setSignup(false)
+          setLogin(true)
+        }}
+        close={() => setSignup(false)}
+        onRequestClose={() => setSignup(false)}
+      />
     </div>
   )
 }

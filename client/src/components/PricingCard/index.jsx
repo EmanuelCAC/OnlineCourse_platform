@@ -1,7 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import { Img, Text, Heading, Button } from "./..";
+import LogIn from "modals/LogIn";
+import SignUp from "modals/SignUp";
+import { useSelector } from "react-redux";
 
 export default function PricingCard({title, price, items}) {
+  const [login, setLogin] = useState(false)
+  const [signup, setSignup] = useState(false)
+  const authData = useSelector((state) => state.auth.userData)
 
   return (
     <div className="flex flex-col items-start justify-start w-[32%] md:w-full gap-6 p-[30px] sm:p-5 bg-white-A700 cursor-pointer rounded-[20px] hover:shadow-sm">
@@ -26,9 +32,32 @@ export default function PricingCard({title, price, items}) {
       <Heading size="s" as="h3">
         ${price}
       </Heading>
-      <Button size="2xl" variant="outline" shape="round" className="w-full sm:px-5 font-medium hover:bg-red-300_01 hover:text-white-A700">
+      <Button size="2xl" variant="outline" shape="round" className="w-full sm:px-5 font-medium hover:bg-red-300_01 hover:text-white-A700"
+      onClick={() => {
+        if (!authData) 
+          setLogin(true)
+      }}
+      >
         Purchase Course
       </Button>
+      <LogIn
+        isOpen={login}
+        isSignupOpen={() => {
+          setLogin(false)
+          setSignup(true)
+        }}
+        close={() => setLogin(false)}
+        onRequestClose={() => setLogin(false)}
+      />
+      <SignUp
+        isOpen={signup}
+        isLoginOpen={() => {
+          setSignup(false)
+          setLogin(true)
+        }}
+        close={() => setSignup(false)}
+        onRequestClose={() => setSignup(false)}
+      />
     </div> 
   )
 }
