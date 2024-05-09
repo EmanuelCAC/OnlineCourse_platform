@@ -4,7 +4,6 @@ import { default as ModalProvider } from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { logout as authLogut } from "store/authSlice";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import ProfilePic from "modals/ProfilePic";
 
 export default function Menu({ isOpen, close, ...props }) {
@@ -18,24 +17,6 @@ export default function Menu({ isOpen, close, ...props }) {
       document.body.style.overflow = isOpen ? 'hidden' : 'auto'
     }
   }, [isOpen])
-
-  const submitHandler = async (e) => {
-    e.preventDefault()
-    const image = document.querySelector('#photo')
-    
-    const formdata = new FormData()
-    formdata.append('photo', image.files[0])
-    try {
-      const {data} = await axios.post(`http://localhost:3001/api/v1/image/${authData.userId}`, formdata, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }
-    )
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   return (
 
@@ -67,14 +48,50 @@ export default function Menu({ isOpen, close, ...props }) {
               </div>
               <div className="flex flex-col w-full h-full gap-1">
                 <hr />
-                <Text as="button" className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left">Your profile</Text>
+                <Text
+                  as="button" 
+                  className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left"
+                  onClick={() => {
+                    navigate('/account')
+                    history.pushState({ active: "Books" }, "")
+                    close()
+                  }}
+                >Your profile</Text>
                 <Text as="button" className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left">Add account</Text>
                 <hr />
-                <Text as="button" className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left" onClick={() => navigate('/review')}>Add review</Text>
+                <Text
+                  as="button"
+                  className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left"
+                  onClick={() => navigate('/review')}
+                >Add review</Text>
                 <hr />
-                <Text as="button" className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left">Your books</Text>
-                <Text as="button" className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left">Your courses</Text>
-                <Text as="button" className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left">Your certificates</Text>
+                <Text
+                  as="button"
+                  className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left"
+                  onClick={() => {
+                    navigate('/account')
+                    history.pushState({ active: "Books" }, "")
+                    close()
+                  }}
+                >Your books</Text>
+                <Text
+                  as="button"
+                  className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left"
+                  onClick={() => {
+                    navigate('/account')
+                    history.pushState({ active: "Courses" }, "")
+                    close()
+                  }}
+                >Your courses</Text>
+                <Text
+                  as="button"
+                  className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left"
+                  onClick={() => {
+                    navigate('/account')
+                    history.pushState({ active: "Certificates" }, "")
+                    close()
+                  }}
+                >Your certificates</Text>
                 <hr />
                 <Text as="button" className="text-gray-600 border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left">Settings</Text>
                 <Text as="button" className="text-gray-600 mt-auto border border-transparent hover:bg-gray-100 w-full p-1.5 rounded-md text-left">Support</Text>
@@ -84,6 +101,7 @@ export default function Menu({ isOpen, close, ...props }) {
                   onClick={() => {
                     dispatch(authLogut())
                     localStorage.removeItem('token')
+                    navigate('/')
                     close()
                   }}
                 >Sign out</Text>

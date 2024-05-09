@@ -13,7 +13,7 @@ export default function YourAccount() {
   const authData = useSelector((state) => state.auth.userData)
   const dispatch = useDispatch()
   const [profilePic, setProfilePic] = useState(false)
-  const [active, setActive] = useState("Books")
+  const [active, setActive] = useState(history.state.active || "Books")
   const [books, setBooks] = useState()
   const [bookInfo, setBookInfo] = useState()
   const [courses, setCourses] = useState()
@@ -90,7 +90,11 @@ export default function YourAccount() {
       getBookInfo()
     if (courses)
       getCourseInfo()
-  }, [books])
+  }, [books, courses])
+
+  useEffect(() => {
+    setActive(history.state.active)
+  }, [history.state.active])
 
   return (
     <>
