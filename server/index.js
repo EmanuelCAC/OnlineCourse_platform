@@ -19,6 +19,7 @@ import subscribeRoute from '../routes/subscribe.js'
 import ownedBookRoute from '../routes/ownedBook.js'
 import ownedCourseRoute from '../routes/ownedCourse.js'
 import imageRoute from '../routes/image.js'
+import coursePlaylistRoute from '../routes/coursePlaylist.js'
 
 import notFoundMiddleware from '../middleware/not-found.js'
 import errorHandlerMiddleware from '../middleware/error-handler.js'
@@ -46,6 +47,7 @@ app.use('/api/v1/subscribe', subscribeRoute)
 app.use('/api/v1/ownedBook', ownedBookRoute)
 app.use('/api/v1/ownedCourse', ownedCourseRoute)
 app.use('/api/v1/image', upload.single('photo'), imageRoute)
+app.use('/api/v1/coursePlaylist', coursePlaylistRoute)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)

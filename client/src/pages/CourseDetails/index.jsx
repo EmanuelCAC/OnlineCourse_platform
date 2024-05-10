@@ -23,6 +23,7 @@ export default function CourseDetails() {
   const [signup, setSignup] = useState(false)
   const navigate = useNavigate()
   const authData = useSelector((state) => state.auth.userData)
+  // const v = document.querySelector("#myVideo").duration
 
   const getCourse = async () => {
     try {
@@ -147,20 +148,14 @@ export default function CourseDetails() {
               <div className="flex flex-col items-start justify-start w-full gap-[29px]">
                 <div className="flex flex-row justify-start w-full">
                   <div className="h-[455px] w-full relative">
-                    <Img
-                      src="/images/img_pexels_vanessa_garcia_6325959.png"
-                      alt="pexelsvanessa"
-                      className="justify-center h-[455px] w-full sm:w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute rounded-[20px]"
-                    />
-                    <Button
-                      size="4xl"
-                      shape="circle"
-                      className="w-[60px] left-0 bottom-0 right-0 top-0 m-auto absolute"
-                    >
-                      <Img src="/images/img_call_button.svg" />
-                    </Button>
+                    {/* <video className="justify-center h-[455px] w-full sm:w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute rounded-[20px]" controls>
+                      <source src="https://res.cloudinary.com/duheudj5m/video/upload/v1715084581/samples/sea-turtle.mp4" type="video/mp4"/>
+                    </video> */}
+                    <video id="myVideo" className="justify-center h-[455px] w-full sm:w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute rounded-[20px]" controls controlsList="nodownload" poster="/images/img_pexels_vanessa_garcia_6325959.png">
+                      <source src="https://res.cloudinary.com/duheudj5m/video/upload/v1715084583/samples/elephants.mp4" type="video/mp4"/>
+                    </video>
                   </div>
-                </div>
+                </div>  
                 <Heading size="lg" as="h1" className="!text-black-900_02">
                   {course?.name} | Episode 2
                 </Heading>
