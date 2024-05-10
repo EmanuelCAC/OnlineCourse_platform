@@ -30,7 +30,7 @@ export default function BookCard1({book, ...props}) {
           </>
         </Heading>
         <Heading as="h4" className="!text-red-300_01">
-          ${book.price}
+          ${book.price.toFixed(2)}
         </Heading>
       </div>
     </div>

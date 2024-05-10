@@ -144,8 +144,8 @@ export default function BookDetails() {
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta praesentium vero suscipit veniam ipsum facere facilis qui deleniti repudiandae totam veritatis doloremque repellat ipsam eaque mollitia, consequatur quam dolorum necessitatibus!
                   </Text>
                 </div>
-                <div className="flex flew-row mt-auto">
-                  <Text as="p" className="!text-black-900_02 my-auto mx-3 h-8" size="lg">
+                <div className="flex flew-row mt-auto gap-3">
+                  <Text as="p" className="!text-black-900_02 my-auto h-8" size="lg">
                     Amount:
                   </Text>
                   <div className="flex border-2 border-gray-200 h-[32px] my-auto">
@@ -168,7 +168,8 @@ export default function BookDetails() {
                       <Text size="lg" className="!text-black-900_02" >+</Text>
                     </Button>
                   </div>
-                  <Button className="ml-auto" hover onClick={() => {
+                  <Text className="ml-auto my-auto !text-2xl !font-semibold h-8">${book?.price.toFixed(2)}</Text>
+                  <Button hover onClick={() => {
                     if (authData)
                       addToCart()
                     else

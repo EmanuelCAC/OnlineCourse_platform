@@ -20,11 +20,11 @@ export default function BookCard3({book, ...props}) {
           />
         </div>
       </div>
-      <div className="flex flex-col items-start justify-start w-full gap-[9px]">
+      <div className="flex flex-col items-start justify-between w-full h-full gap-[9px]">
         <Heading as="h1">{book.name}</Heading>
         <div className="flex flex-row justify-between items-center w-full">
           <Heading as="h2" className="!text-red-300_01">
-            {book.price.toFixed(2)}
+            ${book.price.toFixed(2)}
           </Heading>
           <RatingBar
             value={book.rating}

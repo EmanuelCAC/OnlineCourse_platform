@@ -10,6 +10,10 @@ const getAll = async (req, res) => {
     queryObject.category = category
   }
 
+  if (search) {
+    queryObject.name = { $regex: search, $options: 'i' }
+  }
+
   let result = Book.find(queryObject)
 
   if (sort) {
@@ -23,12 +27,7 @@ const getAll = async (req, res) => {
   result = result.skip(skip).limit(limit)
 
   let books = await result
-
-  if (search) {
-    books = books.filter((book) => {
-      return book.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-    })
-  }
+  
   res.status(StatusCodes.OK).json({ books })
 }
 

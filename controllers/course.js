@@ -15,6 +15,10 @@ const getAll = async (req, res) => {
     queryObject.instructorId = instructorId
   }
 
+  if (search) {
+    queryObject.name = { $regex: search, $options: 'i' }
+  }
+
   let result = Course.find(queryObject)
 
   if (sort) {
@@ -28,12 +32,6 @@ const getAll = async (req, res) => {
   result = result.skip(skip).limit(limit)
 
   let courses = await result
-
-  if (search) {
-    courses = courses.filter((courses) => {
-      return courses.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-    })
-  }
 
   res.status(StatusCodes.OK).json(courses)
 }
