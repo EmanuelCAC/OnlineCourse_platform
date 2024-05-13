@@ -21,6 +21,10 @@ const CoursePlaylistSchema = new mongoose.Schema({
   },
   duration: {
     type: Number
+  },
+  poster: {
+    type: String,
+    required: [true, 'Please provide the poster url']
   }
 })
 
