@@ -191,7 +191,7 @@ export default function BookDetails() {
               </div>
               <div className="flex flex-col w-[70%] pl-3 pr-6 gap-2 my-5">
                 {reviews && reviews.map((review) => (
-                  <ReviewComment key={review._id} review={review} getReviews={() => getReviews()} setEditReview={() => setEditReview(!editReview)} setReview={() => setReview(review)} />
+                  <ReviewComment key={review._id} review={review} getReviews={() => getReviews()} setEditReview={() => setEditReview(!editReview)} setReview={() => setReview(review)} target={"book"} />
                 ))}
               </div>
               <ReviewModal isOpen={editReview} close={() => setEditReview(false)} onRequestClose={() => setEditReview(false)} review={review} target={"book"} id={id} />
