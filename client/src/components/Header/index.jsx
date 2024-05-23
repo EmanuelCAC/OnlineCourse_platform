@@ -57,11 +57,6 @@ export default function Header({ updateCart, ...props }) {
       active: true
     },
     {
-      name: "Mentors",
-      slug: "/mentor",
-      active: true
-    },
-    {
       name: "Courses",
       slug: "/courses",
       img: {
@@ -72,8 +67,17 @@ export default function Header({ updateCart, ...props }) {
       state: { category: "" },
       dropdown: ["Kindergarten", "High School", "College", "Technology", "Science", "Language", "Mathematics", "Social Studies"],
       active: true
+    },
+    {
+      name: "Mentors",
+      slug: "/mentor",
+      active: true
+    },
+    {
+      name: "Join Us",
+      slug: "/joinAsTeacher",
+      active: true
     }
-    
   ]
 
   const navAuthItems = [

@@ -14,6 +14,7 @@ import ConfirmAccount from "pages/ConfirmAccount";
 import Payment from "pages/Payment";
 import Review from "pages/Review";
 import YourAccount from "pages/YourAccount";
+import JoinAsTeacher from "pages/JoinAsTeacher";
 
 const ProjectRoutes = () => {
   let element = useRoutes([
@@ -30,6 +31,7 @@ const ProjectRoutes = () => {
     { path: "/payment", element: <Payment /> },
     { path: "/review", element: <Review /> },
     { path: "/account", element: <YourAccount />},
+    { path: "/joinAsTeacher", element: <JoinAsTeacher />},
     { path: "*", element: <NotFound /> },
   ]);
 
