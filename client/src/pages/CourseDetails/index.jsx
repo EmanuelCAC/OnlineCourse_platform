@@ -24,6 +24,7 @@ export default function CourseDetails() {
   const [totalReviews, setTotalReviews] = useState(0)
   const [login, setLogin] = useState(false)
   const [signup, setSignup] = useState(false)
+  const [owned, setOwned] = useState(false)
   const navigate = useNavigate()
   const authData = useSelector((state) => state.auth.userData)
 
@@ -111,6 +112,19 @@ export default function CourseDetails() {
     setCourse(data)
   }
 
+  const ownership = async () => {
+    try {
+      const {data} = await axios.post(`http://localhost:3001/api/v1/ownedCourse/all`, {userId: authData.userId})
+      data.map((course) => {
+        if(course.courseId == id) {
+          setOwned(true)
+        }
+      })
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
+
   useEffect(() => {
     getCourse()
     getCoursePlaylist()
@@ -132,13 +146,17 @@ export default function CourseDetails() {
     }
   }, [reviews])
 
+  useEffect(() => {
+    ownership()
+  }, [])
+
   return (
     <>
       <Helmet>
         <title>Online Course Platform</title>
         <meta name="description" content="Web site created using create-react-app" />
       </Helmet>
-      <div className="flex flex-col items-center justify-start w-full gap-[99px] bg-gray-100">
+      <div className="flex flex-col items-center justify-start w-full gap-[70px] bg-gray-100">
         <div className="flex flex-col items-center justify-start w-full gap-12">
           <Header className="flex justify-center items-center w-full md:h-auto p-[22px] sm:p-5 bg-gray-100" updateCart={updateCart} />
           <div className="flex flex-row md:flex-col justify-between items-start w-full p-6 md:gap-10 md:px-5 sm:p-5 bg-gray-200_01 max-w-7xl rounded-[20px]">
@@ -181,7 +199,7 @@ export default function CourseDetails() {
                   key={i}
                   id={video.order}
                   onClick={() => {
-                    if (i < 2) 
+                    if (owned || i < 2) 
                       setIndex(i)
                   }}>
                   <div className="flex flex-row justify-start w-full max-w-[90px]">
@@ -191,7 +209,7 @@ export default function CourseDetails() {
                         alt="image_one"
                         className="justify-center h-[50px] sm:w-full left-0 bottom-0 right-0 top-0 m-auto opacity-0.5 object-cover absolute rounded-[5px]"
                       />
-                      {i >= 2 && <>
+                      {!owned && i >= 2 && <>
                         <div className="w-full h-full bg-white-A700/40 rounded-[5px] left-0 bottom-0 right-0 top-0 absolute z-10"></div>
                         <div className="flex flex-col items-center justify-center h-max w-max left-0 bottom-0 right-0 top-0 p-1 m-auto bg-white-A700 absolute rounded-[50%] z-20">
                         <Img src="/images/img_lock_pad_lock_s.svg" alt="lockpadlocks" className="h-[10px] w-[10px]" />
@@ -200,10 +218,10 @@ export default function CourseDetails() {
                     </div>
                   </div>
                   <div className="flex flex-col items-start justify-start w-[70%] gap-[3px]">
-                    <Heading as="p" className={`${i >= 2 ? "!text-black-900_87" : "!text-black-900_02"} w-full truncate`}>
+                    <Heading as="p" className={`${!owned && i >= 2 ? "!text-black-900_87" : "!text-black-900_02"} w-full truncate`}>
                       {video.name} - {course?.name}
                     </Heading>
-                    <Text size="s" as="p" className={`${i >= 2 && "!text-deep_orange-400_87"}`}>
+                    <Text size="s" as="p" className={`${!owned && i >= 2 && "!text-deep_orange-400_87"}`}>
                       {video.duration}
                     </Text>
                   </div>
@@ -367,16 +385,32 @@ export default function CourseDetails() {
                   </Heading>
                 </div>
               </div>
-              <Button size="2xl" shape="round" className="w-full sm:px-5 font-medium" hover onClick={() => {
+              {!owned && <Button size="2xl" shape="round" className="w-full sm:px-5 font-medium" hover onClick={() => {
                 if (authData)
                   purchase()
                 else
                   setLogin(true)
               }}>
                 Purchase Course
-              </Button>
+              </Button>}
             </div>
           </div>
+        </div>
+        <div className="flex flex-col px-8 w-[70%] bg-white-A700 rounded-[15px]">
+          <Heading size="xl" className="py-8 font-normal">Reviews</Heading>
+          <div className="flex flex-row h-[60px] gap-3">
+            <Text as="span" className="text-5xl font-extrabold h-[36px] my-auto">{course?.rating || 0}</Text>
+            <div className="flex flex-col my-auto">
+              <RatingBar value={course?.rating || 0} size={20} />
+              <Text size="md">{totalReviews} reviews</Text>
+            </div>
+          </div>
+          <div className="flex flex-col w-full pl-3 pr-6 gap-2 my-5">
+            {reviews && reviews.map((review) => (
+              <ReviewComment key={review._id} review={review} getReviews={() => getReviews()} setEditReview={() => setEditReview(!editReview)} setReview={() => setReview(review)} target={"course"} />
+            ))}
+          </div>
+          <ReviewModal isOpen={editReview} close={() => setEditReview(false)} onRequestClose={() => setEditReview(false)} review={review} target={"course"} id={id} />
         </div>
         <div className="flex flex-row justify-center w-full">
           {similarCourses[1] && <div className="flex flex-col items-start justify-start w-full gap-12 md:px-5 max-w-7xl">
@@ -389,22 +423,6 @@ export default function CourseDetails() {
               ))}
             </div>
           </div>}
-        </div>
-        <div className="flex flex-col mt-10 px-8 w-[85%] !mx-auto bg-white-A700 rounded-[15px]">
-          <Heading size="lg" className="py-8 font-normal">Reviews</Heading>
-          <div className="flex flex-row h-[60px] gap-3">
-            <Text as="span" className="text-5xl font-extrabold h-[36px] my-auto">{course?.rating || 0}</Text>
-            <div className="flex flex-col my-auto">
-              <RatingBar value={course?.rating || 0} size={20} />
-              <Text size="md">{totalReviews} reviews</Text>
-            </div>
-          </div>
-          <div className="flex flex-col w-[70%] pl-3 pr-6 gap-2 my-5">
-            {reviews && reviews.map((review) => (
-              <ReviewComment key={review._id} review={review} getReviews={() => getReviews()} setEditReview={() => setEditReview(!editReview)} setReview={() => setReview(review)} target={"course"} />
-            ))}
-          </div>
-          <ReviewModal isOpen={editReview} close={() => setEditReview(false)} onRequestClose={() => setEditReview(false)} review={review} target={"course"} id={id} />
         </div>
         <LogIn
           isOpen={login}

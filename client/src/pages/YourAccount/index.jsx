@@ -8,10 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { login as authLogin } from "store/authSlice";
 import ProfilePic from "modals/ProfilePic";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function YourAccount() {
   const authData = useSelector((state) => state.auth.userData)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [profilePic, setProfilePic] = useState(false)
   const [active, setActive] = useState(history.state.active || "Books")
   const [books, setBooks] = useState()
@@ -165,7 +167,7 @@ export default function YourAccount() {
                 <Text className="mx-auto text-6xl font-black py-10">No book yet!</Text>
               </div>}
               {active == "Books" && bookInfo && bookInfo.map((book) => (
-                <div key={book._id} className="w-1/2 min-w-[350px]">
+                <div key={book._id} className="w-1/2 min-w-[350px] cursor-pointer" onClick={() => (navigate('/shop/' + book._id))} >
                   <div className="flex flex-row pb-5 pt-3" >
                     <Img src={book.image} className={'w-28 mr-3 border-2'} />
                     <div className="flex flex-col w-full justify-center">
@@ -182,9 +184,9 @@ export default function YourAccount() {
                 </div>
               ))}
               {active == "Courses" && courseInfo && courseInfo.map((course) => (
-                <div key={course._id} className="w-1/2 min-w-[350px]">
+                <div key={course._id} className="w-1/2 min-w-[350px] cursor-pointer" onClick={() => (navigate('/courses/' + course._id))}>
                   <div className="flex flex-row pb-5 pt-3 h-32" >
-                    <Img src={course.image} className={'mr-3 border-2 rounded-xl'} />
+                    <Img src={course.image} className={'mr-3 rounded-xl'} />
                     <div className="flex flex-col w-full justify-center">
                       <RatingBar
                         value={course.rating}
