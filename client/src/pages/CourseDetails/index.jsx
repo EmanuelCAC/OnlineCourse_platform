@@ -8,6 +8,7 @@ import CourseCard2 from "components/CourseCard2";
 import { useSelector } from "react-redux";
 import LogIn from "modals/LogIn";
 import SignUp from "modals/SignUp";
+import { Scrollbar } from 'react-scrollbars-custom';
 
 export default function CourseDetails() {
   let { id } = useParams()
@@ -159,7 +160,7 @@ export default function CourseDetails() {
               <div className="flex flex-col items-start justify-start w-full gap-[29px]">
                 <div className="flex flex-row justify-start w-full">
                   <div className="h-[455px] w-full relative">
-                    {coursePlaylist[index] && <video id="myVideo" className="justify-center h-[455px] w-full sm:w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute rounded-[20px]" controls controlsList="nodownload" poster="/images/img_pexels_vanessa_garcia_6325959.png">
+                    {coursePlaylist[index] && <video id="myVideo" key={index} className="justify-center h-[455px] w-full sm:w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute rounded-[20px]" controls controlsList="nodownload" poster="/images/img_pexels_vanessa_garcia_6325959.png">
                       <source src={coursePlaylist[index]?.video} type="video/mp4"/>
                     </video>}
                   </div>
@@ -170,22 +171,25 @@ export default function CourseDetails() {
               </div>
             </div>
             <div className="flex flex-col items-start justify-start w-[32%] md:w-full mr-[5px] gap-3">
-              <Heading size="lg" as="h2" className="!text-black-900_02">
+              <Heading size="lg" as="h2" className="!text-black-900_02 mb-3">
                 Course Playlists
               </Heading>
+              <Scrollbar style={{ height: 510}} wrapperProps={{ style: "" }}>
               <div className="flex flex-col w-full gap-4">
-                {coursePlaylist[index] && coursePlaylist.map((video, i) => (
-                  <div className="flex flex-row justify-start items-center  gap-2.5 p-2.5 bg-white-A700 cursor-pointer rounded-[10px] hover:shadow-sm"
+              {coursePlaylist[index] && coursePlaylist.map((video, i) => (
+                  <div className="flex flex-row justify-start items-center gap-2.5 p-2.5 bg-white-A700 cursor-pointer rounded-[10px] hover:shadow-sm mr-4"
+                  key={i}
+                  id={video.order}
                   onClick={() => {
                     if (i < 2) 
                       setIndex(i)
                   }}>
-                  <div className="flex flex-row justify-start w-[23%]">
+                  <div className="flex flex-row justify-start w-full max-w-[90px]">
                     <div className="h-[50px] w-full sm:w-full relative">
                       <Img
-                        src={video.video}
+                        src={video?.poster}
                         alt="image_one"
-                        className="justify-center h-[50px] w-full sm:w-full left-0 bottom-0 right-0 top-0 m-auto opacity-0.5 object-cover absolute rounded-[5px]"
+                        className="justify-center h-[50px] sm:w-full left-0 bottom-0 right-0 top-0 m-auto opacity-0.5 object-cover absolute rounded-[5px]"
                       />
                       {i >= 2 && <>
                         <div className="w-full h-full bg-white-A700/40 rounded-[5px] left-0 bottom-0 right-0 top-0 absolute z-10"></div>
@@ -205,7 +209,8 @@ export default function CourseDetails() {
                   </div>
                 </div>
                 ))}
-              </div>
+                </div>
+              </Scrollbar>
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ const CoursePlaylistSchema = new mongoose.Schema({
     required: [true, 'Please provide the order']
   },
   duration: {
-    type: Number
+    type: String
   },
   poster: {
     type: String,
@@ -33,7 +33,10 @@ CoursePlaylistSchema.pre('save', async function (next) {
   const duration = await getVideoDurationInSeconds(
     this.video
   ).then((duration) => {
-    return duration
+    const m = Math.floor(duration / 60)
+    const s = Math.floor((duration - m * 60))
+    const time = m.toString().padStart(2, "0") + ":" + s.toString().padStart(2, "0")
+    return time
   })
   this.duration = duration
   next()
