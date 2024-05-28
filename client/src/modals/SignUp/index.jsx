@@ -4,6 +4,9 @@ import SignUpInputfield from "../../components/SignUpInputfield";
 import { default as ModalProvider } from "react-modal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login as authLogin } from "store/authSlice";
+import { useGoogleLogin } from '@react-oauth/google';
 
 export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
   const [sliderState, setSliderState] = React.useState(0);
@@ -16,6 +19,34 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
   const [passType2, setPassType2] = React.useState("password")
   const [error, setError] = React.useState(null)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: async (response) => {
+      try {
+        const { data } = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+          headers: {
+            Authorization: `Bearer ${response.access_token}`
+          }
+        });
+        if (data.email_verified) {
+          try {
+            const { data: userData } = await axios.post("http://localhost:3001/api/v1/auth/signupWithGoogle", { name: data.name, email: data.email, password: data.sub, image: data.picture })
+            if (userData) {
+              localStorage.setItem('token', userData.token)
+              dispatch(authLogin(userData.token))
+              navigate('/')
+              close()
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  });
 
   const submitHandler = (async (e) => {
     e.preventDefault()
@@ -90,8 +121,9 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
                       color="white_A700"
                       leftIcon={<Img src="/images/img_googleplus_1_1.svg" alt="google-plus (1) 1" />}
                       className="w-full gap-[23px] sm:px-5 !text-gray-700_01 border-gray-300 border border-solid rounded-[10px]"
+                      onClick={() => loginWithGoogle()}
                     >
-                      Sign in with google
+                      Sign up with google
                     </Button>
                     <div className="flex flex-row justify-center items-center w-full mt-5 gap-[11px] p-[3px]">
                       <div className="h-px w-[6%] ml-[54px] md:ml-5 bg-gray-700_01" />

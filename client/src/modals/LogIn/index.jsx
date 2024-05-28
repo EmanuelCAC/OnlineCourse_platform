@@ -5,6 +5,7 @@ import { default as ModalProvider } from "react-modal";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login as authLogin } from "store/authSlice";
+import { useGoogleLogin } from '@react-oauth/google';
 
 export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
   const [sliderState, setSliderState] = React.useState(0);
@@ -13,6 +14,31 @@ export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
   const [password, setPassword] = React.useState("")
   const [error, setError] = React.useState(null)
   const dispatch = useDispatch()
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: async (response) => {
+      try {
+        const {data} = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+          headers: {
+            Authorization: `Bearer ${response.access_token}`
+          }
+        });
+        if (data.email_verified) {
+          try {
+            const { data: userData } = await axios.post("http://localhost:3001/api/v1/auth/login", { email: data.email, password: data.sub})
+            if (userData) {
+              dispatch(authLogin(userData.token))
+              close()
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  });
 
   const submitHandler = (async (e) => {
     e.preventDefault()
@@ -82,6 +108,7 @@ export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
                       color="white_A700"
                       leftIcon={<Img src="/images/img_googleplus_1_1.svg" alt="google-plus (1) 1" />}
                       className="w-full gap-[23px] sm:px-5 !text-gray-700_01 border-gray-300 border border-solid rounded-[10px]"
+                      onClick={() => loginWithGoogle()}
                     >
                       Sign in with google
                     </Button>

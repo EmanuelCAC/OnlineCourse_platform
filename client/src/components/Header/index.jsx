@@ -31,7 +31,7 @@ export default function Header({ updateCart, ...props }) {
         })
       if (data) setCartItems(data.cart.length)
     } catch (error) {
-      console.log(error.response.data.msg)
+      console.log(error.response)
     }
   }
 
@@ -122,11 +122,11 @@ export default function Header({ updateCart, ...props }) {
 
   return (
     <header {...props}>
-      <div className="flex flex-row md:flex-col justify-between w-full mx-auto md:gap-10 md:px-5 max-w-7xl">
+      <div className="flex flex-row md:flex-col justify-start w-full mx-auto gap-10 md:gap-10 md:px-5 max-w-7xl">
         <button onClick={() => navigate("/")}>
-          <Img src="/images/img_logo.svg" alt="logo_one" className="h-[30px]" />
+          <Img src="/images/img_logo.svg" alt="logo_one" className="h-[30px] w-[175px]" />
         </button>
-        <ul className="flex flex-row md:flex-col justify-start items-center w-[58%] md:w-full gap-6 md:gap-5">
+        <ul className="flex flex-row md:flex-col justify-start items-center md:w-full gap-6 md:gap-5">
           {
             navItems.map((item, i) => item.active ? (
               <li
@@ -176,7 +176,7 @@ export default function Header({ updateCart, ...props }) {
             ) : null)
           }
         </ul>
-        <ul className="flex flex-row justify-between w-[21%] md:w-full">
+        <ul className="flex flex-row justify-between md:w-full gap-5 ml-auto">
           {
             navAuthItems.map((item) => item.active ? (
               <li key={item.name} className="flex flex-row justify-start items-center pl-[3px] gap-2.5 ml-auto" onClick={() => item.action(item)}>
