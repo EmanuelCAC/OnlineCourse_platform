@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login as authLogin } from "store/authSlice";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ConfirmAccount() {
 
@@ -14,11 +16,20 @@ export default function ConfirmAccount() {
   const [num2, setNum2] = useState("")
   const [num3, setNum3] = useState("")
   const [num4, setNum4] = useState("")
-
   const [code, setCode] = useState(history.state.account.code)
-
   const email = history.state.account.email
   const sensorEmail = email.replace(email.slice(1, email.indexOf('@')-1), '*'.repeat(email.indexOf('@')-2))
+
+  const signed = (name) => toast.success(`Logged as ${name}`, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    });
 
   const initialSeconds = 60
     const [seconds, setSeconds ] =  useState(initialSeconds);
@@ -56,6 +67,7 @@ export default function ConfirmAccount() {
           if (data) {
             localStorage.setItem('token', data.token)
             dispatch(authLogin(data.token))
+            signed(data.user.name)
             navigate('/')
           }
         } catch (error) {

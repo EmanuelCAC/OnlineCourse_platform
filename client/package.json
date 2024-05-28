@@ -25,7 +25,8 @@
     "react-router-hash-link": "^2.4.3",
     "react-scrollbars-custom": "^4.1.1",
     "react-select": "^5.2.1",
-    "react-tabs": "^4.2.0"
+    "react-tabs": "^4.2.0",
+    "react-toastify": "^10.0.5"
   },
   "scripts": {
     "start": "vite",
