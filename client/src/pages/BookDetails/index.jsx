@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import ReviewModal from "modals/Review";
 import LogIn from "modals/LogIn";
 import SignUp from "modals/SignUp";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function BookDetails() {
   const { id } = useParams()
@@ -21,6 +23,7 @@ export default function BookDetails() {
   const [login, setLogin] = useState(false)
   const [signup, setSignup] = useState(false)
   const authData = useSelector((state) => state.auth.userData)
+  const added = () => toast.info(`Book "${book.name}" added to the cart!`);
 
   const getBook = async () => {
     const data = await fetch(`http://localhost:3001/api/v1/book/${id}`)
@@ -82,6 +85,7 @@ export default function BookDetails() {
         }
       )
       setUpdateCart(!updateCart)
+      added()
     } catch (error) {
       console.log(error.response.data.msg)
     }

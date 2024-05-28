@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Header, Text, Heading, Img, RatingBar, Button, Footer, BreadCrumbs, Input } from "components";
+import { Header, Text, Img, Button, Footer, BreadCrumbs, Input } from "components";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -118,16 +118,30 @@ export default function Cart() {
             }
             {cart[0] &&
               <div className="flex flex-row w-full gap-5">
-                <div className="flex flex-col w-2/3 bg-white-A700 rounded-[20px] p-5 md:px-5 mt-3">
+                <div className="flex flex-col w-2/3 bg-white-A700 rounded-[20px] h-fit p-5 md:px-5 mt-3">
                   <Text className="!text-black-900_02 !text-3xl !font-medium">Items</Text>
                   {cart.map((item) => (
-                    <div key={item._id}>
+                    <div key={item._id} className="relative">
+                      {item.type == "course" &&
+                        <Button className="!h-[37px] !w-[37px] !p-0 text-2xl bg-transparent text-gray-300 hover:bg-gray-100 hover:text-gray-600 absolute right-4 top-2 rounded-[5px]" onClick={() => { editAmount(item, -1) }}>
+                          <Text size="lg" className="!text-black-900_02">&#10799;</Text>
+                        </Button>
+                      }
                       <div className="flex flex-row pb-5 pt-3" >
-                        <Img src={item.image} className={'w-28 mr-3 border-2 cursor-pointer'} onClick={() => (navigate('/shop/' + item.productId))} />
+                        <Img src={item.image} className={'w-28 mr-3 border-2 cursor-pointer'} onClick={() => {
+                          if (item.type == "book") navigate('/shop/' + item.productId)
+                          else if (item.type == "course") navigate('/courses/' + item.productId)
+                        }} />
                         <div className="flex flex-col justify-between w-full">
                           <div>
-                          <Text className=" !text-black-900_02 !text-lg cursor-pointer" onClick={() => (navigate('/shop/' + item.productId))}>{item.productName}</Text>
-                          <Text size="sm" className="!text-gray-400">{item.type}</Text>
+                            <Text className=" !text-black-900_02 !text-lg cursor-pointer"
+                              onClick={() => {
+                                if (item.type == "book") navigate('/shop/' + item.productId)
+                                else if (item.type == "course") navigate('/courses/' + item.productId)
+                            }}>
+                              {item.productName}
+                            </Text>
+                            <Text size="sm" className="!text-gray-400">{item.type}</Text>
                           </div>
                           <div className="flex flex-row justify-between ">
                             <Text size="lg" className=" font-extrabold">R$ {item.price.toFixed(2)}</Text>

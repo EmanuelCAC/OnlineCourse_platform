@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { login as authLogin } from "store/authSlice";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Payment() {
   const authData = useSelector((state) => state.auth.userData)
@@ -16,6 +18,8 @@ export default function Payment() {
   const [books, setBooks] = useState()
   const [courses, setCourses] = useState()
   const [plan, setPlan] = useState()
+  const completedPurchase = () => toast.success(`Purchase completed successfully!`)
+  const error = (msg) => toast.error(msg)
 
   const getTotal = () => {
     let sum = 0;
@@ -50,7 +54,9 @@ export default function Payment() {
         try {
           const { data } = await axios.post("http://localhost:3001/api/v1/ownedBook", {userId: authData.userId, bookId: book.productId})
         } catch (error) {
-          console.log(error.response.data.msg)
+          if (error.response) {
+            error(error.response.data.msg)
+          }
         }
       })
 
@@ -58,7 +64,9 @@ export default function Payment() {
         try {
           const { data } = await axios.post("http://localhost:3001/api/v1/ownedCourse", {userId: authData.userId, courseId: course.productId})
         } catch (error) {
-          console.log(error.response.data.msg)
+          if (error.response) {
+            error(error.response.data.msg)
+          }
         }
       })
 
@@ -69,7 +77,9 @@ export default function Payment() {
           dispatch(authLogin(data.token))
         }
       } catch (error) {
-        console.log(error.response.data.msg)
+        if (error.response) {
+          error(error.response.data.msg)
+        }
       }
       
       await items.map(async (item) => {
@@ -84,11 +94,13 @@ export default function Payment() {
               }
             })
           } catch (error) {
-            console.log(error.response.data.msg)
+            if (error.response) {
+              error(error.response.data.msg)
+            }
           }
         }
       })
-
+      completedPurchase()
       navigate('/')
     }
   }

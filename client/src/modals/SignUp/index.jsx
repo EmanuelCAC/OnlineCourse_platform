@@ -22,17 +22,17 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
   const [error, setError] = React.useState(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const signed = (name) => toast.success(`Logged as ${name}`, {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-    });
+  const signed = (name) => toast.success(`Logged as ${name}!`);
 
+  const clear = () => {
+    setName("")
+    setEmail("")
+    setPassword1("")
+    setPassword2("")
+    setPassType1("password")
+    setPassType2("password")
+    setError(null)
+  }
   
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (response) => {
@@ -87,6 +87,7 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
       {...props}
       appElement={document.getElementById("root")}
       isOpen={isOpen}
+      onAfterClose={clear}
       className="w-[80%]"
       style={{
         overlay: {

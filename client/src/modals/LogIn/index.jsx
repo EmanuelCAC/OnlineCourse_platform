@@ -17,8 +17,14 @@ export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
   const [passType, setPassType] = useState("password")
   const [error, setError] = useState(null)
   const dispatch = useDispatch()
-  const logged = (name) => toast.success(`Logged as ${name}`);
+  const logged = (name) => toast.success(`Logged as ${name}!`);
 
+  const clear = () => {
+    setEmail("")
+    setPassword("")
+    setPassType("password")
+    setError(null)
+  }
 
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (response) => {
@@ -69,6 +75,7 @@ export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
       {...props}
       appElement={document.getElementById("root")}
       isOpen={isOpen}
+      onAfterClose={clear}
       className="w-[80%]"
       style={{
         overlay: {

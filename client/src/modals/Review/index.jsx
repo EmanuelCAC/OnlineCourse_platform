@@ -3,12 +3,17 @@ import { Text, CheckBox, Button, Input, Img, Heading, Slider, RatingBar } from "
 import { default as ModalProvider } from "react-modal";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ReviewModal({ isOpen, isSignupOpen, close, review, target, id, ...props }) {
   const [comment, setComment] = useState("")
   const [rating, setRating] = useState(0)
   const [confirm, setConfirm] = useState(false)
   const authData = useSelector((state) => state.auth.userData)
+  const added = () => toast.success("Review added!")
+  const edited = () => toast.success("Review edited!")
+  const removed = () => toast.success("Review deleted!")
 
   const remove = async () => {
     try {
@@ -18,7 +23,7 @@ export default function ReviewModal({ isOpen, isSignupOpen, close, review, targe
         }
       })
       updateTarget()
-      if (data) alert('Review Deleted Successifully')
+      removed()
     } catch (error) {
       console.log(error.response.data.msg)
     }
@@ -42,6 +47,7 @@ export default function ReviewModal({ isOpen, isSignupOpen, close, review, targe
       setRating(0)
       updateTarget()
       close()
+      added()
     } catch (error) {
       console.log(error.response.data.msg)
     }
@@ -82,6 +88,7 @@ export default function ReviewModal({ isOpen, isSignupOpen, close, review, targe
       setRating(0)
       updateTarget()
       close()
+      edited()
     } catch (error) {
       console.log(error.response.data.msg)
     }

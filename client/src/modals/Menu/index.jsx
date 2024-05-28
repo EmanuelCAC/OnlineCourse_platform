@@ -5,12 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout as authLogut } from "store/authSlice";
 import { useNavigate } from "react-router-dom";
 import ProfilePic from "modals/ProfilePic";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Menu({ isOpen, close, ...props }) {
   const [profilePic, setProfilePic] = useState(false)
   const authData = useSelector((state) => state.auth.userData)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const signedOut = () => toast.success("Sign out successfully")
 
   useEffect(() => {
     if (document) {
@@ -103,6 +106,7 @@ export default function Menu({ isOpen, close, ...props }) {
                     localStorage.removeItem('token')
                     navigate('/')
                     close()
+                    signedOut()
                   }}
                 >Sign out</Text>
               </div>

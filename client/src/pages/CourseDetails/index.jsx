@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import LogIn from "modals/LogIn";
 import SignUp from "modals/SignUp";
 import { Scrollbar } from 'react-scrollbars-custom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CourseDetails() {
   let { id } = useParams()
@@ -27,6 +29,8 @@ export default function CourseDetails() {
   const [owned, setOwned] = useState(false)
   const navigate = useNavigate()
   const authData = useSelector((state) => state.auth.userData)
+  const added = () => toast.info(`Course "${course.name}" added to the cart!`)
+  
 
   const getCourse = async () => {
     try {
@@ -102,6 +106,7 @@ export default function CourseDetails() {
         }
       )
       setUpdateCart(!updateCart)
+      added()
     } catch (error) {
       console.log(error.response)
     }

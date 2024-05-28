@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Img, Button, Input, Text, Heading } from "./..";
 import axios from "axios";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Subscribe({ ...props }) {
   const [email, setEmail] = useState("")
-
+  const subscribed = () => toast.success("Subscribed successfully!")
 
   const submitHandler = async (e) => {
     e.preventDefault()
@@ -14,6 +16,7 @@ export default function Subscribe({ ...props }) {
         email: email
       })
       setEmail("")
+      subscribed()
     } catch (error) {
       console.log(error.response.data.msg);
     }
