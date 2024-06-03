@@ -14,6 +14,11 @@ const getAll = async (req, res) => {
 }
 
 const create = async (req, res) => {
+  const alreadyExist = await OwnedBook.findOne({ bookId: req.body.bookId, userId: req.body.userId})
+  if (alreadyExist) {
+    return res.status(StatusCodes.OK).json()
+  }
+
   const item = await OwnedBook.create(req.body)
   res.status(StatusCodes.CREATED).json(item)
 }

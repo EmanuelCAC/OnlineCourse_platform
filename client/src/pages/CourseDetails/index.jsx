@@ -214,11 +214,12 @@ export default function CourseDetails() {
                         alt="image_one"
                         className="justify-center h-[50px] sm:w-full left-0 bottom-0 right-0 top-0 m-auto opacity-0.5 object-cover absolute rounded-[5px]"
                       />
-                      {!owned && i >= 2 && <>
-                        <div className="w-full h-full bg-white-A700/40 rounded-[5px] left-0 bottom-0 right-0 top-0 absolute z-10"></div>
-                        <div className="flex flex-col items-center justify-center h-max w-max left-0 bottom-0 right-0 top-0 p-1 m-auto bg-white-A700 absolute rounded-[50%] z-20">
-                        <Img src="/images/img_lock_pad_lock_s.svg" alt="lockpadlocks" className="h-[10px] w-[10px]" />
-                      </div>
+                      {!owned && i >= 2 &&
+                      <>
+                        <div className="w-full h-full bg-white-A700/40 rounded-[5px] left-0 bottom-0 right-0 top-0 absolute"></div>
+                        <div className="flex flex-col items-center justify-center h-max w-max left-0 bottom-0 right-0 top-0 p-1 m-auto bg-white-A700 absolute rounded-[50%]">
+                          <Img src="/images/img_lock_pad_lock_s.svg" alt="lockpadlocks" className="h-[10px] w-[10px]" />
+                        </div>
                       </>}
                     </div>
                   </div>

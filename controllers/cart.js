@@ -8,6 +8,16 @@ const getAll = async (req, res) => {
 }
 
 const create = async (req, res) => {
+  const alreadyExist = await Cart.findOne({ productId: req.body.productId, userId: req.body.userId})
+  if (alreadyExist) {
+    const item = await Cart.findOneAndUpdate(
+      { _id: alreadyExist._id },
+      { amount: alreadyExist.amount + req.body.amount },
+      { new: true, runValidators: true }
+    )
+    return res.status(StatusCodes.OK).json(item)
+  }
+  
   const item = await Cart.create(req.body)
   res.status(StatusCodes.CREATED).json(item)
 }

@@ -47,7 +47,7 @@ export default function ReviewModal({ isOpen, isSignupOpen, close, review, targe
       setRating(0)
       updateTarget()
       close()
-      added()
+      edited()
     } catch (error) {
       console.log(error.response.data.msg)
     }
@@ -88,7 +88,7 @@ export default function ReviewModal({ isOpen, isSignupOpen, close, review, targe
       setRating(0)
       updateTarget()
       close()
-      edited()
+      added()
     } catch (error) {
       console.log(error.response.data.msg)
     }
