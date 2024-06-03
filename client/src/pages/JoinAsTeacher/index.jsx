@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import { Img, Heading, Button, Text, Footer, Header, BreadCrumbs } from "../../components";
+import { Img, Heading, Button, Text, Footer, Header, Banner } from "../../components";
 
 export default function JoinAsTeacher() {
   const [active, setActive] = useState(1)
@@ -14,8 +14,12 @@ export default function JoinAsTeacher() {
       <div className="flex flex-col items-center justify-start w-full gap-[100px] bg-gray-100">
         <div className="flex flex-col items-center justify-start w-full gap-12">
           <Header className="flex justify-center items-center w-full md:h-auto p-[22px] sm:p-5 bg-gray-100" />
-          <div className="flex flex-col items-start justify-start w-full gap-[5px] p-5 md:px-5 bg-yellow-100 max-w-7xl rounded-[20px]">
-            <BreadCrumbs routes={[
+          <Banner
+            bgColor="bg-yellow-100"
+            l1="Join Educatsy as"
+            l2="a Mentor"
+            image="/images/joinAsTeacher_banner.png"
+            routes={[
               {
                 name: "Home",
                 path: "/"
@@ -24,24 +28,8 @@ export default function JoinAsTeacher() {
                 name: "Join as a Teacher",
                 path: "#"
               }
-            ]} />
-            <div className="flex flex-row md:flex-col justify-center items-center w-[99%] md:w-full ml-2.5 gap-[546px] md:gap-10 md:ml-0">
-              <Heading size="2xl" as="h1" className="w-[31%] !font-semibold">
-                <>
-                  Join Educatsy as
-                  <br />a Mentor
-                </>
-              </Heading>
-              <div className="h-[210px] w-[32%] md:w-full relative">
-                <div className="h-[14px] w-full bottom-[1%] right-0 left-0 m-auto bg-black-900_cc backdrop-opacity-[0.5] blur-[81.00px] absolute rounded-[50%]" />
-                <Img
-                  src="/images/joinAsTeacher_banner.png"
-                  alt="image_one"
-                  className="justify-center h-[210px] w-[97%] sm:w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute"
-                />
-              </div>
-            </div>
-          </div>
+            ]}
+          />
         </div>
         <div className="flex flex-row justify-center w-full">
           <div className="flex flex-row md:flex-col justify-between items-center w-full md:gap-10 md:px-5 max-w-7xl">

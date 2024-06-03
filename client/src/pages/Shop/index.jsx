@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { CloseSVG } from "../../assets/images";
-import { Button, Img, Text, SelectBox, Input, Heading, RatingBar, BreadCrumbs } from "../../components";
+import { Button, Img, Text, SelectBox, Input, Heading, Banner } from "../../components";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import BookCard2 from "components/BookCard2";
@@ -82,8 +82,12 @@ export default function EduviShopPage() {
       <div className="flex flex-col items-center justify-start w-full gap-[100px] bg-gray-100">
         <div className="flex flex-col items-center justify-start w-full gap-12">
           <Header className="flex justify-center items-center w-full md:h-auto p-[22px] sm:p-5 bg-gray-100" />
-          <div className="flex flex-col items-start justify-start w-full gap-[5px] p-5 md:px-5 bg-red-50 max-w-7xl rounded-[20px]">
-            <BreadCrumbs routes={[
+          <Banner
+            bgColor="bg-red-50"
+            l1="Educatsy Online"
+            l2="Book Shop"
+            image="/images/img_kisspng_bookcas.png"
+            routes={[
               {
                 name: "Home",
                 path: "/"
@@ -92,22 +96,8 @@ export default function EduviShopPage() {
                 name: "Shop",
                 path: "#"
               }
-            ]} />
-            <div className="flex flex-row md:flex-col justify-between items-center w-[99%] md:w-full ml-2.5 gap-[492px] md:gap-10 md:ml-0">
-              <Heading size="3xl" as="h1" className="w-[30%] !font-semibold">
-                <>
-                  Educatsy Online
-                  <br />
-                  Book Shop
-                </>
-              </Heading>
-              <Img
-                src="/images/img_kisspng_bookcas.png"
-                alt="kisspngbookcas"
-                className="w-[31%] md:w-full md:h-[210px] object-cover"
-              />
-            </div>
-          </div>
+            ]}
+          />
         </div>
         <div className="flex flex-row md:flex-col justify-start items-start w-full pl-20 pr-14 gap-10 md:gap-5 md:px-5">
           <div className="flex flex-col w-[31%] md:w-full gap-[39px]">
