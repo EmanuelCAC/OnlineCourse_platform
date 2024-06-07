@@ -86,7 +86,7 @@ export default function ConfirmAccount() {
         <title>Online Course Platform</title>
         <meta name="description" content="Web site created using create-react-app" />
       </Helmet>
-      <div className="flex flex-col items-center justify-center w-full h-[100vh] gap-[100px] bg-gray-100">
+      <div className="flex flex-col items-center justify-center w-full h-[100vh] gap-[100px] bg-gray-100 px-5">
         <div className="flex flex-col items-center justify-start bg-white-A700 rounded-[15px] py-16 gap-8">
           <Heading size="3xl" className="!text-black-900_02">Confirm your Acount</Heading>
           <Text className="!text-gray-500 w-[65%] text-center">A code was sent to {sensorEmail}. Please insert the code to confirm your account</Text>

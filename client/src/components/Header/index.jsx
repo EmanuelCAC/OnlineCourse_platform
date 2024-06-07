@@ -191,11 +191,11 @@ export default function Header({ updateCart, ...props }) {
             ) : null)
           }
         </ul>
-        <ul className="flex flex-row justify-end md:w-full gap-5 ml-auto">
+        <ul className="flex flex-row justify-end w-fit gap-5 ml-auto">
           {
             navAuthItems.map((item) => item.active ? (
               <li key={item.name} className="flex flex-row justify-start items-center pl-[3px] gap-2" onClick={() => item.action(item)}>
-                <Text as="button" className="!text-gray-900 text-right !font-medium" >
+                <Text as="button" className="!text-gray-900 text-right !font-medium md:hidden" >
                   {item.name}
                 </Text>
                 <Img {...item.img} />

@@ -34,21 +34,23 @@ export default function Home() {
         <title>Online Course Platform</title>
         <meta name="description" content="Web site created using create-react-app" />
       </Helmet>
-      <div className="flex flex-col items-center justify-start w-full gap-[100px] bg-gray-100">
+      <div className="flex flex-col items-center justify-start w-full gap-[100px] bg-gray-100 px-5">
         <div className="flex flex-col items-center justify-start w-full gap-12">
           <Header className="flex justify-center items-center w-full md:h-auto p-[22px] sm:p-5 bg-gray-100" />
-          <Banner
-            bgColor="bg-red-50"
-            l1="Educatsy Online"
-            l2="Welcome!"
-            image="/images/img_image_210x374.png"
-            routes={[
-              {
-                name: "Home",
-                path: "#"
-              }
-            ]}
-          />
+          <div className="flex flex-row justify-center w-full">
+            <Banner
+              bgColor="bg-red-50"
+              l1="Educatsy Online"
+              l2="Welcome!"
+              image="/images/img_image_210x374.png"
+              routes={[
+                {
+                  name: "Home",
+                  path: "#"
+                }
+              ]}
+            />
+          </div>  
         </div>
         <div className="flex flex-col items-center justify-start w-full gap-[47px]">
           <div className="flex flex-col items-center justify-start w-full gap-[23px] md:px-5 max-w-7xl">

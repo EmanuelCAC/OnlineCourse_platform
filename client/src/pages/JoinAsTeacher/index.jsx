@@ -11,25 +11,27 @@ export default function JoinAsTeacher() {
         <title>Emanuel's Application1</title>
         <meta name="description" content="Web site created using create-react-app" />
       </Helmet>
-      <div className="flex flex-col items-center justify-start w-full gap-[100px] bg-gray-100">
+      <div className="flex flex-col items-center justify-start w-full gap-[100px] bg-gray-100 px-5">
         <div className="flex flex-col items-center justify-start w-full gap-12">
           <Header className="flex justify-center items-center w-full md:h-auto p-[22px] sm:p-5 bg-gray-100" />
-          <Banner
-            bgColor="bg-yellow-100"
-            l1="Join Educatsy as"
-            l2="a Mentor"
-            image="/images/joinAsTeacher_banner.png"
-            routes={[
-              {
-                name: "Home",
-                path: "/"
-              },
-              {
-                name: "Join as a Teacher",
-                path: "#"
-              }
-            ]}
-          />
+          <div className="flex flex-row justify-center w-full">
+            <Banner
+              bgColor="bg-yellow-100"
+              l1="Join Educatsy as"
+              l2="a Mentor"
+              image="/images/joinAsTeacher_banner.png"
+              routes={[
+                {
+                  name: "Home",
+                  path: "/"
+                },
+                {
+                  name: "Join as a Teacher",
+                  path: "#"
+                }
+              ]}
+            />
+          </div>
         </div>
         <div className="flex flex-row justify-center w-full">
           <div className="flex flex-row md:flex-col justify-between items-center w-full md:gap-10 md:px-5 max-w-7xl">

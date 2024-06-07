@@ -97,7 +97,7 @@ export default function BookDetails() {
         <title>Online Course Platform</title>
         <meta name="description" content="Web site created using create-react-app" />
       </Helmet>
-      <div className="flex flex-col items-center justify-start w-full gap-[100px] bg-gray-100">
+      <div className="flex flex-col items-center justify-start w-full gap-[100px] bg-gray-100 px-5">
         <div className="flex flex-col items-center justify-start w-full gap-12">
           <Header className="flex justify-center items-center w-full md:h-auto p-[22px] sm:p-5 bg-gray-100" updateCart={updateCart} />
           <div className="flex flex-col items-start justify-start w-full gap-[5px] p-5 md:px-5 bg-white-A700 max-w-7xl rounded-[20px]">
