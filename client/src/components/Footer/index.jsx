@@ -6,11 +6,11 @@ export default function Footer({ ...props }) {
     <>
       <Subscribe className="flex flex-row justify-center w-full" />
       <footer {...props}>
-        <div className="flex flex-row md:flex-col justify-between items-center w-full mx-auto md:gap-10 max-w-7xl">
-          <div className="flex flex-col items-center justify-start w-[15%] md:w-full pb-[3px] gap-[46px]">
-            <div className="flex flex-col items-center justify-start w-[97%] md:w-full gap-[22px]">
+        <div className="flex flex-row justify-between fs:justify-center w-full gap-2 max-w-7xl mb-5">
+          <div className="flex flex-col items-center justify-start w-fit gap-[46px] fs:gap-5">
+            <div className="flex flex-col items-center justify-start w-full gap-[22px]">
               <Img src="/images/img_logo.svg" alt="logo_three" className="h-[30px]" />
-              <div className="flex flex-row justify-between items-center w-[85%] md:w-full">
+              <div className="flex flex-row justify-between items-center w-[85%]">
                 <Img src="/images/img_facebook_logo_1.svg" alt="facebooklogoone" className="h-[22px] w-[22px]" />
                 <Button color="deep_orange_400" size="xs" shape="circle" className="w-[36px]">
                   <Img src="/images/img_instagram_icon.svg" />
@@ -19,18 +19,18 @@ export default function Footer({ ...props }) {
                 <Img src="/images/img_linkedin_icon.svg" alt="linkedinicon" className="h-[18px]" />
               </div>
             </div>
-            <div className="flex flex-col items-start justify-start w-full gap-[13px]">
+            <div className="flex flex-col items-start justify-start fs:items-center w-full gap-[13px]">
               <Text as="p">©2021 Educatsy</Text>
               <Text as="p">Educatsy is a registered</Text>
             </div>
           </div>
-          <div className="flex flex-col items-start justify-start w-[14%] md:w-full gap-[19px]">
+          <div className="flex flex-col items-start justify-start w-fit gap-[19px] fs:hidden">
             <Heading size="md" as="h5">
               Courses
             </Heading>
-            <div className="flex flex-col items-start justify-start w-full gap-6 py-[5px]">
+            <div className="flex flex-col items-start justify-start w-full gap-[20px]">
               <Text as="p">Classroom courses</Text>
-              <Text as="p" className="!leading-[30px]">
+              <Text as="p">
                 Virtual classroom courses
               </Text>
               <Text as="p">E-learning courses</Text>
@@ -38,11 +38,11 @@ export default function Footer({ ...props }) {
               <Text as="p">Offline Courses</Text>
             </div>
           </div>
-          <div className="flex flex-col items-start justify-start w-[14%] md:w-full pt-0.5 gap-[17px]">
+          <div className="flex flex-col items-start justify-start w-fit gap-[19px] fs:hidden">
             <Heading size="md" as="h5">
               Community
             </Heading>
-            <div className="flex flex-col items-start justify-center w-full gap-[27px] py-[3px]">
+            <div className="flex flex-col items-start justify-center w-full gap-[20px]">
               <Text as="p" className="mt-0.5">
                 Learners
               </Text>
@@ -53,11 +53,11 @@ export default function Footer({ ...props }) {
               <Text as="p">Teaching Center</Text>
             </div>
           </div>
-          <div className="flex flex-col items-start justify-start w-[14%] md:w-full gap-[19px]">
+          <div className="flex flex-col items-start justify-start w-fit gap-[19px] fs:hidden">
             <Heading size="md" as="h5">
               Quick links
             </Heading>
-            <div className="flex flex-col items-start justify-center w-full gap-[27px] py-[3px]">
+            <div className="flex flex-col items-start justify-center gap-[20px]">
               <Text as="p" className="mt-0.5">
                 Home
               </Text>
@@ -68,11 +68,11 @@ export default function Footer({ ...props }) {
               <Text as="p">Programs</Text>
             </div>
           </div>
-          <div className="flex flex-col items-start justify-start w-[14%] md:w-full gap-[19px]">
+          <div className="flex flex-col items-start justify-start w-fit gap-[19px] fs:hidden">
             <Heading size="md" as="h5">
               More
             </Heading>
-            <div className="flex flex-col items-start justify-start w-full gap-[26px] py-1">
+            <div className="flex flex-col items-start justify-start gap-[20px]">
               <Text as="p">Press</Text>
               <Text as="p">Investors</Text>
               <Text as="p">Terms</Text>
