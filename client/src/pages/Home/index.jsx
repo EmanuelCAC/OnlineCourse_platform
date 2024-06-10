@@ -57,7 +57,7 @@ export default function Home() {
             <Heading size="xl" as="h2">
               Popular Courses
             </Heading>
-            <div className="justify-center w-full gap-10 grid-cols-2 md:grid-cols-1 md:gap-5 grid">
+            <div className="justify-center w-full md:w-[90%] gap-10 md:gap-5 grid-cols-2 md:grid-cols-1 grid">
               {popularCourses[0] && popularCourses.map((course) => (
                 <CourseCard2 course={course} key={course._id} />
               ))}

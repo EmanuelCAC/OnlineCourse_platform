@@ -103,33 +103,33 @@ export default function EduviCoursesPage() {
           </div>
         </div>
         <div className="flex flex-col items-center justify-start w-full gap-[47px]">
-          <div className="flex flex-row md:flex-col justify-start w-full gap-5 md:px-5 max-w-7xl">
+          <div className="flex flex-row flex-wrap justify-center gap-3.5 w-full md:px-5 max-w-7xl">
             <Button onClick={() => categoryHandler("Kindergarten")} color={active == "Kindergarten" ? "orange_200_01" : "white_A700"} className="font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               Kindergarten
             </Button>
-            <Button onClick={() => categoryHandler("High School")} color={active == "High School" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
+            <Button onClick={() => categoryHandler("High School")} color={active == "High School" ? "orange_200_01" : "white_A700"} className="px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               High School
             </Button>
-            <Button onClick={() => categoryHandler("College")} color={active == "College" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
+            <Button onClick={() => categoryHandler("College")} color={active == "College" ? "orange_200_01" : "white_A700"} className="px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               College
             </Button>
-            <Button onClick={() => categoryHandler("Technology")} color={active == "Technology" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
+            <Button onClick={() => categoryHandler("Technology")} color={active == "Technology" ? "orange_200_01" : "white_A700"} className="px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               Technology
             </Button>
-            <Button onClick={() => categoryHandler("Science")} color={active == "Science" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
+            <Button onClick={() => categoryHandler("Science")} color={active == "Science" ? "orange_200_01" : "white_A700"} className="px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               Science
             </Button>
-            <Button onClick={() => categoryHandler("Language")} color={active == "Language" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
+            <Button onClick={() => categoryHandler("Language")} color={active == "Language" ? "orange_200_01" : "white_A700"} className="px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               Language
             </Button>
-            <Button onClick={() => categoryHandler("Mathematics")} color={active == "Mathematics" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
+            <Button onClick={() => categoryHandler("Mathematics")} color={active == "Mathematics" ? "orange_200_01" : "white_A700"} className="px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               Mathematics
             </Button>
-            <Button onClick={() => categoryHandler("Social Studies")} color={active == "Social Studies" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
+            <Button onClick={() => categoryHandler("Social Studies")} color={active == "Social Studies" ? "orange_200_01" : "white_A700"} className="px-5 font-medium min-w-[142px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
               Social Studies
             </Button>
           </div>
-          <div className="flex flex-row md:flex-col justify-start w-full gap-[42px] md:gap-5 max-w-7xl">
+          <div className="flex flex-row justify-between gap-3 w-full max-w-7xl">
             <Input
               color="white_A700"
               name="search"
@@ -143,7 +143,7 @@ export default function EduviCoursesPage() {
                   <Img src="/images/img_search.svg" alt="search" className="cursor-pointer opacity-0 fill-black-900_02" fill="#0000000" />
                 )
               }
-              className="w-[84%] md:w-full gap-[35px] !text-gray-700_99 rounded-tr-[10px] rounded-br-[10px] font-medium"
+              className="w-[84%] gap-[35px] !text-gray-700_99 rounded-tr-[10px] rounded-br-[10px] font-medium"
             />
             <SelectBox
               size="xs"
@@ -152,7 +152,7 @@ export default function EduviCoursesPage() {
               name="sortby"
               placeholder="Sort by: Latest"
               options={dropDownOptions}
-              className="w-[16%] md:w-full gap-px font-medium"
+              className="w-fit gap-px font-medium"
               onChange={(value) => { setSortBy(value.value) }}
             />
           </div>

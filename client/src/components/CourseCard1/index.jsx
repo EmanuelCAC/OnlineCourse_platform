@@ -8,7 +8,7 @@ export default function CourseCard1({course, ...props}) {
   return (
     <div className="flex flex-col items-center justify-start w-full max-w-fit" {...props}>
       <div className="flex flex-col items-center justify-between w-full h-full p-[15px] bg-white-A700 rounded-[15px]">
-        <div className="flex flex-col items-center justify-start w-full gap-3 md:px-5 max-w-[260px]">
+        <div className="flex flex-col items-center justify-start w-full gap-3 max-w-[260px]">
           <Img src={course.image} alt="image" />
           <div className="flex flex-col items-center justify-start w-full gap-1">
             <Heading as="h1" className="text-center !font-bold">

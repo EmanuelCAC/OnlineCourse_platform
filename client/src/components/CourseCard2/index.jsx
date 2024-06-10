@@ -7,7 +7,7 @@ export default function CourseCard2({course, ...props}) {
   
   return (
     <div
-      className="flex flex-row justify-start w-full gap-6 p-[15px] bg-white-A700 cursor-pointer rounded-[10px] hover:shadow-xs"
+      className="flex flex-row sm:flex-col justify-start w-full gap-2 p-[15px] bg-white-A700 cursor-pointer rounded-[10px] hover:shadow-xs relative"
       {...props}
       onMouseLeave={() => {
         const button = document.getElementById(course._id)
@@ -23,17 +23,17 @@ export default function CourseCard2({course, ...props}) {
       }}
       onClick={() => { navigate('/courses/' + course._id) }}
     >
-      <div className="flex flex-row sm:flex-col justify-start items-center w-[89%] md:w-full gap-[15px] sm:gap-5">
-        <div className="flex flex-row justify-start w-[35%] sm:w-full">
+      <div className="flex flex-row sm:flex-col justify-start items-center gap-[15px]">
+        <div className="flex flex-row justify-start">
           <Img
             src={course.image}
             alt="image"
-            className="w-full md:h-auto sm:w-full object-cover rounded-[10px]"
+            className="w-[175px] object-cover rounded-[10px]"
           />
         </div>
-        <div className="flex flex-col items-start justify-start w-[67%] sm:w-full gap-2">
+        <div className="flex flex-col items-start justify-start w-[67%] gap-2 sm:gap-1">
           <div>
-            <Heading size="md" as="h1">
+            <Heading size="md" as="h1" className="sm:text-base">
               {course.name}
             </Heading>
             <Text as="p" size="s" className="!text-gray-700_01">{course.instructor}</Text>
@@ -44,17 +44,17 @@ export default function CourseCard2({course, ...props}) {
             size={18}
             className="flex justify-between"
           />
-          <Heading size="md" as="h2" className="!text-deep_orange-400">
+          <Heading size="md" as="h2" className="!text-deep_orange-400 sm:text-base">
             ${course.price.toFixed(2)}
           </Heading>
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-row flex-wrap gap-3">
             {course.category.map((courseCat) => (
               <span key={courseCat} className="py-1 px-2 rounded-full bg-gray-200 text-black-900_02 text-xs">{courseCat}</span>
             ))}
           </div>
         </div>
       </div>
-      <Button size="lg" shape="round" className="w-[44px] !rounded-md bg-red-100" id={course._id}>
+      <Button size="lg" shape="round" className="w-[44px] !rounded-md bg-red-100 ml-auto sm:absolute sm:right-[15px] sm:top-[15px]" id={course._id}>
         <Img src="/images/img_shopping_bag_24.svg" id="child" />
       </Button>
     </div>
