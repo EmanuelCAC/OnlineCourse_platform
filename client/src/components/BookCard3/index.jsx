@@ -12,7 +12,7 @@ export default function BookCard3({book, ...props}) {
       onClick={() => navigate(book._id)}
     >
       <div className="flex flex-col items-center justify-start w-full md:h-auto p-5 bg-white-A700 rounded-[10px] hover:shadow-xs">
-        <div className="flex flex-col items-center justify-start w-full md:px-5 max-w-[230px]">
+        <div className="flex flex-col items-center justify-start w-full max-w-[230px]">
           <Img
             src={book.image}
             alt="image_one"
@@ -20,10 +20,10 @@ export default function BookCard3({book, ...props}) {
           />
         </div>
       </div>
-      <div className="flex flex-col items-start justify-between w-full h-full gap-[9px]">
+      <div className="flex flex-col items-start justify-between w-full h-full gap-[9px] md:text-base">
         <Heading as="h1">{book.name}</Heading>
         <div className="flex flex-row justify-between items-center w-full">
-          <Heading as="h2" className="!text-red-300_01">
+          <Heading as="h2" className="!text-red-300_01 md:text-base">
             ${book.price.toFixed(2)}
           </Heading>
           <RatingBar

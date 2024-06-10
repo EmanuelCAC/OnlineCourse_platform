@@ -101,13 +101,13 @@ export default function EduviShopPage() {
             />
           </div>  
         </div>
-        <div className="flex flex-row md:flex-col justify-start items-start w-full pl-20 pr-14 gap-10 md:gap-5 md:px-5">
-          <div className="flex flex-col w-[31%] md:w-full gap-[39px]">
+        <div className="flex flex-row md:flex-col-reverse justify-start items-start w-full px-10 gap-10 md:gap-5 md:px-5">
+          <div className="flex flex-col md:w-full gap-[39px]">
             <div className="flex flex-col items-start justify-start w-full pt-0.5 gap-3.5">
               <Heading size="xl" as="h2" className="!text-black-900_02">
                 Popular Books
               </Heading>
-              <div className="flex flex-col w-full gap-[15px]">
+              <div className="flex flex-col w-full md:items-center gap-[15px]">
                 {popularBooks && popularBooks.map((book) => (
                   <BookCard2 book={book} key={book._id} />
                 ))}
@@ -117,26 +117,26 @@ export default function EduviShopPage() {
               <Heading size="xl" as="h3" className="!text-black-900_02">
                 New Arrivals
               </Heading>
-              <div className="flex flex-col w-full gap-[15px]">
+              <div className="flex flex-col w-full md:items-center gap-[15px]">
                 {newArrivals && newArrivals.map((book) => (
                   <BookCard2 book={book} key={book._id} />
                 ))}
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-start w-[65%] md:w-full gap-10">
+          <div className="flex flex-col items-center justify-start min-w-[60%] masx-w-[65%] md:w-full gap-10">
             <div className="flex flex-col items-center justify-start w-full gap-[30px]">
-              <div className="flex flex-row md:flex-col justify-start w-full gap-6 md:gap-5">
-                <Button onClick={() => setActive("All Books")} color={active == "All Books" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[131px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
+              <div className="flex flex-row justify-start w-full gap-6 md:gap-4">
+                <Button onClick={() => setActive("All Books")} color={active == "All Books" ? "orange_200_01" : "white_A700"} className="!px-2 w-full sm:px-5 font-medium rounded-[10px] hover:border-2 hover:border-orange-200_01 md:text-sm ">
                   All Books
                 </Button>
-                <Button onClick={() => setActive("Kindergarten")} color={active == "Kindergarten" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[212px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
+                <Button onClick={() => setActive("Kindergarten")} color={active == "Kindergarten" ? "orange_200_01" : "white_A700"} className="!px-6 w-full sm:px-4 font-medium rounded-[10px] hover:border-2 hover:border-orange-200_01 md:text-sm ">
                   Kindergarten
                 </Button>
-                <Button onClick={() => setActive("High School")} color={active == "High School" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[212px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
+                <Button onClick={() => setActive("High School")} color={active == "High School" ? "orange_200_01" : "white_A700"} className="!px-6 w-full sm:px-4 font-medium rounded-[10px] hover:border-2 hover:border-orange-200_01 md:text-sm ">
                   High School
                 </Button>
-                <Button onClick={() => setActive("College")} color={active == "College" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[212px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
+                <Button onClick={() => setActive("College")} color={active == "College" ? "orange_200_01" : "white_A700"} className="!px-6 w-full sm:px-4 font-medium rounded-[10px] hover:border-2 hover:border-orange-200_01 md:text-sm ">
                   College
                 </Button>
               </div>
@@ -163,11 +163,11 @@ export default function EduviShopPage() {
                   name="sortby"
                   placeholder="Sort by: Latest"
                   options={dropDownOptions}
-                  className="w-[16%] sm:w-full gap-px font-medium"
+                  className="w-[150px] sm:w-full gap-px font-medium"
                   onChange={(value) => { setSortBy(value.value) }}
                 />
               </div>
-              <div className="justify-center w-full gap-[15px] grid-cols-3 md:grid-cols-2 md:gap-5 sm:grid-cols-1 grid">
+              <div className="justify-center w-full gap-[15px] grid-cols-3 md:grid-cols-3 sm:grid-cols-1 grid">
                 {books && books.map((book) => (
                   <BookCard3 book={book} key={book._id} />
                 ))}

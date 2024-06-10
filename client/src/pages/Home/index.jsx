@@ -74,7 +74,7 @@ export default function Home() {
             <Heading size="xl" as="h2">
               Popular Books
             </Heading>
-            <div className="flex flex-row w-full gap-[25px]">
+            <div className="flex flex-row md:flex-col md:items-center w-full gap-[25px]">
               {books && books.map((book) => (
                 <BookCard1 book={book} key={book._id} />
               ))}
