@@ -115,16 +115,16 @@ export default function BookDetails() {
                 path: "#"
               },
             ]} />
-            <div className="flex flex-row w-full mt-3">
-              <div className="w-[50%] flex flex-row gap-5 mr-3">
+            <div className="flex flex-row md:flex-col w-full mt-3">
+              <div className="w-[50%] md:w-[90%] flex flex-row gap-3 mr-3">
                 <div className="flex flex-col" onClick={() => (setDisplay(book.image))}>
-                  <Img src={book?.image} className={'w-16 hover:border-black-900_02 hover:border-2 mb-1 mx-3'} />
+                  <Img src={book?.image} className={'w-24 hover:border-black-900_02 hover:border-2'} />
                 </div>
                 <div>
                   <Img src={display || book?.image} />
                 </div>
               </div>
-              <div className="flex flex-col m-5 w-[50%]">
+              <div className="flex flex-col m-3 w-[50%] md:w-fit">
                 <Heading children={book?.name} size="xl" />
                 <div className="flex flex-rol w-full justify-between">
                   <Text>
@@ -148,32 +148,34 @@ export default function BookDetails() {
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta praesentium vero suscipit veniam ipsum facere facilis qui deleniti repudiandae totam veritatis doloremque repellat ipsam eaque mollitia, consequatur quam dolorum necessitatibus!
                   </Text>
                 </div>
-                <div className="flex flew-row mt-auto gap-3">
-                  <Text as="p" className="!text-black-900_02 my-auto h-8" size="lg">
-                    Amount:
-                  </Text>
-                  <div className="flex border-2 border-gray-200 h-[32px] my-auto">
-                    <Button className="h-[30px] px-0 bg-gray-200 aspect-square" onClick={() => { if (amount > 1) setAmount(amount - 1) }}>
-                      <Text size="lg" className="!text-black-900_02" >-</Text>
-                    </Button>
-                    <Input
-                      className="h-[30px] !text-black-900_02 !px-5"
-                      type="number"
-                      value={amount}
-                      onChange={(e) => {
-                        if (e && e > 1)
-                          setAmount(e)
-                        else
-                          setAmount(1)
-                      }}
-                      inputClass="text-center w-8 font-semibold"
-                    />
-                    <Button className="h-[30px] px-0 bg-gray-200 aspect-square" onClick={() => setAmount(amount + 1)}>
-                      <Text size="lg" className="!text-black-900_02" >+</Text>
-                    </Button>
+                <div className="flex flew-row sm:flex-col justify-end mt-auto gap-3">
+                  <div className="flex flew-row gap-3 w-full">
+                    <Text as="p" className="!text-black-900_02 my-auto h-8" size="lg">
+                      Amount:
+                    </Text>
+                    <div className="flex border-2 border-gray-200 h-[32px] my-auto">
+                      <Button className="h-[30px] px-0 bg-gray-200 aspect-square" onClick={() => { if (amount > 1) setAmount(amount - 1) }}>
+                        <Text size="lg" className="!text-black-900_02" >-</Text>
+                      </Button>
+                      <Input
+                        className="h-[30px] !text-black-900_02 !px-5"
+                        type="number"
+                        value={amount}
+                        onChange={(e) => {
+                          if (e && e > 1)
+                            setAmount(e)
+                          else
+                            setAmount(1)
+                        }}
+                        inputClass="text-center w-8 font-semibold"
+                      />
+                      <Button className="h-[30px] px-0 bg-gray-200 aspect-square" onClick={() => setAmount(amount + 1)}>
+                        <Text size="lg" className="!text-black-900_02" >+</Text>
+                      </Button>
+                    </div>
+                    <Text className="ml-auto my-auto !text-2xl !font-semibold h-8">${book?.price.toFixed(2)}</Text>
                   </div>
-                  <Text className="ml-auto my-auto !text-2xl !font-semibold h-8">${book?.price.toFixed(2)}</Text>
-                  <Button hover onClick={() => {
+                  <Button className="min-w-[130px] !px-0" hover onClick={() => {
                     if (authData)
                       addToCart()
                     else

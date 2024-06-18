@@ -281,31 +281,31 @@ export default function CourseDetails() {
                 <Heading size="xl" as="h5">
                   What you&#39;ll learn in this course:
                 </Heading>
-                <div className="flex flex-row sm:flex-col justify-start items-center w-full mt-1.5 gap-2.5 py-[3px] sm:gap-2.5">
+                <div className="flex flex-row justify-start items-center w-full mt-1.5 gap-2.5 py-[3px] sm:gap-2.5">
                   <div className="h-[10px] w-[10px] bg-deep_orange-400 rounded-[50%]" />
                   <Text as="p" className="mt-[3px] sm:mt-0 !text-gray-900">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit
                   </Text>
                 </div>
-                <div className="flex flex-row sm:flex-col justify-start items-center w-full mt-2.5 gap-2.5 py-[3px] sm:gap-2.5">
+                <div className="flex flex-row justify-start items-center w-full mt-2.5 gap-2.5 py-[3px] sm:gap-2.5">
                   <div className="h-[10px] w-[10px] bg-deep_orange-400 rounded-[50%]" />
                   <Text as="p" className="mt-[3px] sm:mt-0 !text-gray-900">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit
                   </Text>
                 </div>
-                <div className="flex flex-row sm:flex-col justify-start items-center w-full mt-2.5 gap-2.5 py-[3px] sm:gap-2.5">
+                <div className="flex flex-row justify-start items-center w-full mt-2.5 gap-2.5 py-[3px] sm:gap-2.5">
                   <div className="h-[10px] w-[10px] bg-deep_orange-400 rounded-[50%]" />
                   <Text as="p" className="mt-[3px] sm:mt-0 !text-gray-900">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit
                   </Text>
                 </div>
-                <div className="flex flex-row sm:flex-col justify-start items-center w-full mt-2.5 gap-2.5 py-[3px] sm:gap-2.5">
+                <div className="flex flex-row justify-start items-center w-full mt-2.5 gap-2.5 py-[3px] sm:gap-2.5">
                   <div className="h-[10px] w-[10px] bg-deep_orange-400 rounded-[50%]" />
                   <Text as="p" className="mt-[3px] sm:mt-0 !text-gray-900">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit
                   </Text>
                 </div>
-                <div className="flex flex-row sm:flex-col justify-start items-center w-full mt-2.5 gap-2.5 py-[3px] sm:gap-2.5">
+                <div className="flex flex-row justify-start items-center w-full mt-2.5 gap-2.5 py-[3px] sm:gap-2.5">
                   <div className="h-[10px] w-[10px] bg-deep_orange-400 rounded-[50%]" />
                   <Text as="p" className="mt-[3px] sm:mt-0 !text-gray-900">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit
@@ -402,7 +402,7 @@ export default function CourseDetails() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col px-8 w-[70%] bg-white-A700 rounded-[15px]">
+        <div className="flex flex-col px-8 w-[70%] md:w-[95%] bg-white-A700 rounded-[15px]">
           <Heading size="xl" className="py-8 font-normal">Reviews</Heading>
           <div className="flex flex-row h-[60px] gap-3">
             <Text as="span" className="text-5xl font-extrabold h-[36px] my-auto">{course?.rating || 0}</Text>

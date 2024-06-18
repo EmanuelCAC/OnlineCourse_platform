@@ -55,7 +55,7 @@ export default function JoinAsTeacher() {
               </div>
               <div className="flex flex-col items-center justify-start w-full gap-5">
                 <div className="flex flex-row justify-start items-start w-full gap-[30px] h-[60px]">
-                  <div className="flex flex-col items-center justify-start w-[33%] pt-1.5 gap-[13px]">
+                  <div className="flex flex-col items-center justify-start w-[33%] max-w-[184px] pt-1.5 gap-[13px]">
                     <Text as="p" className={`${active==1 && '!text-red-300_01'} !font-medium cursor-pointer`} onClick={() => setActive(1)}>
                       Instructor Requirements
                     </Text>

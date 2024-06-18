@@ -129,7 +129,7 @@ export default function EduviCoursesPage() {
               Social Studies
             </Button>
           </div>
-          <div className="flex flex-row justify-between gap-3 w-full max-w-7xl">
+          <div className="flex flex-row sm:flex-col justify-between gap-3 w-full max-w-7xl">
             <Input
               color="white_A700"
               name="search"
@@ -143,7 +143,7 @@ export default function EduviCoursesPage() {
                   <Img src="/images/img_search.svg" alt="search" className="cursor-pointer opacity-0 fill-black-900_02" fill="#0000000" />
                 )
               }
-              className="w-[84%] gap-[35px] !text-gray-700_99 rounded-tr-[10px] rounded-br-[10px] font-medium"
+              className="w-[84%] sm:w-full gap-[35px] !text-gray-700_99 rounded-tr-[10px] rounded-br-[10px] font-medium"
             />
             <SelectBox
               size="xs"
@@ -152,7 +152,7 @@ export default function EduviCoursesPage() {
               name="sortby"
               placeholder="Sort by: Latest"
               options={dropDownOptions}
-              className="w-fit gap-px font-medium"
+              className="w-fit gap-px font-medium sm:w-full"
               onChange={(value) => { setSortBy(value.value) }}
             />
           </div>
