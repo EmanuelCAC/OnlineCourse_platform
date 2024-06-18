@@ -129,19 +129,19 @@ export default function Header({ updateCart, ...props }) {
 
   return (
     <header {...props}>
-      <div className="flex flex-row justify-start w-full mx-auto gap-10 max-w-7xl h-[46px] relative">
+      <div className="flex flex-row justify-start w-full mx-auto gap-8 max-w-7xl h-[46px] relative">
         <Button
-          className="md:block hidden !p-2  !h-fit !w-fit rounded-[5px] bg-transparent -mr-6 hover:bg-gray-200"
+          className="md:block hidden !p-2 !h-fit !w-fit rounded-[5px] bg-transparent -mr-6 hover:bg-gray-200"
           onClick={() => toogleMenu()}
         >
           <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 50 50" fill="#0a033c">
           <path d="M 5 8 A 2.0002 2.0002 0 1 0 5 12 L 45 12 A 2.0002 2.0002 0 1 0 45 8 L 5 8 z M 5 23 A 2.0002 2.0002 0 1 0 5 27 L 45 27 A 2.0002 2.0002 0 1 0 45 23 L 5 23 z M 5 38 A 2.0002 2.0002 0 1 0 5 42 L 45 42 A 2.0002 2.0002 0 1 0 45 38 L 5 38 z"></path>
           </svg>
         </Button>
-        <button onClick={() => navigate("/")} className="w-full max-w-[180px]">
+        <button onClick={() => navigate("/")} className="max-w-[180px] sm:max-w-[150px]">
           <Img src="/images/img_logo.svg" alt="logo_one" className="h-[30px] w-[175px]" />
         </button>
-        <ul className="flex flex-row justify-start items-center gap-5 md:hidden md:absolute md:w-fit md:rounded-[5px] md:top-14 md:left-0 md:py-2 md:px-3 md:bg-gray-200" id="menu">
+        <ul className="flex flex-row justify-start items-center gap-4 md:hidden md:absolute md:w-fit md:rounded-[5px] md:top-14 md:left-0 md:py-2 md:px-3 md:bg-gray-200" id="menu">
           {
             navItems.map((item, i) => item.active ? (
               <li
@@ -191,10 +191,10 @@ export default function Header({ updateCart, ...props }) {
             ) : null)
           }
         </ul>
-        <ul className="flex flex-row justify-end w-fit gap-5 ml-auto">
+        <ul className="flex flex-row justify-end w-fit gap-3 ml-auto">
           {
             navAuthItems.map((item) => item.active ? (
-              <li key={item.name} className="flex flex-row justify-start items-center pl-[3px] gap-2" onClick={() => item.action(item)}>
+              <li key={item.name} className="flex flex-row justify-start items-center gap-2" onClick={() => item.action(item)}>
                 <Text as="button" className="!text-gray-900 text-right !font-medium md:hidden" >
                   {item.name}
                 </Text>

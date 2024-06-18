@@ -10,7 +10,7 @@ const BreadCrumbs = (value) => {
     <div className="display: flex">
       {
         routes.map((route, i) => (
-          <Text as="button" className="mt-[5px] ml-1 md:ml-0 !text-black-900_02 !font-medium" onClick={() => navigate(route.path)} key={i}>
+          <Text as="button" className={`mt-[5px] ml-1 !text-black-900_02 !font-medium ${i == routes.length - 1 && '!font-bold'}`} onClick={() => navigate(route.path)} key={i}>
             {route.name} {(i < routes.length - 1) ? "|" : ""}
           </Text>
         ))
