@@ -93,7 +93,7 @@ export default function SinglementordetailsPage() {
                     </div>
                   </div>
                   <div className="flex flex-row justify-start w-[32%] md:w-full mt-[-81px] ml-[30px] md:ml-0 sm:ml-5">
-                    <div className="flex flex-row sm:flex-col justify-start items-center w-full gap-5 sm:gap-5">
+                    <div className="flex flex-row justify-start items-center w-full gap-5 sm:gap-5">
                       <Img
                         src={mentor?.image}
                         alt="bg_one"
@@ -116,14 +116,14 @@ export default function SinglementordetailsPage() {
           <div className="flex flex-row justify-center w-full">
             <div className="flex flex-row md:flex-col justify-start items-start w-full gap-10 md:gap-5 md:px-5 max-w-7xl">
               <div className="flex flex-col items-center justify-start w-[66%] md:w-full gap-[29px]">
-                <div className="flex flex-row md:flex-col justify-start w-full gap-6 md:gap-5">
+                <div className="flex flex-row flex-wrap justify-start w-full gap-6 md:gap-3">
                   <Button onClick={() => setActive("About")} color={active == "About" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[160px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
                     About
                   </Button>
-                  <Button onClick={() => setActive("Courses")} color={active == "Courses" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[160px] rounded-[10px] hover:border-2 hover:border-orange-200_01">
+                  <Button onClick={() => setActive("Courses")} color={active == "Courses" ? "orange_200_01" : "white_A700"} className="sm:px-5 font-medium min-w-[160px] rounded-[10px] hover:border-2 hover:border-orange-200_01 mr-auto">
                     Courses
                   </Button>
-                  <Button className="sm:px-5 font-medium min-w-[160px] rounded-[10px] ml-auto">Contact Now</Button>
+                  <Button className="sm:px-5 font-medium min-w-[160px] rounded-[10px]">Contact Now</Button>
                 </div>
                 {active == "About" &&
                   (

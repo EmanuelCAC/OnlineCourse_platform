@@ -56,7 +56,7 @@ export default function Mentors() {
         </div>
         <div className="flex flex-col justify-center w-full gap-[50px]">
           <Heading size="3xl" as="h1" className="text-center" >Our Mentors</Heading>
-          <div className="flex flex-row flex-wrap md:flex-col justify-between w-[85%] gap-3 md:gap-5 mx-auto">
+          <div className="flex flex-row flex-wrap justify-between w-[85%] gap-3 mx-auto">
             {mentors[0] && mentors.map((mentor) => (
               <MentorCard mentor={mentor} key={mentor._id} />
             ))}
