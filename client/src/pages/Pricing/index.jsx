@@ -52,100 +52,100 @@ export default function Pricing() {
             </Text>
           </div>
         </div>
-          <div className="flex flex-row justify-center w-full md:px-5 max-w-7xl">
-            <div className="flex flex-row md:flex-col items-center w-full gap-10 md:gap-2.5">
+        <div className="flex flex-row justify-center w-full md:px-5 max-w-7xl">
+          <div className="flex flex-row flex-wrap items-center w-full gap-4">
             <PricingCard title="Basic" price={200} items={[
-                {
-                  description: "3 HD video lessons & tutorials",
-                  has: true
-                },
-                {
-                  description: "1 Official exam",
-                  has: true
-                },
-                {
-                  description: "100 Practice questions",
-                  has: true
-                },
-                {
-                  description: "1 Free book",
-                  has: true
-                },
-                {
-                  description: "Practice quizzes & assignments",
-                  has: false
-                },
-                {
-                  description: "In depth explanations",
-                  has: false
-                },
-                {
-                  description: "Personal instructor Assistance",
-                  has: false
-                }
-              ]} />
-              <PricingCard title="Standard" price={600} items={[
-                {
-                  description: "8 HD video lessons & tutorials",
-                  has: true
-                },
-                {
-                  description: "2 Official exam",
-                  has: true
-                },
-                {
-                  description: "200 Practice questions",
-                  has: true
-                },
-                {
-                  description: "3 Free book",
-                  has: true
-                },
-                {
-                  description: "Practice quizzes & assignments",
-                  has: true
-                },
-                {
-                  description: "In depth explanations",
-                  has: false
-                },
-                {
-                  description: "Personal instructor Assistance",
-                  has: false
-                }
-              ]} />
-              <PricingCard title="Premium" price={1200} items={[
-                {
-                  description: "15 HD video lessons & tutorials",
-                  has: true
-                },
-                {
-                  description: "3 Official exam",
-                  has: true
-                },
-                {
-                  description: "300 Practice questions",
-                  has: true
-                },
-                {
-                  description: "5 Free book",
-                  has: true
-                },
-                {
-                  description: "Practice quizzes & assignments",
-                  has: true
-                },
-                {
-                  description: "In depth explanations",
-                  has: true
-                },
-                {
-                  description: "Personal instructor Assistance",
-                  has: true
-                }
-              ]} />
-            </div>
+              {
+                description: "3 HD video lessons & tutorials",
+                has: true
+              },
+              {
+                description: "1 Official exam",
+                has: true
+              },
+              {
+                description: "100 Practice questions",
+                has: true
+              },
+              {
+                description: "1 Free book",
+                has: true
+              },
+              {
+                description: "Practice quizzes & assignments",
+                has: false
+              },
+              {
+                description: "In depth explanations",
+                has: false
+              },
+              {
+                description: "Personal instructor Assistance",
+                has: false
+              }
+            ]} />
+            <PricingCard title="Standard" price={600} items={[
+              {
+                description: "8 HD video lessons & tutorials",
+                has: true
+              },
+              {
+                description: "2 Official exam",
+                has: true
+              },
+              {
+                description: "200 Practice questions",
+                has: true
+              },
+              {
+                description: "3 Free book",
+                has: true
+              },
+              {
+                description: "Practice quizzes & assignments",
+                has: true
+              },
+              {
+                description: "In depth explanations",
+                has: false
+              },
+              {
+                description: "Personal instructor Assistance",
+                has: false
+              }
+            ]} />
+            <PricingCard title="Premium" price={1200} items={[
+              {
+                description: "15 HD video lessons & tutorials",
+                has: true
+              },
+              {
+                description: "3 Official exam",
+                has: true
+              },
+              {
+                description: "300 Practice questions",
+                has: true
+              },
+              {
+                description: "5 Free book",
+                has: true
+              },
+              {
+                description: "Practice quizzes & assignments",
+                has: true
+              },
+              {
+                description: "In depth explanations",
+                has: true
+              },
+              {
+                description: "Personal instructor Assistance",
+                has: true
+              }
+            ]} />
           </div>
+        </div>
         <Footer className="flex justify-center items-center w-full px-14 py-20 md:p-5 bg-gray-100" />
       </div>
     </>

@@ -23,7 +23,7 @@ export default function PricingCard({title, price, items}) {
   }
 
   return (
-    <div className="flex flex-col items-start justify-start w-[32%] md:w-full gap-6 p-[30px] sm:p-5 bg-white-A700 cursor-pointer rounded-[20px] hover:shadow-sm">
+    <div className="flex flex-col items-start justify-start mx-auto w-full max-w-[400px] min-w-[340px] sm:min-w-0 gap-6 p-[30px] sm:p-5 bg-white-A700 cursor-pointer rounded-[20px] hover:shadow-sm">
       <div className="flex flex-col items-center justify-start w-full pb-3.5">
         <div className="flex flex-col items-start justify-start w-full gap-3.5">
           <Img src="/images/img_group_red_300_01.svg" alt="basic_pack_one" className="h-[50px] w-[50px]" />
