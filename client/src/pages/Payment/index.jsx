@@ -121,8 +121,8 @@ export default function Payment() {
         <Header className="flex justify-center items-center w-full md:h-auto p-[22px] sm:p-5 bg-gray-100" />
           <div className="flex flex-col items-start justify-start w-full gap-[5px] p-5 md:px-5 max-w-7xl">
             <Text className="!text-black-900_02 !text-3xl !font-medium">Form of Payment</Text>
-            <div className="flex flex-row w-full gap-5">
-              <div className="flex flex-col w-2/3 rounded-[20px] md:px-5 mt-3 gap-5">
+            <div className="flex flex-row md:flex-col w-full gap-5">
+              <div className="flex flex-col w-2/3 md:w-full rounded-[20px] mt-3 gap-5">
                 <div className="w-full bg-white-A700 p-4 rounded-2xl">
                   <div className="flex flex-row gap-2 cursor-pointer" onClick={() => {setSelectedValue("Card")}}>
                     <input type="radio" checked={selectedValue == "Card"} className="my-auto" />
@@ -131,7 +131,7 @@ export default function Payment() {
 
                   {selectedValue == "Card" && (
                     <div className="flex flex-row pt-4">
-                      <div className="flex flex-col w-1/2 gap-5">
+                      <div className="flex flex-col w-1/2 sm:w-full gap-5">
                         <div>
                           <label className="pl-2 pb-1">Card number</label>
                           <Input
@@ -185,7 +185,7 @@ export default function Payment() {
                           />
                         </div>
                       </div>
-                      <div className="w-1/2 pl-4">
+                      <div className="w-1/2 pl-4 sm:hidden">
                         <Img src="/images/creditCard.png" className={"mx-auto h-full aspect-square w-3/4"} />
                       </div>
                     </div>
@@ -255,7 +255,7 @@ export default function Payment() {
                   )}
                 </div>
               </div>
-              <div className="flex flex-col w-1/3">
+              <div className="flex flex-col w-1/3 md:w-full">
                 <div className="bg-white-A700 rounded-[20px] p-5 md:px-5 mt-3">
                   <Text className="!text-black-900_02 !text-3xl !font-medium mb-3">Resume</Text>
                   {items.map((item, i) => (

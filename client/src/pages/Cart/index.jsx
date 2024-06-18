@@ -117,8 +117,8 @@ export default function Cart() {
               </div>
             }
             {cart[0] &&
-              <div className="flex flex-row w-full gap-5">
-                <div className="flex flex-col w-2/3 bg-white-A700 rounded-[20px] h-fit p-5 md:px-5 mt-3">
+              <div className="flex flex-row md:flex-col w-full gap-5">
+                <div className="flex flex-col w-2/3 md:w-full bg-white-A700 rounded-[20px] h-fit p-5 mt-3">
                   <Text className="!text-black-900_02 !text-3xl !font-medium">Items</Text>
                   {cart.map((item) => (
                     <div key={item._id} className="relative">
@@ -166,7 +166,7 @@ export default function Cart() {
                     </div>
                   ))}
                 </div>
-                <div className="flex flex-col w-1/3">
+                <div className="flex flex-col w-1/3 md:w-full">
                   <div className="bg-white-A700 rounded-[20px] p-5 md:px-5 mt-3">
                     <Text className="!text-black-900_02 !text-3xl !font-medium mb-3">Resume</Text>
                     {cart.map((item) => (
@@ -179,7 +179,7 @@ export default function Cart() {
                       <Text className="!text-black-900_02 !font-semibold !text-xl ">Total</Text>
                       <Text className="!font-semibold !text-xl min-w-fit">R$ {total}</Text>
                     </div>
-                    <Button shape="round" className="mt-4 w-full" hover onClick={purchase}>Complete the purchase</Button>
+                    <Button shape="round" className="mt-4 w-full !px-0" hover onClick={purchase}>Complete the purchase</Button>
                   </div>
                 </div>
               </div>
