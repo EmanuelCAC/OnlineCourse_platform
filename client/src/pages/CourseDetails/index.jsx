@@ -34,7 +34,7 @@ export default function CourseDetails() {
 
   const getCourse = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3001/api/v1/course/${id}`)
+      const { data } = await axios.get(`${import.meta.env.VITE_APILINK}/course/${id}`)
       if (data) setCourse(data)
     } catch (error) {
       console.log(error.response)
@@ -43,7 +43,7 @@ export default function CourseDetails() {
 
   const getCoursePlaylist = async (req, res) => {
     try {
-      const {data} = await axios.post(`http://localhost:3001/api/v1/coursePlaylist/all`, {courseId: id})
+      const {data} = await axios.post(`${import.meta.env.VITE_APILINK}/coursePlaylist/all`, {courseId: id})
       setCoursePlaylist(data)
     } catch (error) {
       console.log(error.response);
@@ -51,9 +51,9 @@ export default function CourseDetails() {
   }
 
   const getReviews = async () => {
-    const { data } = await axios.post(`http://localhost:3001/api/v1/course/review/all`, { courseId: id })
+    const { data } = await axios.post(`${import.meta.env.VITE_APILINK}/course/review/all`, { courseId: id })
     const reviewsList = data.map(async (review) => {
-      const data = await fetch(`http://localhost:3001/api/v1/user/${review.createdBy}`)
+      const data = await fetch(`${import.meta.env.VITE_APILINK}/user/${review.createdBy}`)
       const user = await data.json()
       if (user) {
         review.userName = user.name
@@ -69,7 +69,7 @@ export default function CourseDetails() {
   const getSimilarCourses = async () => {
     if (course?.category) {
       try {
-        const { data } = await axios.get(`http://localhost:3001/api/v1/course?category=${course.category[1]}`)
+        const { data } = await axios.get(`${import.meta.env.VITE_APILINK}/course?category=${course.category[1]}`)
         if (data) setSimilarCourses(data)
       } catch (error) {
         console.log(error.response)
@@ -80,7 +80,7 @@ export default function CourseDetails() {
   const getInstructor = async () => {
     if (course?.instructorId) {
       try {
-        const { data } = await axios.get(`http://localhost:3001/api/v1/mentor/${course.instructorId}`)
+        const { data } = await axios.get(`${import.meta.env.VITE_APILINK}/mentor/${course.instructorId}`)
         if (data) setInstructor(data.name)
       } catch (error) {
         console.log(error.response)
@@ -90,7 +90,7 @@ export default function CourseDetails() {
 
   const purchase = async () => {
     try {
-      const { data } = await axios.post(`http://localhost:3001/api/v1/cart/new`,
+      const { data } = await axios.post(`${import.meta.env.VITE_APILINK}/cart/new`,
         {
           userId: authData.userId,
           productId: id,
@@ -113,13 +113,13 @@ export default function CourseDetails() {
   }
 
   const updateCourse = async () => {
-    const { data } = await axios.patch(`http://localhost:3001/api/v1/course/${id}`)
+    const { data } = await axios.patch(`${import.meta.env.VITE_APILINK}/course/${id}`)
     setCourse(data)
   }
 
   const ownership = async () => {
     try {
-      const {data} = await axios.post(`http://localhost:3001/api/v1/ownedCourse/all`, {userId: authData.userId})
+      const {data} = await axios.post(`${import.meta.env.VITE_APILINK}/ownedCourse/all`, {userId: authData.userId})
       data.map((course) => {
         if(course.courseId == id) {
           setOwned(true)

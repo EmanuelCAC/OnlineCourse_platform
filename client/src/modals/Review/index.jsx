@@ -17,7 +17,7 @@ export default function ReviewModal({ isOpen, isSignupOpen, close, review, targe
 
   const remove = async () => {
     try {
-      const { data } = await axios.delete(`http://localhost:3001/api/v1/${target}/review/${review._id}`, {
+      const { data } = await axios.delete(`${import.meta.env.VITE_APILINK}/${target}/review/${review._id}`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -33,7 +33,7 @@ export default function ReviewModal({ isOpen, isSignupOpen, close, review, targe
     e.preventDefault()
 
     try {
-      const { data } = await axios.patch(`http://localhost:3001/api/v1/${target}/review/${review._id}`,
+      const { data } = await axios.patch(`${import.meta.env.VITE_APILINK}/${target}/review/${review._id}`,
         {
           comment,
           rating
@@ -58,7 +58,7 @@ export default function ReviewModal({ isOpen, isSignupOpen, close, review, targe
 
     try {
       if (target == "book") {
-      const { data } = await axios.post(`http://localhost:3001/api/v1/${target}/review/`,
+      const { data } = await axios.post(`${import.meta.env.VITE_APILINK}/${target}/review/`,
         {
           createdBy: authData.userId,
           bookId: id,
@@ -71,7 +71,7 @@ export default function ReviewModal({ isOpen, isSignupOpen, close, review, targe
           }
         })
       } else if (target == "course") {
-        const { data } = await axios.post(`http://localhost:3001/api/v1/${target}/review/`,
+        const { data } = await axios.post(`${import.meta.env.VITE_APILINK}/${target}/review/`,
         {
           createdBy: authData.userId,
           courseId: id,
@@ -96,7 +96,7 @@ export default function ReviewModal({ isOpen, isSignupOpen, close, review, targe
 
   const updateTarget = async () => {
     try {
-      const {data} = await axios.patch(`http://localhost:3001/api/v1/${target}/${id}`)
+      const {data} = await axios.patch(`${import.meta.env.VITE_APILINK}/${target}/${id}`)
     } catch (error) {
       console.log(error.response)
     }

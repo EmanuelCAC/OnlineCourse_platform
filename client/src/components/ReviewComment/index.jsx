@@ -14,7 +14,7 @@ const ReviewComment = ({review, getReviews, setReview, setEditReview, target}) =
   const toogleLike = async (review) => {
     if (review.like.includes(authData.userId)) {
       try {
-        const { data } = await axios.patch(`http://localhost:3001/api/v1/${target}/review/${review._id}`,
+        const { data } = await axios.patch(`${import.meta.env.VITE_APILINK}/${target}/review/${review._id}`,
           {
             like: review.like.filter((id) => {
               return id != authData.userId
@@ -31,7 +31,7 @@ const ReviewComment = ({review, getReviews, setReview, setEditReview, target}) =
     } else {
       review.like.push(authData.userId)
       try {
-        const { data } = await axios.patch(`http://localhost:3001/api/v1/${target}/review/${review._id}`,
+        const { data } = await axios.patch(`${import.meta.env.VITE_APILINK}/${target}/review/${review._id}`,
           {
             like: review.like
           },

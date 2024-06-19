@@ -12,7 +12,7 @@ export default function Subscribe({ ...props }) {
     e.preventDefault()
 
     try {
-      const {data} = await axios.post(`http://localhost:3001/api/v1/subscribe`, {
+      const {data} = await axios.post(`${import.meta.env.VITE_APILINK}/subscribe`, {
         email: email
       })
       setEmail("")

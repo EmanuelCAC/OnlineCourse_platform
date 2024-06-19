@@ -19,7 +19,7 @@ export default function Header({ updateCart, ...props }) {
 
   const getCart = async () => {
     try {
-      const { data } = await axios.post('http://localhost:3001/api/v1/cart',
+      const { data } = await axios.post(`${import.meta.env.VITE_APILINK}/cart`,
         {
           userId: authData.userId
         },

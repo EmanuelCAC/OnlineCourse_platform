@@ -34,7 +34,7 @@ export default function EduviCoursesPage() {
   }
 
   const getTotalPages = async () => {
-    const data = await fetch(`http://localhost:3001/api/v1/course?search=${searchBarValue}&sort=${sortBy}&category=${active}`)
+    const data = await fetch(`${import.meta.env.VITE_APILINK}/course?search=${searchBarValue}&sort=${sortBy}&category=${active}`)
     const result = await data.json()
     setTotalPages(Math.ceil(result.length / 8))
   }
@@ -46,13 +46,13 @@ export default function EduviCoursesPage() {
   }
 
   const getCourses = async () => {
-    const data = await fetch(`http://localhost:3001/api/v1/course?search=${searchBarValue}&sort=${sortBy}&limit=8&page=${page}&category=${active}`)
+    const data = await fetch(`${import.meta.env.VITE_APILINK}/course?search=${searchBarValue}&sort=${sortBy}&limit=8&page=${page}&category=${active}`)
     const result = await data.json()
     setCourses(result)
   }
 
   const getPopularCourses = async () => {
-    const data = await fetch(`http://localhost:3001/api/v1/course?limit=4&sort=-rating`)
+    const data = await fetch(`${import.meta.env.VITE_APILINK}/course?limit=4&sort=-rating`)
     const result = await data.json()
     setPopularCourses(result)
   }

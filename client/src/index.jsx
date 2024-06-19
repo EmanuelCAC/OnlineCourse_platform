@@ -15,7 +15,7 @@ const root = createRoot(container);
 
 root.render(
   <Provider store={store}>
-    <GoogleOAuthProvider clientId="333408870324-sg7jgq16boo1or6ue6tqk0m40v7rh51l.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={`${import.meta.env.VITE_CLIENTID}`}>
       <App />
     </GoogleOAuthProvider>
   </Provider>

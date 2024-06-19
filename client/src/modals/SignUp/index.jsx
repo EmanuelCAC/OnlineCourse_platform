@@ -44,7 +44,7 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
         });
         if (data.email_verified) {
           try {
-            const { data: userData } = await axios.post("http://localhost:3001/api/v1/auth/signupWithGoogle", { name: data.name, email: data.email, password: data.sub, image: data.picture })
+            const { data: userData } = await axios.post(`${import.meta.env.VITE_APILINK}/auth/signupWithGoogle`, { name: data.name, email: data.email, password: data.sub, image: data.picture })
             if (userData) {
               localStorage.setItem('token', userData.token)
               dispatch(authLogin(userData.token))
@@ -66,7 +66,7 @@ export default function SignUp({ isOpen, isLoginOpen, close, ...props }) {
     const code = Math.floor(1000 + Math.random() * 9000);
 
     try {
-      const { data } = await axios.post("http://localhost:3001/api/v1/tempUser", { name, email, password1, password2, code })
+      const { data } = await axios.post(`${import.meta.env.VITE_APILINK}/tempUser`, { name, email, password1, password2, code })
       if (data) {
         setName("")
         setEmail("")

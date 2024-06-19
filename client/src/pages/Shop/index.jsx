@@ -28,25 +28,25 @@ export default function EduviShopPage() {
   const [totalPages, setTotalPages] = useState(1)
 
   const getPopularBooks = async () => {
-    const data = await fetch('http://localhost:3001/api/v1/book?limit=3&sort=-rating')
+    const data = await fetch(`${import.meta.env.VITE_APILINK}/book?limit=3&sort=-rating`)
     const result = await data.json()
     setPopularBooks(result.books)
   }
 
   const getNewArrivals = async () => {
-    const data = await fetch('http://localhost:3001/api/v1/book?limit=3&sort=-createdAt')
+    const data = await fetch(`${import.meta.env.VITE_APILINK}/book?limit=3&sort=-createdAt`)
     const result = await data.json()
     setNewArrivals(result.books)
   }
 
   const getBooks = async () => {
-    const data = await fetch(`http://localhost:3001/api/v1/book?search=${searchBarValue}&sort=${sortBy}&limit=9&page=${page}&category=${active}`)
+    const data = await fetch(`${import.meta.env.VITE_APILINK}/book?search=${searchBarValue}&sort=${sortBy}&limit=9&page=${page}&category=${active}`)
     const result = await data.json()
     setBooks(result.books)
   }
 
   const getTotalPages = async () => {
-    const data = await fetch(`http://localhost:3001/api/v1/book?search=${searchBarValue}&sort=${sortBy}&category=${active}`)
+    const data = await fetch(`${import.meta.env.VITE_APILINK}/book?search=${searchBarValue}&sort=${sortBy}&category=${active}`)
     const result = await data.json()
     setTotalPages(Math.ceil(result.books.length / 9))
   }

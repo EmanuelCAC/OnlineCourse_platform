@@ -36,7 +36,7 @@ export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
         });
         if (data.email_verified) {
           try {
-            const { data: userData } = await axios.post("http://localhost:3001/api/v1/auth/login", { email: data.email, password: data.sub})
+            const { data: userData } = await axios.post(`${import.meta.env.VITE_APILINK}/auth/login`, { email: data.email, password: data.sub})
             if (userData) {
               localStorage.setItem('token', userData.token)
               dispatch(authLogin(userData.token))
@@ -57,7 +57,7 @@ export default function LogIn({ isOpen, isSignupOpen, close, ...props }) {
     e.preventDefault()
 
     try {
-      const { data } = await axios.post("http://localhost:3001/api/v1/auth/login", { email, password })
+      const { data } = await axios.post(`${import.meta.env.VITE_APILINK}/auth/login`, { email, password })
       localStorage.setItem('token', data.token)
       setEmail("")
       setPassword("")

@@ -9,7 +9,7 @@ export default function Mentors() {
 
   const getMentors = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3001/api/v1/mentor`)
+      const { data } = await axios.get(`${import.meta.env.VITE_APILINK}/mentor`)
       if (data) {
         const newMentors = data.map((mentor) => {
           mentor.role = mentor.role.join(' & ')

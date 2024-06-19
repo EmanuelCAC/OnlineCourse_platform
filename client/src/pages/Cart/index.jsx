@@ -14,7 +14,7 @@ export default function Cart() {
 
   const getCart = async () => {
     try {
-      const { data } = await axios.post('http://localhost:3001/api/v1/cart',
+      const { data } = await axios.post(`${import.meta.env.VITE_APILINK}/cart`,
         {
           userId: authData.userId
         },
@@ -33,7 +33,7 @@ export default function Cart() {
   const editAmount = async (item, n) => {
     if (item.amount + n <= 0) {
       try {
-        const { data } = await axios.delete('http://localhost:3001/api/v1/cart',
+        const { data } = await axios.delete(`${import.meta.env.VITE_APILINK}/cart`,
           {
             headers: {
               authorization: `Bearer ${localStorage.getItem('token')}`
@@ -50,7 +50,7 @@ export default function Cart() {
       }
     } else {
       try {
-        const { data } = await axios.patch('http://localhost:3001/api/v1/cart',
+        const { data } = await axios.patch(`${import.meta.env.VITE_APILINK}/cart`,
           {
             id: item._id,
             amount: item.amount + n

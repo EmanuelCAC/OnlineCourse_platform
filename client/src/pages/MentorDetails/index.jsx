@@ -20,7 +20,7 @@ export default function SinglementordetailsPage() {
 
   const getMentor = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3001/api/v1/mentor/${id}`)
+      const { data } = await axios.get(`${import.meta.env.VITE_APILINK}/mentor/${id}`)
       if (data) {
         setMentor(data)
         setRoles(data.role.join(' & '))
@@ -33,7 +33,7 @@ export default function SinglementordetailsPage() {
 
   const getCourses = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3001/api/v1/course?instructorId=${id}`)
+      const { data } = await axios.get(`${import.meta.env.VITE_APILINK}/course?instructorId=${id}`)
       if (data) setCourses(data)
     } catch (error) {
       console.log(error)
@@ -43,7 +43,7 @@ export default function SinglementordetailsPage() {
   const getReviews = async () => {
     if (mentor?.id) {
       try {
-        const { data } = await axios.post(`http://localhost:3001/api/v1/mentor/review/all`, { instructorId: mentor._id })
+        const { data } = await axios.post(`${import.meta.env.VITE_APILINK}/mentor/review/all`, { instructorId: mentor._id })
         if (data) setReviews(data)
       } catch (error) {
         console.log(error)

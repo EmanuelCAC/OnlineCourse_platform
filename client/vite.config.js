@@ -12,7 +12,7 @@ export default defineConfig({
   plugins: [tsconfigPaths(), react()],
   server: {
     proxy: {
-      '/api': 'http://localhost:3001/api'
+      '/api': 'https://onlinecourse-backend.onrender.com/api'
     }
   }
 });

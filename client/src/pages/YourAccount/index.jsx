@@ -26,7 +26,7 @@ export default function YourAccount() {
 
   const getBooks = async (req, res) => {
     try {
-      const {data} = await axios.post("http://localhost:3001/api/v1/ownedBook/all", {userId: authData.userId})
+      const {data} = await axios.post(`${import.meta.env.VITE_APILINK}/ownedBook/all`, {userId: authData.userId})
       setBooks(data)
     } catch (error) {
       console.log(error.response);
@@ -35,7 +35,7 @@ export default function YourAccount() {
 
   const getCourses = async () => {
     try {
-      const {data} = await axios.post("http://localhost:3001/api/v1/ownedCourse/all", {userId: authData.userId})
+      const {data} = await axios.post(`${import.meta.env.VITE_APILINK}/ownedCourse/all`, {userId: authData.userId})
       setCourses(data)
     } catch (error) {
       console.log(error.response);
@@ -45,7 +45,7 @@ export default function YourAccount() {
   const getBookInfo = async () => {
     const data = books.map( async (book) => {
       try {
-        const {data} = await axios.get(`http://localhost:3001/api/v1/book/${book.bookId}`)
+        const {data} = await axios.get(`${import.meta.env.VITE_APILINK}/book/${book.bookId}`)
         return data
       } catch (error) {
         console.log(error.response);
@@ -58,7 +58,7 @@ export default function YourAccount() {
   const getCourseInfo = async () => {
     const data = courses.map( async (course) => {
       try {
-        const {data} = await axios.get(`http://localhost:3001/api/v1/course/${course.courseId}`)
+        const {data} = await axios.get(`${import.meta.env.VITE_APILINK}/course/${course.courseId}`)
         return data
       } catch (error) {
         console.log(error.response);
@@ -70,7 +70,7 @@ export default function YourAccount() {
 
   const changeName = async () => {
     try {
-      const {data} = await axios.patch(`http://localhost:3001/api/v1/user/${authData.userId}`, {name: newName})
+      const {data} = await axios.patch(`${import.meta.env.VITE_APILINK}/user/${authData.userId}`, {name: newName})
       if (data) {
         localStorage.setItem('token', data.token)
         dispatch(authLogin(data.token))

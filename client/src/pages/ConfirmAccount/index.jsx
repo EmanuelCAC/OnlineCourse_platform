@@ -48,7 +48,7 @@ export default function ConfirmAccount() {
       const newCode = Math.floor(1000 + Math.random() * 9000);
 
       try {
-        const {data} = await axios.patch(`http://localhost:3001/api/v1/tempUser/${history.state.account.id}`, {code: newCode})
+        const {data} = await axios.patch(`${import.meta.env.VITE_APILINK}/tempUser/${history.state.account.id}`, {code: newCode})
         if (data) {
           setCode(data.code)
           setSeconds(60)
@@ -63,7 +63,7 @@ export default function ConfirmAccount() {
       console.log(history.state.account.password);
       if (userCode == code) {
         try {
-          const { data } = await axios.post("http://localhost:3001/api/v1/auth/signup", { name: history.state.account.name, email: history.state.account.email, password: history.state.account.password})
+          const { data } = await axios.post(`${import.meta.env.VITE_APILINK}/auth/signup`, { name: history.state.account.name, email: history.state.account.email, password: history.state.account.password})
           if (data) {
             localStorage.setItem('token', data.token)
             dispatch(authLogin(data.token))

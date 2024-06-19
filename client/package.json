@@ -33,7 +33,7 @@
     "build": "vite build",
     "serve": "vite preview"
   },
-  "proxy": "http://localhost:3001",
+  "proxy": "https://onlinecourse-backend.onrender.com",
   "eslintConfig": {
     "extends": [
       "react-app",

@@ -12,13 +12,13 @@ export default function Home() {
   const navigate = useNavigate()
 
   const popularBooks = async () => {
-    const data = await fetch('http://localhost:3001/api/v1/book?limit=3&sort=-rating')
+    const data = await fetch(`${import.meta.env.VITE_APILINK}/book?limit=3&sort=-rating`)
     const result = await data.json()
     setBooks(result.books)
   }
 
   const getPopularCourses = async () => {
-    const data = await fetch(`http://localhost:3001/api/v1/course?limit=4&sort=-rating`)
+    const data = await fetch(`${import.meta.env.VITE_APILINK}/course?limit=4&sort=-rating`)
     const result = await data.json()
     setPopularCourses(result)
   }

@@ -52,7 +52,7 @@ export default function Payment() {
     if (selectedValue != "") {
       await books.map(async (book) => {
         try {
-          const { data } = await axios.post("http://localhost:3001/api/v1/ownedBook", {userId: authData.userId, bookId: book.productId})
+          const { data } = await axios.post(`${import.meta.env.VITE_APILINK}/ownedBook`, {userId: authData.userId, bookId: book.productId})
         } catch (error) {
           if (error.response) {
             error(error.response.data.msg)
@@ -62,7 +62,7 @@ export default function Payment() {
 
       await courses.map(async (course) => {
         try {
-          const { data } = await axios.post("http://localhost:3001/api/v1/ownedCourse", {userId: authData.userId, courseId: course.productId})
+          const { data } = await axios.post(`${import.meta.env.VITE_APILINK}/ownedCourse`, {userId: authData.userId, courseId: course.productId})
         } catch (error) {
           if (error.response) {
             error(error.response.data.msg)
@@ -71,7 +71,7 @@ export default function Payment() {
       })
 
       try {
-        const { data } = await axios.patch(`http://localhost:3001/api/v1/user/${authData.userId}`, {plan: plan[0].productName})
+        const { data } = await axios.patch(`${import.meta.env.VITE_APILINK}/user/${authData.userId}`, {plan: plan[0].productName})
         if (data) {
           localStorage.setItem('token', data.token)
           dispatch(authLogin(data.token))
@@ -85,7 +85,7 @@ export default function Payment() {
       await items.map(async (item) => {
         if (item.type != "plan") {
           try {
-            const {data} = await axios.delete(`http://localhost:3001/api/v1/cart`, {
+            const {data} = await axios.delete(`${import.meta.env.VITE_APILINK}/cart`, {
               headers: {
                 authorization: `Bearer ${localStorage.getItem('token')}`
               },

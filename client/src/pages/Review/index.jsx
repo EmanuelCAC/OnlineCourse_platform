@@ -21,7 +21,7 @@ export default function Review() {
 
   const getBooks = async () => {
     try {
-      const {data} = await axios.post("http://localhost:3001/api/v1/ownedBook/all", {userId: authData.userId})
+      const {data} = await axios.post(`${import.meta.env.VITE_APILINK}/ownedBook/all`, {userId: authData.userId})
       setBooks(data)
     } catch (error) {
       console.log(error.response);
@@ -30,7 +30,7 @@ export default function Review() {
 
   const getCourses = async () => {
     try {
-      const {data} = await axios.post("http://localhost:3001/api/v1/ownedCourse/all", {userId: authData.userId})
+      const {data} = await axios.post(`${import.meta.env.VITE_APILINK}/ownedCourse/all`, {userId: authData.userId})
       setCourses(data)
     } catch (error) {
       console.log(error.response);
@@ -40,7 +40,7 @@ export default function Review() {
   const getBooksToReview = async () => {
     const toReview = books.map( async (book) => {
       try {
-        const {data} = await axios.post("http://localhost:3001/api/v1/book/review/all", {bookId: book.bookId})
+        const {data} = await axios.post(`${import.meta.env.VITE_APILINK}/book/review/all`, {bookId: book.bookId})
         const has = data.find((review) => {
           return review.createdBy == authData.userId
         })
@@ -61,7 +61,7 @@ export default function Review() {
   const getCoursesToReview = async () => {
     const toReview = courses.map( async (course) => {
       try {
-        const {data} = await axios.post("http://localhost:3001/api/v1/course/review/all", {courseId: course.courseId})
+        const {data} = await axios.post(`${import.meta.env.VITE_APILINK}/course/review/all`, {courseId: course.courseId})
         const has = data.find((review) => {
           return review.createdBy == authData.userId
         })
@@ -82,7 +82,7 @@ export default function Review() {
   const getBookInfo = async () => {
     const books = booksToReview.map( async (book) => {
       try {
-        const {data} = await axios.get(`http://localhost:3001/api/v1/book/${book.bookId}`)
+        const {data} = await axios.get(`${import.meta.env.VITE_APILINK}/book/${book.bookId}`)
         return data
       } catch (error) {
         console.log(error.response);
@@ -95,7 +95,7 @@ export default function Review() {
   const getCourseInfo = async () => {
     const courses = coursesToReview.map( async (course) => {
       try {
-        const {data} = await axios.get(`http://localhost:3001/api/v1/course/${course.courseId}`)
+        const {data} = await axios.get(`${import.meta.env.VITE_APILINK}/course/${course.courseId}`)
         return data
       } catch (error) {
         console.log(error.response);

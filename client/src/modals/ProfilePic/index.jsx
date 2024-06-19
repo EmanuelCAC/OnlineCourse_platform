@@ -16,7 +16,7 @@ export default function ProfilePic({ isOpen, close, ...props }) {
     const formdata = new FormData()
     formdata.append('photo', image.files[0])
     try {
-      const {data} = await axios.post(`http://localhost:3001/api/v1/image/${authData.userId}`, formdata, {
+      const {data} = await axios.post(`${import.meta.env.VITE_APILINK}/image/${authData.userId}`, formdata, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

@@ -26,16 +26,16 @@ export default function BookDetails() {
   const added = () => toast.info(`Book "${book.name}" added to the cart!`);
 
   const getBook = async () => {
-    const data = await fetch(`http://localhost:3001/api/v1/book/${id}`)
+    const data = await fetch(`${import.meta.env.VITE_APILINK}/book/${id}`)
     const result = await data.json()
     if (result) setBook(result)
     if (book) setDisplay(book.image)
   }
 
   const getReviews = async () => {
-    const { data } = await axios.post(`http://localhost:3001/api/v1/book/review/all`, { bookId: id })
+    const { data } = await axios.post(`${import.meta.env.VITE_APILINK}/book/review/all`, { bookId: id })
     const reviewsList = data.map(async (review) => {
-      const data = await fetch(`http://localhost:3001/api/v1/user/${review.createdBy}`)
+      const data = await fetch(`${import.meta.env.VITE_APILINK}/user/${review.createdBy}`)
       const user = await data.json()
       if (user) {
         review.userName = user.name
@@ -50,7 +50,7 @@ export default function BookDetails() {
   }
 
   const updateBook = async () => {
-    const { data } = await axios.patch(`http://localhost:3001/api/v1/book/${id}`)
+    const { data } = await axios.patch(`${import.meta.env.VITE_APILINK}/book/${id}`)
     setBook(data)
   }
 
@@ -68,7 +68,7 @@ export default function BookDetails() {
 
   const addToCart = async () => {
     try {
-      const { data } = await axios.post(`http://localhost:3001/api/v1/cart/new`,
+      const { data } = await axios.post(`${import.meta.env.VITE_APILINK}/cart/new`,
         {
           userId: authData.userId,
           productId: id,
